@@ -14,7 +14,7 @@ from deap import tools
 from deap import gp
 
 from pmlb import fetch_data
-
+from sym_reg_tree import SymRegTree
 
 def protectedDiv(left, right):
     try:
@@ -41,14 +41,14 @@ def eval_symb_reg_pmlb(individual, inputs, targets):
     #inputs = data.drop('target', axis=1)
     #targets = data['target']
 
-    outputs = inputs.apply(lambda x: func(*x), axis=1)# engine="numba")
+    outputs = inputs.apply(lambda x: func(*x), axis=1)# , engine="numba")
     return ((outputs - targets) ** 2).sum() / len(targets),
 
 
 def main():
     random.seed(318)
 
-    dataset_name = 'adult'
+    dataset_name = '4544_GeographicalOriginalofMusic'
     dataset = pmlb.fetch_data(dataset_name)
 
     pset = gp.PrimitiveSet("MAIN", len(dataset.drop('target', axis=1).columns))
@@ -63,7 +63,7 @@ def main():
     #pset.renameArguments(ARG0='x')
 
     creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
-    creator.create("Individual", gp.PrimitiveTree, fitness=creator.FitnessMin)
+    creator.create("Individual", SymRegTree, fitness=creator.FitnessMin)
 
     toolbox.register("expr", gp.genHalfAndHalf, pset=pset, min_=1, max_=2)
     toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.expr)
@@ -73,15 +73,18 @@ def main():
     #toolbox.register("evaluate", evalSymbReg, points=[x / 10. for x in range(-10, 10)])
     toolbox.register("evaluate", eval_symb_reg_pmlb, inputs=dataset.drop('target', axis=1),
                      targets=dataset['target'])
-    toolbox.register("select", tools.selTournament, tournsize=3)
+    toolbox.register("select", tools.selTournament, tournsize=7)
     toolbox.register("mate", gp.cxOnePoint)
-    toolbox.register("expr_mut", gp.genFull, min_=0, max_=2)
+    toolbox.register("expr_mut", gp.genFull, min_=0, max_=20)
     toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
 
-    toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"), max_value=17))
-    toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max_value=17))
+    toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"), max_value=40))
+    toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max_value=40))
 
-    pop = toolbox.population(n=10)
+    a = toolbox.individual()
+    a.tokenize(pset, 5)
+
+    pop = toolbox.population(n=900)
     hof = tools.HallOfFame(1)
 
     stats_fit = tools.Statistics(lambda ind: ind.fitness.values)
@@ -92,7 +95,7 @@ def main():
     mstats.register("min", numpy.min)
     mstats.register("max", numpy.max)
 
-    pop, log = algorithms.eaSimple(pop, toolbox, 0.5, 0.1, 100, stats=mstats,
+    pop, log = algorithms.eaSimple(pop, toolbox, 0.8, 0.05, 5000, stats=mstats,
                                    halloffame=hof, verbose=True)
     # print log
     return pop, log, hof
