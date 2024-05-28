@@ -3,6 +3,13 @@ import copy
 from deap import gp
 
 
+# TOKEN_MAPPING = {
+#     "PAD": 0,
+#     "UNKNOWN": 1,
+#
+# }
+
+
 def hash_elements(elements, pset):
     mapping = get_mapping(pset, ["PAD", "UNKNOWN"])
 
@@ -45,6 +52,6 @@ class SymRegTree(gp.PrimitiveTree):
                 current_depth += 1
                 stack.extend([current_depth] * self[i].arity)
         for i, n in reversed(insertions):
-            padded[i+1:i+1] = ["PAD"] * n
+            padded[i+1:i+1] = ["PAD"] * int(n)
 
         return padded

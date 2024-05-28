@@ -2,7 +2,7 @@ import operator
 import math
 import random
 
-import numpy
+import numpy as np
 
 from functools import partial
 
@@ -16,7 +16,8 @@ from deap import gp
 from pmlb import fetch_data
 from sym_reg_tree import SymRegTree
 
-def protectedDiv(left, right):
+
+def div(left, right):
     try:
         return left / right
     except ZeroDivisionError:
@@ -45,6 +46,12 @@ def eval_symb_reg_pmlb(individual, inputs, targets):
     return ((outputs - targets) ** 2).sum() / len(targets),
 
 
+def generate_random_trees(n_trees, toolbox, filename="data.txt"):
+    trees = [toolbox.individual().tokenize(toolbox.pset, 10) for _ in range(n_trees)]
+    np.array(trees).savetxt(filename)
+    return trees
+
+
 def main():
     random.seed(318)
 
@@ -55,34 +62,37 @@ def main():
     pset.addPrimitive(operator.add, 2)
     pset.addPrimitive(operator.sub, 2)
     pset.addPrimitive(operator.mul, 2)
-    pset.addPrimitive(protectedDiv, 2)
+    pset.addPrimitive(div, 2)
     pset.addPrimitive(operator.neg, 1)
     pset.addPrimitive(math.cos, 1)
     pset.addPrimitive(math.sin, 1)
-    pset.addEphemeralConstant("rand101", partial(random.randint, -1, 1))
-    #pset.renameArguments(ARG0='x')
+    pset.addTerminal("c0", 1)
+    pset.addTerminal("c1", -1)
 
     creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
     creator.create("Individual", SymRegTree, fitness=creator.FitnessMin)
 
-    toolbox.register("expr", gp.genHalfAndHalf, pset=pset, min_=1, max_=2)
+    toolbox.register("expr", gp.genHalfAndHalf, pset=pset, min_=0, max_=10)
     toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.expr)
     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
     toolbox.register("compile", gp.compile, pset=pset)
+    toolbox.pset = pset
 
     #toolbox.register("evaluate", evalSymbReg, points=[x / 10. for x in range(-10, 10)])
     toolbox.register("evaluate", eval_symb_reg_pmlb, inputs=dataset.drop('target', axis=1),
                      targets=dataset['target'])
     toolbox.register("select", tools.selTournament, tournsize=7)
     toolbox.register("mate", gp.cxOnePoint)
-    toolbox.register("expr_mut", gp.genFull, min_=0, max_=20)
+    toolbox.register("expr_mut", gp.genFull, min_=0, max_=10)
     toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
 
-    toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"), max_value=40))
-    toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max_value=40))
+    toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"), max_value=10))
+    toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max_value=10))
 
-    a = toolbox.individual()
-    a.tokenize(pset, 5)
+    # a = toolbox.individual()
+    # a.tokenize(pset, 5)
+
+    generate_random_trees(100000, toolbox)
 
     pop = toolbox.population(n=900)
     hof = tools.HallOfFame(1)
@@ -90,10 +100,10 @@ def main():
     stats_fit = tools.Statistics(lambda ind: ind.fitness.values)
     stats_size = tools.Statistics(len)
     mstats = tools.MultiStatistics(fitness=stats_fit, size=stats_size)
-    mstats.register("avg", numpy.mean)
-    mstats.register("std", numpy.std)
-    mstats.register("min", numpy.min)
-    mstats.register("max", numpy.max)
+    mstats.register("avg", np.mean)
+    mstats.register("std", np.std)
+    mstats.register("min", np.min)
+    mstats.register("max", np.max)
 
     pop, log = algorithms.eaSimple(pop, toolbox, 0.8, 0.05, 5000, stats=mstats,
                                    halloffame=hof, verbose=True)
