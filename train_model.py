@@ -13,7 +13,7 @@ def train_loop(model, opt, loss_fn, dataloader):
 
     for i, batch in enumerate(dataloader):
         print(f"Batch {i + 1} / {len(dataloader)}\r", end="")
-        x, y = batch, batch.copy()
+        x, y = batch, batch
         x, y = torch.tensor(x, dtype=torch.long, device=device), torch.tensor(y, dtype=torch.long, device=device)
 
         # Now we shift the tgt by one so with the <SOS> we predict the token at pos 1
@@ -46,7 +46,7 @@ def validation_loop(model, loss_fn, dataloader):
 
     with torch.no_grad():
         for batch in dataloader:
-            X, y = batch, batch.copy()
+            X, y = batch, batch
             X, y = torch.tensor(X, dtype=torch.long, device=device), torch.tensor(y, dtype=torch.long, device=device)
 
             # Now we shift the tgt by one so with the <SOS> we predict the token at pos 1
@@ -97,4 +97,9 @@ model = Transformer(128, 512, 8, 6, 6).to(device)
 opt = torch.optim.SGD(model.parameters(), lr=0.01)
 loss_fn = torch.nn.CrossEntropyLoss()
 
-train_loss_list, validation_loss_list = fit(model, opt, loss_fn, train_dataloader, val_dataloader, 10)
+train_loss_list, validation_loss_list = fit(model, opt, loss_fn, train_dataloader, val_dataloader, 16)
+
+torch.save(model.state_dict(), "model.pth")
+np.save("train_loss.npy", train_loss_list)
+np.save("validation_loss.npy", validation_loss_list)
+
