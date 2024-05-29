@@ -47,8 +47,11 @@ def eval_symb_reg_pmlb(individual, inputs, targets):
 
 
 def generate_random_trees(n_trees, toolbox, filename="data.txt"):
-    trees = [toolbox.individual().tokenize(toolbox.pset, 10) for _ in range(n_trees)]
-    np.array(trees).savetxt(filename)
+    trees = [toolbox.individual().tokenize(toolbox.pset, 5) for _ in range(n_trees)]
+    trees_array = np.array(trees, dtype=int)
+    np.random.shuffle(trees_array)
+    print(f"Trees shape: {trees_array.shape}")
+    np.savetxt(filename, trees_array)
     return trees
 
 
@@ -72,7 +75,7 @@ def main():
     creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
     creator.create("Individual", SymRegTree, fitness=creator.FitnessMin)
 
-    toolbox.register("expr", gp.genHalfAndHalf, pset=pset, min_=0, max_=10)
+    toolbox.register("expr", gp.genHalfAndHalf, pset=pset, min_=1, max_=5)
     toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.expr)
     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
     toolbox.register("compile", gp.compile, pset=pset)
@@ -83,11 +86,11 @@ def main():
                      targets=dataset['target'])
     toolbox.register("select", tools.selTournament, tournsize=7)
     toolbox.register("mate", gp.cxOnePoint)
-    toolbox.register("expr_mut", gp.genFull, min_=0, max_=10)
+    toolbox.register("expr_mut", gp.genFull, min_=0, max_=5)
     toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
 
-    toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"), max_value=10))
-    toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max_value=10))
+    toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"), max_value=5))
+    toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max_value=5))
 
     # a = toolbox.individual()
     # a.tokenize(pset, 5)

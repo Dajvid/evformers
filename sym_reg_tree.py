@@ -37,6 +37,8 @@ class SymRegTree(gp.PrimitiveTree):
         return hash_elements(padded, pset)
 
     def add_padding(self, pset, max_depth):
+        if len(self) > 2 ** (max_depth + 1) - 1:
+            raise ValueError("Tree is too deep")
         padded = [x.name for x in self]
         stack = [0]
         current_depth = 0
@@ -50,8 +52,11 @@ class SymRegTree(gp.PrimitiveTree):
                 current_depth = stack.pop()
             else:
                 current_depth += 1
-                stack.extend([current_depth] * self[i].arity)
+                stack.extend([current_depth] * (self[i].arity - 1))
+        if len(self) + sum([n for _, n in insertions]) != 2 ** (max_depth + 1) - 1:
+            raise RuntimeError("Tree is not full")
         for i, n in reversed(insertions):
-            padded[i+1:i+1] = ["PAD"] * int(n)
+            if n != 0:
+                padded[i+1:i+1] = ["PAD"] * int(n)
 
         return padded
