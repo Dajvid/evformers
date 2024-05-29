@@ -87,17 +87,17 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs):
 
 
 data = np.loadtxt('data.txt')
-train_data = data[int(len(data) * 0.1):]
-val_data = data[:int(len(data) * 0.025)]
+train_data = data[int(len(data) * 0.2):]
+val_data = data[:int(len(data) * 0.03)]
 
 train_dataloader = batchify_data(train_data, batch_size=64)
 val_dataloader = batchify_data(val_data, batch_size=64)
 
-model = Transformer(128, 512, 8, 6, 6).to(device)
+model = Transformer(128, 256, 8, 6, 6).to(device)
 opt = torch.optim.SGD(model.parameters(), lr=0.01)
 loss_fn = torch.nn.CrossEntropyLoss()
 
-train_loss_list, validation_loss_list = fit(model, opt, loss_fn, train_dataloader, val_dataloader, 16)
+train_loss_list, validation_loss_list = fit(model, opt, loss_fn, train_dataloader, val_dataloader, 50)
 
 torch.save(model.state_dict(), "model.pth")
 np.save("train_loss.npy", train_loss_list)
