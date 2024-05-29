@@ -11,7 +11,8 @@ def train_loop(model, opt, loss_fn, dataloader):
     model.train()
     total_loss = 0
 
-    for batch in dataloader:
+    for i, batch in enumerate(dataloader):
+        print(f"Batch {i + 1} / {len(dataloader)}\r", end="")
         x, y = batch, batch.copy()
         x, y = torch.tensor(x, dtype=torch.long, device=device), torch.tensor(y, dtype=torch.long, device=device)
 
@@ -86,11 +87,11 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs):
 
 
 data = np.loadtxt('data.txt')
-train_data = data[int(len(data) * 0.8):]
-val_data = data[:int(len(data) * 0.2)]
+train_data = data[int(len(data) * 0.1):]
+val_data = data[:int(len(data) * 0.025)]
 
-train_dataloader = batchify_data(train_data)
-val_dataloader = batchify_data(val_data)
+train_dataloader = batchify_data(train_data, batch_size=64)
+val_dataloader = batchify_data(val_data, batch_size=64)
 
 model = Transformer(128, 512, 8, 6, 6).to(device)
 opt = torch.optim.SGD(model.parameters(), lr=0.01)
