@@ -87,8 +87,8 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs):
 
 
 data = np.loadtxt('data.txt')
-train_data = data[int(len(data) * 0.2):]
-val_data = data[:int(len(data) * 0.03)]
+train_data = data[:int(0.8 * len(data))]
+val_data = data[int(0.8 * len(data)):]
 
 train_dataloader = batchify_data(train_data, batch_size=64)
 val_dataloader = batchify_data(val_data, batch_size=64)
