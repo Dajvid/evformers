@@ -104,22 +104,37 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs):
     return train_loss_list, validation_loss_list
 
 
+parameters = {
+    "num_tokens": 128,
+    "dim_model": 256,
+    "num_heads": 1,
+    "num_encoder_layers": 1,
+    "num_decoder_layers": 1,
+    "dropout": 0.1,
+    "data_source": 'data.txt',
+    "batch_size": 16,
+    "lr": 0.001,
+    "loss": torch.nn.KLDivLoss(),
+    "epochs": 50,
+}
+
 start_timestamp = time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime(time.time()))
 out_dir = os.path.join("results", start_timestamp)
 
-data = np.loadtxt('data.txt')
+data = np.loadtxt(parameters["data_source"])
 train_data = data[:int(0.8 * len(data))]
 val_data = data[int(0.8 * len(data)):]
 
-train_dataloader = batchify_data(train_data, batch_size=16)
-val_dataloader = batchify_data(val_data, batch_size=16)
+train_dataloader = batchify_data(train_data, batch_size=parameters["batch_size"])
+val_dataloader = batchify_data(val_data, batch_size=parameters["batch_size"])
 
-model = Transformer(128, 256, 1, 1, 1).to(device)
-opt = torch.optim.SGD(model.parameters(), lr=0.001)
+model = Transformer(parameters["num_tokens"], parameters["dim_model"], parameters["num_heads"],
+                    parameters["num_encoder_layers"], parameters["num_decoder_layers"]).to(device)
+opt = torch.optim.SGD(model.parameters(), lr=parameters["lr"])
 #loss_fn = torch.nn.CrossEntropyLoss()
-loss_fn = torch.nn.KLDivLoss()
+loss_fn = parameters["loss"]
 
-train_loss_list, validation_loss_list = fit(model, opt, loss_fn, train_dataloader, val_dataloader, 50)
+train_loss_list, validation_loss_list = fit(model, opt, loss_fn, train_dataloader, val_dataloader, parameters["epochs"])
 
 os.makedirs(out_dir, exist_ok=True)
 torch.save(model.state_dict(), os.path.join(out_dir, "model.pth"))
@@ -131,3 +146,5 @@ plt.plot(train_loss_list, label="Train loss")
 plt.plot(validation_loss_list, label="Validation loss")
 plt.legend()
 plt.savefig(os.path.join(out_dir, "loss_plot.png"))
+with open(os.path.join(out_dir, "parameters.txt"), "w") as f:
+    f.write(str(parameters))
