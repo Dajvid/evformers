@@ -104,8 +104,8 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs):
     return train_loss_list, validation_loss_list
 
 
-start_timestamp = time.time()
-out_dir = os.path.join("results", str(start_timestamp))
+start_timestamp = time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime(time.time()))
+out_dir = os.path.join("results", start_timestamp)
 
 data = np.loadtxt('data.txt')
 train_data = data[:int(0.8 * len(data))]
@@ -117,7 +117,7 @@ val_dataloader = batchify_data(val_data, batch_size=64)
 model = Transformer(128, 256, 8, 6, 6).to(device)
 opt = torch.optim.SGD(model.parameters(), lr=0.01)
 #loss_fn = torch.nn.CrossEntropyLoss()
-loss_fn = torch.nn.KLDivLoss()
+loss_fn = torch.nn.KLDivLoss(reduction="batchmean")
 
 train_loss_list, validation_loss_list = fit(model, opt, loss_fn, train_dataloader, val_dataloader, 50)
 
