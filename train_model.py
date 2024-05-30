@@ -1,9 +1,13 @@
+import os
+import time
+
 import torch
 import numpy as np
 
 from data import batchify_data
 from Model import Transformer
 import torch.nn.functional as F
+import matplotlib.pyplot as plt
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -100,6 +104,9 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs):
     return train_loss_list, validation_loss_list
 
 
+start_timestamp = time.time()
+out_dir = os.path.join("results", str(start_timestamp))
+
 data = np.loadtxt('data.txt')
 train_data = data[:int(0.8 * len(data))]
 val_data = data[int(0.8 * len(data)):]
@@ -114,7 +121,13 @@ loss_fn = torch.nn.KLDivLoss()
 
 train_loss_list, validation_loss_list = fit(model, opt, loss_fn, train_dataloader, val_dataloader, 50)
 
-torch.save(model.state_dict(), "model.pth")
-np.save("train_loss.npy", train_loss_list)
-np.save("validation_loss.npy", validation_loss_list)
+os.makedirs(out_dir, exist_ok=True)
+torch.save(model.state_dict(), os.path.join(out_dir, "model.pth"))
+np.save(os.path.join(out_dir, "train_loss.npy"), train_loss_list)
+np.save(os.path.join(out_dir, "validation_loss.npy"), validation_loss_list)
 
+plt.figure()
+plt.plot(train_loss_list, label="Train loss")
+plt.plot(validation_loss_list, label="Validation loss")
+plt.legend()
+plt.savefig(os.path.join(out_dir, "loss_plot.png"))
