@@ -3,6 +3,7 @@ import numpy as np
 
 from data import batchify_data
 from Model import Transformer
+import torch.nn.functional as F
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -28,8 +29,14 @@ def train_loop(model, opt, loss_fn, dataloader):
         pred = model(x, y_input, tgt_mask)
 
         # Permute pred to have batch size first again
-        pred = pred.permute(1, 2, 0)
-        loss = loss_fn(pred, y_expected)
+        pred = pred.permute(1, 0, 2)
+
+        # Apply log_softmax to predictions
+        log_probs = F.log_softmax(pred, dim=2)
+        # One-hot encode the expected outputs
+        y_one_hot = torch.nn.functional.one_hot(y_expected, num_classes=pred.size(2)).float()
+
+        loss = loss_fn(log_probs, y_one_hot)
 
         opt.zero_grad()
         loss.backward()
@@ -46,8 +53,8 @@ def validation_loop(model, loss_fn, dataloader):
 
     with torch.no_grad():
         for batch in dataloader:
-            X, y = batch, batch
-            X, y = torch.tensor(X, dtype=torch.long, device=device), torch.tensor(y, dtype=torch.long, device=device)
+            x, y = batch, batch
+            x, y = torch.tensor(x, dtype=torch.long, device=device), torch.tensor(y, dtype=torch.long, device=device)
 
             # Now we shift the tgt by one so with the <SOS> we predict the token at pos 1
             y_input = y[:, :-1]
@@ -58,11 +65,18 @@ def validation_loop(model, loss_fn, dataloader):
             tgt_mask = tgt_mask = model.get_tgt_mask(sequence_length).to(device)
 
             # Standard training except we pass in y_input and src_mask
-            pred = model(X, y_input, tgt_mask)
+            pred = model(x, y_input, tgt_mask)
 
             # Permute pred to have batch size first again
-            pred = pred.permute(1, 2, 0)
-            loss = loss_fn(pred, y_expected)
+            pred = pred.permute(1, 0, 2)
+
+            # Apply log_softmax to predictions
+            log_probs = F.log_softmax(pred, dim=2)
+            # One-hot encode the expected outputs
+            y_one_hot = torch.nn.functional.one_hot(y_expected, num_classes=pred.size(2)).float()
+
+            loss = loss_fn(log_probs, y_one_hot)
+
             total_loss += loss.detach().item()
 
     return total_loss / len(dataloader)
@@ -95,7 +109,8 @@ val_dataloader = batchify_data(val_data, batch_size=64)
 
 model = Transformer(128, 256, 8, 6, 6).to(device)
 opt = torch.optim.SGD(model.parameters(), lr=0.01)
-loss_fn = torch.nn.CrossEntropyLoss()
+#loss_fn = torch.nn.CrossEntropyLoss()
+loss_fn = torch.nn.KLDivLoss()
 
 train_loss_list, validation_loss_list = fit(model, opt, loss_fn, train_dataloader, val_dataloader, 50)
 
