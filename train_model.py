@@ -111,13 +111,13 @@ data = np.loadtxt('data.txt')
 train_data = data[:int(0.8 * len(data))]
 val_data = data[int(0.8 * len(data)):]
 
-train_dataloader = batchify_data(train_data, batch_size=64)
-val_dataloader = batchify_data(val_data, batch_size=64)
+train_dataloader = batchify_data(train_data, batch_size=16)
+val_dataloader = batchify_data(val_data, batch_size=16)
 
 model = Transformer(128, 256, 1, 1, 1).to(device)
 opt = torch.optim.SGD(model.parameters(), lr=0.001)
 #loss_fn = torch.nn.CrossEntropyLoss()
-loss_fn = torch.nn.KLDivLoss(reduction="batchmean")
+loss_fn = torch.nn.KLDivLoss()
 
 train_loss_list, validation_loss_list = fit(model, opt, loss_fn, train_dataloader, val_dataloader, 50)
 
