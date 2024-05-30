@@ -114,8 +114,8 @@ val_data = data[int(0.8 * len(data)):]
 train_dataloader = batchify_data(train_data, batch_size=64)
 val_dataloader = batchify_data(val_data, batch_size=64)
 
-model = Transformer(128, 256, 8, 6, 6).to(device)
-opt = torch.optim.SGD(model.parameters(), lr=0.01)
+model = Transformer(128, 256, 1, 1, 1).to(device)
+opt = torch.optim.SGD(model.parameters(), lr=0.001)
 #loss_fn = torch.nn.CrossEntropyLoss()
 loss_fn = torch.nn.KLDivLoss(reduction="batchmean")
 
