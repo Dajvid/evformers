@@ -112,7 +112,7 @@ parameters = {
     "num_encoder_layers": 1,
     "num_decoder_layers": 1,
     "dropout": 0.1,
-    "data_source": 'data.txt',
+    "data_source": "geomusic_dataset_mdepth5.txt",
     "batch_size": 16,
     "lr": 0.001,
     "loss": torch.nn.KLDivLoss(reduction="batchmean"),
@@ -133,7 +133,6 @@ model = Transformer(parameters["num_tokens"], parameters["dim_model"], parameter
                     parameters["num_encoder_layers"], parameters["num_decoder_layers"],
                     dropout=parameters["dropout"]).to(device)
 opt = torch.optim.SGD(model.parameters(), lr=parameters["lr"])
-#loss_fn = torch.nn.CrossEntropyLoss()
 loss_fn = parameters["loss"]
 
 train_loss_list, validation_loss_list = fit(model, opt, loss_fn, train_dataloader, val_dataloader, parameters["epochs"])
