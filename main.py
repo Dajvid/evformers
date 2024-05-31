@@ -15,13 +15,20 @@ from deap import gp
 from deap.algorithms import varAnd
 
 from pmlb import fetch_data
-from sym_reg_tree import SymRegTree
+from sym_reg_tree import SymRegTree, get_mapping
 
 
 def div(left, right):
     try:
         return left / right
     except ZeroDivisionError:
+        return 1
+
+
+def sqrt(x):
+    try:
+        return math.sqrt(x)
+    except ValueError:
         return 1
 
 
@@ -115,11 +122,10 @@ def main():
     pset.addPrimitive(operator.sub, 2)
     pset.addPrimitive(operator.mul, 2)
     pset.addPrimitive(div, 2)
-    pset.addPrimitive(operator.neg, 1)
-    pset.addPrimitive(math.cos, 1)
     pset.addPrimitive(math.sin, 1)
-    pset.addTerminal("c0", 1)
-    pset.addTerminal("c1", -1)
+    pset.addPrimitive(sqrt, 1)
+    for i, val in enumerate(np.linspace(-1, 1, num=21, endpoint=True)):
+        pset.addTerminal(val)
 
     creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
     creator.create("Individual", SymRegTree, fitness=creator.FitnessMin)
@@ -160,6 +166,7 @@ def main():
     np.random.shuffle(trees_array)
     print(f"Trees shape: {trees_array.shape}")
     np.savetxt("geomusic_dataset_mdepth5.txt", trees_array)
+    print(f"Mapping len: {len(get_mapping(toolbox.pset))}")
 
     # print log
     return pop, log, hof
