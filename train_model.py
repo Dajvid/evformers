@@ -66,7 +66,7 @@ def validation_loop(model, loss_fn, dataloader):
 
             # Get mask to mask out the next words
             sequence_length = y_input.size(1)
-            tgt_mask = tgt_mask = model.get_tgt_mask(sequence_length).to(device)
+            tgt_mask = model.get_tgt_mask(sequence_length).to(device)
 
             # Standard training except we pass in y_input and src_mask
             pred = model(x, y_input, tgt_mask)
