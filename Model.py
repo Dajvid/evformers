@@ -27,7 +27,7 @@ class PositionalEncoding(nn.Module):
 
 class Transformer(nn.Module):
     def __init__(self, num_tokens: int, dim_model: int, num_heads: int, num_encoder_layers: int,
-                 num_decoder_layers: int, dropout: float = 0.5):
+                 num_decoder_layers: int, dropout: float = 0.1):
         super().__init__()
         self.model_type = 'Transformer'
         self.dim_model = dim_model
@@ -37,12 +37,6 @@ class Transformer(nn.Module):
         self.transformer = nn.Transformer(d_model=dim_model, nhead=num_heads, num_encoder_layers=num_encoder_layers,
                                           num_decoder_layers=num_decoder_layers, dropout=dropout)
         self.out = nn.Linear(dim_model, num_tokens)
-
-    # def init_weights(self) -> None:
-    #     initrange = 0.1
-    #     self.embedding.weight.data.uniform_(-initrange, initrange)
-    #     self.linear.bias.data.zero_()
-    #     self.linear.weight.data.uniform_(-initrange, initrange)
 
     def forward(self, src: Tensor, tgt, tgt_mask=None, src_pad_mask=None, tgt_pad_mask=None) -> Tensor:
         src = self.embedding(src) * math.sqrt(self.dim_model)
