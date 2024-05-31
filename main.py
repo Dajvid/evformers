@@ -136,7 +136,8 @@ def main():
     toolbox.register("compile", gp.compile, pset=pset)
     toolbox.pset = pset
 
-    #toolbox.register("evaluate", evalSymbReg, points=[x / 10. for x in range(-10, 10)])
+    print(f"Mapping len: {len(get_mapping(toolbox.pset, ["PAD", "UNKNOWN"]))}")
+
     toolbox.register("evaluate", eval_symb_reg_pmlb, inputs=dataset.drop('target', axis=1),
                      targets=dataset['target'])
     toolbox.register("select", tools.selTournament, tournsize=7)
@@ -166,7 +167,6 @@ def main():
     np.random.shuffle(trees_array)
     print(f"Trees shape: {trees_array.shape}")
     np.savetxt("geomusic_dataset_mdepth5.txt", trees_array)
-    print(f"Mapping len: {len(get_mapping(toolbox.pset))}")
 
     # print log
     return pop, log, hof
