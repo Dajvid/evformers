@@ -55,7 +55,8 @@ def train_loop(model, opt, loss_fn, dataloader):
 def validation_loop(model, loss_fn, dataloader):
     model.eval()
     total_loss = 0
-    total_accuracy = 0
+    total_token_accuracy = 0
+    total_sequence_accuracy = 0
 
     with torch.no_grad():
         for batch in dataloader:
@@ -85,10 +86,12 @@ def validation_loop(model, loss_fn, dataloader):
 
             correct_prediction = log_probs.argmax(dim=2) == y_expected
 
-            total_accuracy += correct_prediction.sum() / np.prod(correct_prediction.shape)
+            total_sequence_accuracy += correct_prediction.all(dim=1).sum() / len(correct_prediction)
+            total_token_accuracy += correct_prediction.sum() / np.prod(correct_prediction.shape)
             total_loss += loss.detach().item()
 
-    return total_loss / len(dataloader), total_accuracy / len(dataloader)
+    return (total_loss / len(dataloader), total_token_accuracy / len(dataloader),
+            total_sequence_accuracy / len(dataloader))
 
 
 def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs):
@@ -99,12 +102,13 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs):
         print("-" * 25, f"Epoch {epoch + 1}", "-" * 25)
         train_loss = train_loop(model, opt, loss_fn, train_dataloader)
         train_loss_list += [train_loss]
-        validation_loss, validation_accuracy = validation_loop(model, loss_fn, val_dataloader)
+        validation_loss, token_accuracy, sequence_accuracy = validation_loop(model, loss_fn, val_dataloader)
         validation_loss_list += [validation_loss]
 
         print(f"Training loss: {train_loss:.4f}")
         print(f"Validation loss: {validation_loss:.4f}")
-        print(f"Validation accuracy: {validation_accuracy:.4f}")
+        print(f"Validation token accuracy: {token_accuracy:.4f}")
+        print(f"Validation sequence accuracy: {sequence_accuracy:.4f}")
         print()
 
     return train_loss_list, validation_loss_list
