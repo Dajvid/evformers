@@ -114,7 +114,7 @@ parameters = {
     "data_source": 'data.txt',
     "batch_size": 16,
     "lr": 0.001,
-    "loss": torch.nn.KLDivLoss(),
+    "loss": torch.nn.KLDivLoss(reduction="batchmean"),
     "epochs": 50,
 }
 
