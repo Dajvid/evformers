@@ -12,6 +12,7 @@ from deap import base
 from deap import creator
 from deap import tools
 from deap import gp
+from deap.algorithms import varAnd
 
 from pmlb import fetch_data
 from sym_reg_tree import SymRegTree
@@ -46,13 +47,61 @@ def eval_symb_reg_pmlb(individual, inputs, targets):
     return ((outputs - targets) ** 2).sum() / len(targets),
 
 
-def generate_random_trees(n_trees, toolbox, filename="data.txt"):
-    trees = [toolbox.individual().tokenize(toolbox.pset, 5) for _ in range(n_trees)]
-    trees_array = np.array(trees, dtype=int)
-    np.random.shuffle(trees_array)
-    print(f"Trees shape: {trees_array.shape}")
-    np.savetxt(filename, trees_array)
+def generate_random_trees(n_trees):
+    trees = [toolbox.individual() for _ in range(n_trees)]
     return trees
+
+
+def eaSimple_with_population_log(population, toolbox, cxpb, mutpb, ngen, stats=None,
+             halloffame=None, verbose=__debug__, trees=None):
+    logbook = tools.Logbook()
+    logbook.header = ['gen', 'nevals'] + (stats.fields if stats else [])
+
+    # Evaluate the individuals with an invalid fitness
+    invalid_ind = [ind for ind in population if not ind.fitness.valid]
+    fitnesses = toolbox.map(toolbox.evaluate, invalid_ind)
+    for ind, fit in zip(invalid_ind, fitnesses):
+        ind.fitness.values = fit
+
+    if halloffame is not None:
+        halloffame.update(population)
+
+    record = stats.compile(population) if stats else {}
+    logbook.record(gen=0, nevals=len(invalid_ind), **record)
+    if verbose:
+        print(logbook.stream)
+
+    # Begin the generational process
+    for gen in range(1, ngen + 1):
+        # Select the next generation individuals
+        offspring = toolbox.select(population, len(population))
+
+        # Vary the pool of individuals
+        offspring = varAnd(offspring, toolbox, cxpb, mutpb)
+
+        # Evaluate the individuals with an invalid fitness
+        invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
+        fitnesses = toolbox.map(toolbox.evaluate, invalid_ind)
+        for ind, fit in zip(invalid_ind, fitnesses):
+            ind.fitness.values = fit
+
+        # Update the hall of fame with the generated individuals
+        if halloffame is not None:
+            halloffame.update(offspring)
+
+        # Replace the current population by the offspring
+        population[:] = offspring
+        if gen > 5 and trees is not None:
+            for ind in population:
+                trees.append(ind)
+
+        # Append the current generation statistics to the logbook
+        record = stats.compile(population) if stats else {}
+        logbook.record(gen=gen, nevals=len(invalid_ind), **record)
+        if verbose:
+            print(logbook.stream)
+
+    return population, logbook
 
 
 def main():
@@ -92,11 +141,6 @@ def main():
     toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"), max_value=5))
     toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max_value=5))
 
-    # a = toolbox.individual()
-    # a.tokenize(pset, 5)
-
-    generate_random_trees(100000, toolbox)
-
     pop = toolbox.population(n=900)
     hof = tools.HallOfFame(1)
 
@@ -108,8 +152,15 @@ def main():
     mstats.register("min", np.min)
     mstats.register("max", np.max)
 
-    pop, log = algorithms.eaSimple(pop, toolbox, 0.8, 0.05, 5000, stats=mstats,
-                                   halloffame=hof, verbose=True)
+    trees = generate_random_trees(100000)
+    pop, log = eaSimple_with_population_log(pop, toolbox, 0.8, 0.05, 55, stats=mstats,
+                                            halloffame=hof, verbose=True, trees=trees)
+    tokenized_trees = [tree.tokenize(toolbox.pset, 5) for tree in trees]
+    trees_array = np.array(tokenized_trees, dtype=int)
+    np.random.shuffle(trees_array)
+    print(f"Trees shape: {trees_array.shape}")
+    np.savetxt("geomusic_dataset_mdepth5.txt", trees_array)
+
     # print log
     return pop, log, hof
 
