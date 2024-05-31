@@ -6,7 +6,6 @@ import numpy as np
 
 from data import batchify_data
 from Model import Transformer
-from random_data import generate_random_data
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 
@@ -34,15 +33,14 @@ def train_loop(model, opt, loss_fn, dataloader):
         pred = model(x, y_input, tgt_mask)
 
         # Permute pred to have batch size first again
-        pred = pred.permute(1, 2, 0)
+        pred = pred.permute(1, 0, 2)
 
         # Apply log_softmax to predictions
         log_probs = F.log_softmax(pred, dim=2)
         # One-hot encode the expected outputs
         y_one_hot = torch.nn.functional.one_hot(y_expected, num_classes=pred.size(2)).float()
 
-        #loss = loss_fn(log_probs, y_one_hot)
-        loss = loss_fn(pred, y_expected)
+        loss = loss_fn(log_probs, y_one_hot)
 
         opt.zero_grad()
         loss.backward()
@@ -68,21 +66,20 @@ def validation_loop(model, loss_fn, dataloader):
 
             # Get mask to mask out the next words
             sequence_length = y_input.size(1)
-            tgt_mask = model.get_tgt_mask(sequence_length).to(device)
+            tgt_mask = tgt_mask = model.get_tgt_mask(sequence_length).to(device)
 
             # Standard training except we pass in y_input and src_mask
             pred = model(x, y_input, tgt_mask)
 
             # Permute pred to have batch size first again
-            pred = pred.permute(1, 2, 0)
+            pred = pred.permute(1, 0, 2)
 
             # Apply log_softmax to predictions
             log_probs = F.log_softmax(pred, dim=2)
             # One-hot encode the expected outputs
             y_one_hot = torch.nn.functional.one_hot(y_expected, num_classes=pred.size(2)).float()
 
-            #loss = loss_fn(log_probs, y_one_hot)
-            loss = loss_fn(pred, y_expected)
+            loss = loss_fn(log_probs, y_one_hot)
 
             total_loss += loss.detach().item()
 
@@ -108,28 +105,25 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs):
 
 
 parameters = {
-    "num_tokens": 4,
-    "dim_model": 8,
-    "num_heads": 2,
-    "num_encoder_layers": 3,
-    "num_decoder_layers": 3,
+    "num_tokens": 128,
+    "dim_model": 256,
+    "num_heads": 1,
+    "num_encoder_layers": 1,
+    "num_decoder_layers": 1,
     "dropout": 0.1,
-    "data_source": generate_random_data,
+    "data_source": 'data.txt',
     "batch_size": 16,
-    "lr": 0.01,
-    "loss": torch.nn.CrossEntropyLoss(),
-    "epochs": 15,
+    "lr": 0.001,
+    "loss": torch.nn.KLDivLoss(),
+    "epochs": 50,
 }
 
 start_timestamp = time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime(time.time()))
 out_dir = os.path.join("results", start_timestamp)
 
-
-# data = np.loadtxt(parameters["data_source"])
-# train_data = data[:int(0.8 * len(data))]
-# val_data = data[int(0.8 * len(data)):]
-train_data = generate_random_data(9000)
-val_data = generate_random_data(3000)
+data = np.loadtxt(parameters["data_source"])
+train_data = data[:int(0.8 * len(data))]
+val_data = data[int(0.8 * len(data)):]
 
 train_dataloader = batchify_data(train_data, batch_size=parameters["batch_size"])
 val_dataloader = batchify_data(val_data, batch_size=parameters["batch_size"])
