@@ -1,4 +1,5 @@
 import os
+import random
 import time
 
 import torch
@@ -106,7 +107,7 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs):
 
 parameters = {
     "num_tokens": 128,
-    "dim_model": 256,
+    "dim_model": 64,
     "num_heads": 1,
     "num_encoder_layers": 1,
     "num_decoder_layers": 1,
@@ -129,7 +130,8 @@ train_dataloader = batchify_data(train_data, batch_size=parameters["batch_size"]
 val_dataloader = batchify_data(val_data, batch_size=parameters["batch_size"])
 
 model = Transformer(parameters["num_tokens"], parameters["dim_model"], parameters["num_heads"],
-                    parameters["num_encoder_layers"], parameters["num_decoder_layers"]).to(device)
+                    parameters["num_encoder_layers"], parameters["num_decoder_layers"],
+                    dropout=parameters["dropout"]).to(device)
 opt = torch.optim.SGD(model.parameters(), lr=parameters["lr"])
 #loss_fn = torch.nn.CrossEntropyLoss()
 loss_fn = parameters["loss"]
