@@ -6,23 +6,12 @@ import random
 import math
 import numpy as np
 from data import batchify_data
+import torch.nn.functional as F
+
 
 class Transformer(nn.Module):
-    """
-    Model from "A detailed guide to Pytorch's nn.Transformer() module.", by
-    Daniel Melchor: https://medium.com/@danielmelchor/a-detailed-guide-to-pytorchs-nn-transformer-module-c80afbc9ffb1
-    """
-
     # Constructor
-    def __init__(
-            self,
-            num_tokens,
-            dim_model,
-            num_heads,
-            num_encoder_layers,
-            num_decoder_layers,
-            dropout_p,
-    ):
+    def __init__(self, num_tokens, dim_model, num_heads, num_encoder_layers, num_decoder_layers, dropout_p,):
         super().__init__()
 
         # INFO
@@ -80,11 +69,6 @@ class Transformer(nn.Module):
         #  [0.,   0.,   0.,   0.,   0.]]
 
         return mask
-
-    def create_pad_mask(self, matrix: torch.tensor, pad_token: int) -> torch.tensor:
-        # If matrix = [1,2,3,0,0,0] where pad_token=0, the result mask is
-        # [False, False, False, True, True, True]
-        return (matrix == pad_token)
 
 
 class PositionalEncoding(nn.Module):
@@ -164,9 +148,8 @@ def generate_random_data(n):
 #     return batches
 
 
-data = np.loadtxt("data.txt")
-train_data = data[:int(0.8 * len(data))]
-val_data = data[int(0.8 * len(data)):]
+train_data = generate_random_data(9000)
+val_data = generate_random_data(3000)
 
 train_dataloader = batchify_data(train_data)
 val_dataloader = batchify_data(val_data)
@@ -176,7 +159,8 @@ model = Transformer(
     num_tokens=128, dim_model=8, num_heads=2, num_encoder_layers=3, num_decoder_layers=3, dropout_p=0.1
 ).to(device)
 opt = torch.optim.SGD(model.parameters(), lr=0.01)
-loss_fn = nn.CrossEntropyLoss()
+#loss_fn = nn.CrossEntropyLoss()
+loss_fn = nn.KLDivLoss(reduction="batchmean")
 
 
 def train_loop(model, opt, loss_fn, dataloader):
@@ -205,8 +189,12 @@ def train_loop(model, opt, loss_fn, dataloader):
         pred = model(X, y_input, tgt_mask)
 
         # Permute pred to have batch size first again
-        pred = pred.permute(1, 2, 0)
-        loss = loss_fn(pred, y_expected)
+        pred = pred.permute(1, 0, 2)
+        log_probs = F.log_softmax(pred, dim=2)
+        # One-hot encode the expected outputs
+        y_one_hot = torch.nn.functional.one_hot(y_expected, num_classes=pred.size(2)).float()
+
+        loss = loss_fn(log_probs, y_one_hot)
 
         opt.zero_grad()
         loss.backward()
@@ -243,8 +231,12 @@ def validation_loop(model, loss_fn, dataloader):
             pred = model(X, y_input, tgt_mask)
 
             # Permute pred to have batch size first again
-            pred = pred.permute(1, 2, 0)
-            loss = loss_fn(pred, y_expected)
+            pred = pred.permute(1, 0, 2)
+            log_probs = F.log_softmax(pred, dim=2)
+            # One-hot encode the expected outputs
+            y_one_hot = torch.nn.functional.one_hot(y_expected, num_classes=pred.size(2)).float()
+
+            loss = loss_fn(log_probs, y_one_hot)
             total_loss += loss.detach().item()
 
     return total_loss / len(dataloader)
