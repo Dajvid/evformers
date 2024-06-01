@@ -204,7 +204,7 @@ def train_epoch(model, optimizer):
 
         src_mask, tgt_mask, src_padding_mask, tgt_padding_mask = create_mask(src, tgt_input)
 
-        logits = model(src, tgt_input, src_mask, tgt_mask,src_padding_mask, tgt_padding_mask, src_padding_mask)
+        logits = model(src, tgt_input, src_mask, tgt_mask, None, None, None)# src_padding_mask, tgt_padding_mask, src_padding_mask)
 
         optimizer.zero_grad()
 
@@ -242,7 +242,7 @@ def evaluate(model):
 
         src_mask, tgt_mask, src_padding_mask, tgt_padding_mask = create_mask(src, tgt_input)
 
-        logits = model(src, tgt_input, src_mask, tgt_mask,src_padding_mask, tgt_padding_mask, src_padding_mask)
+        logits = model(src, tgt_input, src_mask, tgt_mask, None, None, None) # src_padding_mask, tgt_padding_mask, src_padding_mask)
 
         tgt_out = tgt[1:, :]
         loss = loss_fn(logits.reshape(-1, logits.shape[-1]), tgt_out.reshape(-1))
