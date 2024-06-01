@@ -17,7 +17,7 @@ out_dir = os.path.join("runs", start_timestamp)
 os.makedirs(out_dir, exist_ok=True)
 writer = SummaryWriter(out_dir)
 training_step = 0
-
+validation_step = 0
 
 def train_loop(model, opt, loss_fn, dataloader):
     model.train()
