@@ -9,9 +9,13 @@ from data import batchify_data
 from Model import Transformer
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
+from torch.utils.tensorboard import SummaryWriter
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
-
+start_timestamp = time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime(time.time()))
+out_dir = os.path.join("runs", start_timestamp)
+os.makedirs(out_dir, exist_ok=True)
+writer = SummaryWriter(out_dir)
 
 def train_loop(model, opt, loss_fn, dataloader):
     model.train()
@@ -47,7 +51,14 @@ def train_loop(model, opt, loss_fn, dataloader):
         loss.backward()
         opt.step()
 
+        # log to tensorboard
+        correct_prediction = log_probs.argmax(dim=2) == y_expected
+        sequence_accuracy = correct_prediction.all(dim=1).sum() / len(correct_prediction)
+        token_accuracy = correct_prediction.sum() / np.prod(correct_prediction.shape)
         total_loss += loss.detach().item()
+        writer.add_scalar("Accuracy per token/train", token_accuracy)
+        writer.add_scalar("Accuracy per sequence/train", sequence_accuracy)
+        writer.add_scalar("Loss/train", loss.detach().item())
 
     return total_loss / len(dataloader)
 
@@ -84,11 +95,16 @@ def validation_loop(model, loss_fn, dataloader):
 
             loss = loss_fn(log_probs, y_one_hot)
 
+            # log to tensorboard
             correct_prediction = log_probs.argmax(dim=2) == y_expected
-
-            total_sequence_accuracy += correct_prediction.all(dim=1).sum() / len(correct_prediction)
-            total_token_accuracy += correct_prediction.sum() / np.prod(correct_prediction.shape)
+            sequence_accuracy = correct_prediction.all(dim=1).sum() / len(correct_prediction)
+            total_sequence_accuracy += sequence_accuracy
+            token_accuracy = correct_prediction.sum() / np.prod(correct_prediction.shape)
+            total_token_accuracy += token_accuracy
             total_loss += loss.detach().item()
+            writer.add_scalar("Accuracy per token/validation", token_accuracy)
+            writer.add_scalar("Accuracy per sequence/validation", sequence_accuracy)
+            writer.add_scalar("Loss/validation", loss.detach().item())
 
     return (total_loss / len(dataloader), total_token_accuracy / len(dataloader),
             total_sequence_accuracy / len(dataloader))
@@ -127,9 +143,8 @@ parameters = {
     "loss": torch.nn.KLDivLoss(reduction="batchmean"),
     "epochs": 50,
 }
-
-start_timestamp = time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime(time.time()))
-out_dir = os.path.join("results", start_timestamp)
+with open(os.path.join(out_dir, "parameters.txt"), "w") as f:
+    f.write(str(parameters))
 
 data = np.loadtxt(parameters["data_source"])
 train_data = data[:int(0.8 * len(data))]
@@ -146,7 +161,6 @@ loss_fn = parameters["loss"]
 
 train_loss_list, validation_loss_list = fit(model, opt, loss_fn, train_dataloader, val_dataloader, parameters["epochs"])
 
-os.makedirs(out_dir, exist_ok=True)
 torch.save(model.state_dict(), os.path.join(out_dir, "model.pth"))
 np.save(os.path.join(out_dir, "train_loss.npy"), train_loss_list)
 np.save(os.path.join(out_dir, "validation_loss.npy"), validation_loss_list)
@@ -156,5 +170,4 @@ plt.plot(train_loss_list, label="Train loss")
 plt.plot(validation_loss_list, label="Validation loss")
 plt.legend()
 plt.savefig(os.path.join(out_dir, "loss_plot.png"))
-with open(os.path.join(out_dir, "parameters.txt"), "w") as f:
-    f.write(str(parameters))
+writer.close()
