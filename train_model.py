@@ -16,13 +16,13 @@ start_timestamp = time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime(time.time())
 out_dir = os.path.join("runs", start_timestamp)
 os.makedirs(out_dir, exist_ok=True)
 writer = SummaryWriter(out_dir)
-training_step = 0
-validation_step = 0
+
 
 def train_loop(model, opt, loss_fn, dataloader):
     model.train()
     total_loss = 0
-    global training_step
+    total_sequence_accuracy = 0
+    total_token_accuracy = 0
 
     for i, batch in enumerate(dataloader):
         print(f"Batch {i + 1} / {len(dataloader)}\r", end="")
@@ -58,13 +58,12 @@ def train_loop(model, opt, loss_fn, dataloader):
         correct_prediction = log_probs.argmax(dim=2) == y_expected
         sequence_accuracy = correct_prediction.all(dim=1).sum() / len(correct_prediction)
         token_accuracy = correct_prediction.sum() / np.prod(correct_prediction.shape)
+        total_sequence_accuracy += sequence_accuracy
+        total_token_accuracy += token_accuracy
         total_loss += loss.detach().item()
-        writer.add_scalar("Loss/train", loss.detach().item(), global_step=training_step)
-        writer.add_scalar("Accuracy per token/train", token_accuracy, global_step=training_step)
-        writer.add_scalar("Accuracy per sequence/train", sequence_accuracy, global_step=training_step)
-        training_step += 1
 
-    return total_loss / len(dataloader)
+    return (total_loss / len(dataloader), total_token_accuracy / len(dataloader),
+            total_sequence_accuracy / len(dataloader))
 
 
 def validation_loop(model, loss_fn, dataloader):
@@ -72,7 +71,6 @@ def validation_loop(model, loss_fn, dataloader):
     total_loss = 0
     total_token_accuracy = 0
     total_sequence_accuracy = 0
-    global validation_step
 
     with torch.no_grad():
         for batch in dataloader:
@@ -107,10 +105,6 @@ def validation_loop(model, loss_fn, dataloader):
             token_accuracy = correct_prediction.sum() / np.prod(correct_prediction.shape)
             total_token_accuracy += token_accuracy
             total_loss += loss.detach().item()
-            writer.add_scalar("Accuracy per token/validation", token_accuracy, global_step=validation_step)
-            writer.add_scalar("Accuracy per sequence/validation", sequence_accuracy, global_step=validation_step)
-            writer.add_scalar("Loss/validation", loss.detach().item(), global_step=validation_step)
-            validation_step += 1
 
     return (total_loss / len(dataloader), total_token_accuracy / len(dataloader),
             total_sequence_accuracy / len(dataloader))
@@ -122,10 +116,18 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs):
 
     for epoch in range(epochs):
         print("-" * 25, f"Epoch {epoch + 1}", "-" * 25)
-        train_loss = train_loop(model, opt, loss_fn, train_dataloader)
+        train_loss, token_accuracy, sequence_accuracy = train_loop(model, opt, loss_fn, train_dataloader)
         train_loss_list += [train_loss]
         validation_loss, token_accuracy, sequence_accuracy = validation_loop(model, loss_fn, val_dataloader)
         validation_loss_list += [validation_loss]
+
+        # log to tensorboard
+        writer.add_scalar("Accuracy per token/validation", token_accuracy, global_step=epoch)
+        writer.add_scalar("Accuracy per sequence/validation", sequence_accuracy, global_step=epoch)
+        writer.add_scalar("Loss/validation", validation_loss, global_step=epoch)
+        writer.add_scalar("Loss/train", validation_loss, global_step=epoch)
+        writer.add_scalar("Accuracy per token/train", token_accuracy, global_step=epoch)
+        writer.add_scalar("Accuracy per sequence/train", sequence_accuracy, global_step=epoch)
 
         print(f"Training loss: {train_loss:.4f}")
         print(f"Validation loss: {validation_loss:.4f}")
@@ -133,7 +135,7 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs):
         print(f"Validation sequence accuracy: {sequence_accuracy:.4f}")
         print()
 
-    return train_loss_list, validation_loss_list
+    return
 
 
 parameters = {
@@ -165,15 +167,8 @@ model = Transformer(parameters["num_tokens"], parameters["dim_model"], parameter
 opt = torch.optim.SGD(model.parameters(), lr=parameters["lr"])
 loss_fn = parameters["loss"]
 
-train_loss_list, validation_loss_list = fit(model, opt, loss_fn, train_dataloader, val_dataloader, parameters["epochs"])
+fit(model, opt, loss_fn, train_dataloader, val_dataloader, parameters["epochs"])
 
 torch.save(model.state_dict(), os.path.join(out_dir, "model.pth"))
-np.save(os.path.join(out_dir, "train_loss.npy"), train_loss_list)
-np.save(os.path.join(out_dir, "validation_loss.npy"), validation_loss_list)
 
-plt.figure()
-plt.plot(train_loss_list, label="Train loss")
-plt.plot(validation_loss_list, label="Validation loss")
-plt.legend()
-plt.savefig(os.path.join(out_dir, "loss_plot.png"))
 writer.close()
