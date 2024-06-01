@@ -55,12 +55,13 @@ def train_loop(model, opt, loss_fn, dataloader):
         loss.backward()
         opt.step()
 
-        # log to tensorboard
-        correct_prediction = log_probs.argmax(dim=2) == y_expected
-        sequence_accuracy = correct_prediction.all(dim=1).sum() / len(correct_prediction)
-        token_accuracy = correct_prediction.sum() / np.prod(correct_prediction.shape)
-        total_sequence_accuracy += sequence_accuracy
-        total_token_accuracy += token_accuracy
+        # compute statistics
+        pad_mask = y_expected == 0
+        correct_prediction = np.ma.masked_where(pad_mask, log_probs.argmax(dim=2) == y_expected)
+        sequence_accuracy = correct_prediction.all(axis=1).sum() / len(pad_mask)
+        token_accuracy = correct_prediction.sum() / (~pad_mask).sum()
+        total_sequence_accuracy += sequence_accuracy.detach().item()
+        total_token_accuracy += token_accuracy.detach().item()
         total_loss += loss.detach().item()
 
     return (total_loss / len(dataloader), total_token_accuracy / len(dataloader),
@@ -100,12 +101,14 @@ def validation_loop(model, loss_fn, dataloader):
             # loss = loss_fn(log_probs, y_one_hot)
             loss = loss_fn(pred, y_expected)
 
-            # log to tensorboard
-            correct_prediction = log_probs.argmax(dim=2) == y_expected
-            sequence_accuracy = correct_prediction.all(dim=1).sum() / len(correct_prediction)
-            total_sequence_accuracy += sequence_accuracy
-            token_accuracy = correct_prediction.sum() / np.prod(correct_prediction.shape)
-            total_token_accuracy += token_accuracy
+            # compute statistics
+            pad_mask = y_expected == 0
+            correct_prediction = np.ma.masked_where(pad_mask, log_probs.argmax(dim=2) == y_expected)
+            sequence_accuracy = correct_prediction.all(axis=1).sum() / len(pad_mask)
+            token_accuracy = correct_prediction.sum() / (~pad_mask).sum()
+
+            total_sequence_accuracy += sequence_accuracy.detach().item()
+            total_token_accuracy += token_accuracy.detach().item()
             total_loss += loss.detach().item()
 
     return (total_loss / len(dataloader), total_token_accuracy / len(dataloader),
