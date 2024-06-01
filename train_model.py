@@ -151,7 +151,7 @@ parameters = {
     "num_encoder_layers": 1,
     "num_decoder_layers": 1,
     "dropout": 0.1,
-    "data_source": "geomusic_dataset_depth5-5.txt",
+    "data_source": "geomusic_dataset_depth4-8.txt",
     "batch_size": 16,
     "lr": 0.001,
     #"loss": torch.nn.KLDivLoss(reduction="batchmean"),
