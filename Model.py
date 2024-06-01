@@ -5,29 +5,28 @@ from torch.nn import TransformerEncoder, TransformerEncoderLayer, TransformerDec
 
 
 class PositionalEncoding(nn.Module):
-    def __init__(self, dim_model: int, dropout: float = 0.1, max_len: int = 5000):
-        super().__init__()
-        self.dropout = nn.Dropout(p=dropout)
+    def __init__(self,
+                 emb_size: int,
+                 dropout: float,
+                 maxlen: int = 5000):
+        super(PositionalEncoding, self).__init__()
+        den = torch.exp(- torch.arange(0, emb_size, 2)* math.log(10000) / emb_size)
+        pos = torch.arange(0, maxlen).reshape(maxlen, 1)
+        pos_embedding = torch.zeros((maxlen, emb_size))
+        pos_embedding[:, 0::2] = torch.sin(pos * den)
+        pos_embedding[:, 1::2] = torch.cos(pos * den)
+        pos_embedding = pos_embedding.unsqueeze(-2)
 
-        position = torch.arange(max_len).unsqueeze(1)
-        div_term = torch.exp(torch.arange(0, dim_model, 2) * (-math.log(10000.0) / dim_model))
-        pe = torch.zeros(max_len, 1, dim_model)
-        pe[:, 0, 0::2] = torch.sin(position * div_term)
-        pe[:, 0, 1::2] = torch.cos(position * div_term)
-        self.register_buffer('pe', pe)
+        self.dropout = nn.Dropout(dropout)
+        self.register_buffer('pos_embedding', pos_embedding)
 
-    def forward(self, x: Tensor) -> Tensor:
-        """
-        Arguments:
-            x: Tensor, shape ``[seq_len, batch_size, embedding_dim]``
-        """
-        x = x + self.pe[:x.size(0)]
-        return self.dropout(x)
+    def forward(self, token_embedding: Tensor):
+        return self.dropout(token_embedding + self.pos_embedding[:token_embedding.size(0), :])
 
 
 class Transformer(nn.Module):
     def __init__(self, num_tokens: int, dim_model: int, num_heads: int, num_encoder_layers: int,
-                 num_decoder_layers: int, dropout: float = 0.1):
+                 num_decoder_layers: int, dropout: float = 0.1, dim_feedforward: int = 2048):
         super().__init__()
         self.model_type = 'Transformer'
         self.dim_model = dim_model
@@ -35,7 +34,8 @@ class Transformer(nn.Module):
         self.positional_encoder = PositionalEncoding(dim_model, dropout)
         self.embedding = nn.Embedding(num_tokens, dim_model)
         self.transformer = nn.Transformer(d_model=dim_model, nhead=num_heads, num_encoder_layers=num_encoder_layers,
-                                          num_decoder_layers=num_decoder_layers, dropout=dropout)
+                                          num_decoder_layers=num_decoder_layers, dropout=dropout,
+                                          dim_feedforward=dim_feedforward)
         self.out = nn.Linear(dim_model, num_tokens)
 
     def forward(self, src: Tensor, tgt, tgt_mask=None, src_pad_mask=None, tgt_pad_mask=None) -> Tensor:
