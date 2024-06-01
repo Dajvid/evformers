@@ -16,10 +16,13 @@ start_timestamp = time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime(time.time())
 out_dir = os.path.join("runs", start_timestamp)
 os.makedirs(out_dir, exist_ok=True)
 writer = SummaryWriter(out_dir)
+training_step = 0
+
 
 def train_loop(model, opt, loss_fn, dataloader):
     model.train()
     total_loss = 0
+    global training_step
 
     for i, batch in enumerate(dataloader):
         print(f"Batch {i + 1} / {len(dataloader)}\r", end="")
@@ -56,9 +59,10 @@ def train_loop(model, opt, loss_fn, dataloader):
         sequence_accuracy = correct_prediction.all(dim=1).sum() / len(correct_prediction)
         token_accuracy = correct_prediction.sum() / np.prod(correct_prediction.shape)
         total_loss += loss.detach().item()
-        writer.add_scalar("Accuracy per token/train", token_accuracy)
-        writer.add_scalar("Accuracy per sequence/train", sequence_accuracy)
-        writer.add_scalar("Loss/train", loss.detach().item())
+        writer.add_scalar("Loss/train", loss.detach().item(), global_step=training_step)
+        writer.add_scalar("Accuracy per token/train", token_accuracy, global_step=training_step)
+        writer.add_scalar("Accuracy per sequence/train", sequence_accuracy, global_step=training_step)
+        training_step += 1
 
     return total_loss / len(dataloader)
 
@@ -68,6 +72,7 @@ def validation_loop(model, loss_fn, dataloader):
     total_loss = 0
     total_token_accuracy = 0
     total_sequence_accuracy = 0
+    global validation_step
 
     with torch.no_grad():
         for batch in dataloader:
@@ -102,9 +107,10 @@ def validation_loop(model, loss_fn, dataloader):
             token_accuracy = correct_prediction.sum() / np.prod(correct_prediction.shape)
             total_token_accuracy += token_accuracy
             total_loss += loss.detach().item()
-            writer.add_scalar("Accuracy per token/validation", token_accuracy)
-            writer.add_scalar("Accuracy per sequence/validation", sequence_accuracy)
-            writer.add_scalar("Loss/validation", loss.detach().item())
+            writer.add_scalar("Accuracy per token/validation", token_accuracy, global_step=validation_step)
+            writer.add_scalar("Accuracy per sequence/validation", sequence_accuracy, global_step=validation_step)
+            writer.add_scalar("Loss/validation", loss.detach().item(), global_step=validation_step)
+            validation_step += 1
 
     return (total_loss / len(dataloader), total_token_accuracy / len(dataloader),
             total_sequence_accuracy / len(dataloader))
