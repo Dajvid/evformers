@@ -6,8 +6,8 @@ This tutorial shows:
     - How to train a translation model from scratch using Transformer.
     - Use torchtext library to access  `Multi30k <http://www.statmt.org/wmt16/multimodal-task.html#task1>`__ dataset to train a German to English translation model.
 """
-
-
+import os
+import time
 
 import numpy as np
 
@@ -33,6 +33,8 @@ import torch
 import torch.nn as nn
 from torch.nn import Transformer
 import math
+
+from torch.utils.tensorboard import SummaryWriter
 
 from data import batchify_data
 
@@ -264,6 +266,12 @@ def evaluate(model):
 from timeit import default_timer as timer
 NUM_EPOCHS = 18
 
+start_timestamp = time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime(time.time()))
+out_dir = os.path.join("runs", start_timestamp)
+os.makedirs(out_dir, exist_ok=True)
+writer = SummaryWriter(out_dir)
+
+
 for epoch in range(1, NUM_EPOCHS+1):
     start_time = timer()
     train_loss, token_accuracy, sequence_accuracy = train_epoch(transformer, optimizer)
@@ -272,3 +280,10 @@ for epoch in range(1, NUM_EPOCHS+1):
     print((f"Epoch: {epoch}, Train loss: {train_loss:.3f}, Val loss: {val_loss:.3f}, "f"Epoch time = {(end_time - start_time):.3f}s"))
     print(f"Validation token accuracy: {token_accuracy:.4f}")
     print(f"Validation sequence accuracy: {sequence_accuracy:.4f}")
+
+    writer.add_scalar("Accuracy per token/validation", token_accuracy, global_step=epoch)
+    writer.add_scalar("Accuracy per sequence/validation", sequence_accuracy, global_step=epoch)
+    writer.add_scalar("Loss/validation", val_loss, global_step=epoch)
+    writer.add_scalar("Loss/train", val_loss, global_step=epoch)
+    writer.add_scalar("Accuracy per token/train", token_accuracy, global_step=epoch)
+    writer.add_scalar("Accuracy per sequence/train", sequence_accuracy, global_step=epoch)
