@@ -8,24 +8,7 @@ This tutorial shows:
 """
 
 
-######################################################################
-# Data Sourcing and Processing
-# ----------------------------
-#
-# `torchtext library <https://pytorch.org/text/stable/>`__ has utilities for creating datasets that can be easily
-# iterated through for the purposes of creating a language translation
-# model. In this example, we show how to use torchtext's inbuilt datasets,
-# tokenize a raw text sentence, build vocabulary, and numericalize tokens into tensor. We will use
-# `Multi30k dataset from torchtext library <https://pytorch.org/text/stable/datasets.html#multi30k>`__
-# that yields a pair of source-target raw sentences.
-#
-# To access torchtext datasets, please install torchdata following instructions at https://github.com/pytorch/data.
-#
 
-from torchtext.data.utils import get_tokenizer
-from torchtext.vocab import build_vocab_from_iterator
-from torchtext.datasets import multi30k, Multi30k
-from typing import Iterable, List
 import numpy as np
 
 ######################################################################
@@ -195,21 +178,6 @@ transformer = transformer.to(DEVICE)
 loss_fn = torch.nn.CrossEntropyLoss(ignore_index=PAD_IDX)
 
 optimizer = torch.optim.Adam(transformer.parameters(), lr=0.0001, betas=(0.9, 0.98), eps=1e-9)
-
-
-from torch.nn.utils.rnn import pad_sequence
-
-
-# function to collate data samples into batch tensors
-def collate_fn(batch):
-    src_batch, tgt_batch = [], []
-    for src_sample, tgt_sample in batch:
-        src_batch.append(text_transform[SRC_LANGUAGE](src_sample.rstrip("\n")))
-        tgt_batch.append(text_transform[TGT_LANGUAGE](tgt_sample.rstrip("\n")))
-
-    src_batch = pad_sequence(src_batch, padding_value=PAD_IDX)
-    tgt_batch = pad_sequence(tgt_batch, padding_value=PAD_IDX)
-    return src_batch, tgt_batch
 
 ######################################################################
 # Let's define training and evaluation loop that will be called for each
