@@ -240,6 +240,8 @@ def evaluate(model):
         tgt = src
         src = torch.tensor(src, dtype=torch.long, device=DEVICE)
         tgt = torch.tensor(tgt, dtype=torch.long, device=DEVICE)
+        src = src.permute(1, 0)
+        tgt = tgt.permute(1, 0)
 
         tgt_input = tgt[:-1, :]
 
