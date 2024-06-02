@@ -36,8 +36,7 @@ def train_loop(model, opt, loss_fn, dataloader):
 
         # Get mask to mask out the next words
         sequence_length = y_input.size(1)
-        tgt_mask = model.get_tgt_mask(sequence_length)
-
+        tgt_mask = model.get_tgt_mask(sequence_length).to(device)
         src_key_padding_mask = (x == PAD_TOKEN).to(torch.bool).to(device)
         tgt_key_padding_mask = (y_input == PAD_TOKEN).to(torch.bool).to(device)
 
