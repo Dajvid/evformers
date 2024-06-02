@@ -17,6 +17,7 @@ out_dir = os.path.join("runs", start_timestamp)
 os.makedirs(out_dir, exist_ok=True)
 writer = SummaryWriter(out_dir)
 
+PAD_TOKEN = 0
 
 def train_loop(model, opt, loss_fn, dataloader):
     model.train()
@@ -37,8 +38,11 @@ def train_loop(model, opt, loss_fn, dataloader):
         sequence_length = y_input.size(1)
         tgt_mask = model.get_tgt_mask(sequence_length).to(device)
 
-        # Standard training except we pass in y_input and tgt_mask
-        pred = model(x, y_input, tgt_mask)
+        src_key_padding_mask = (x == PAD_TOKEN).to(torch.bool)
+        tgt_key_padding_mask = (y_input == PAD_TOKEN).to(torch.bool)
+
+        pred = model(x, y_input, tgt_mask=tgt_mask, src_pad_mask=src_key_padding_mask,
+                     tgt_pad_mask=tgt_key_padding_mask)
 
         # Permute pred to have batch size first again
         log_probs = F.log_softmax(pred.permute(1, 0, 2), dim=2)
@@ -87,9 +91,11 @@ def validation_loop(model, loss_fn, dataloader):
             # Get mask to mask out the next words
             sequence_length = y_input.size(1)
             tgt_mask = model.get_tgt_mask(sequence_length).to(device)
+            src_key_padding_mask = (x == PAD_TOKEN).to(torch.bool)
+            tgt_key_padding_mask = (y_input == PAD_TOKEN).to(torch.bool)
 
-            # Standard training except we pass in y_input and src_mask
-            pred = model(x, y_input, tgt_mask)
+            pred = model(x, y_input, tgt_mask=tgt_mask, src_pad_mask=src_key_padding_mask,
+                         tgt_pad_mask=tgt_key_padding_mask)
 
             # Permute pred to have batch size first again
             log_probs = F.log_softmax(pred.permute(1, 0, 2), dim=2)
