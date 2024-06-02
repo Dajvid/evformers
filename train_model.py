@@ -38,8 +38,8 @@ def train_loop(model, opt, loss_fn, dataloader):
         sequence_length = y_input.size(1)
         tgt_mask = model.get_tgt_mask(sequence_length)
 
-        src_key_padding_mask = (x == PAD_TOKEN).to(torch.bool)
-        tgt_key_padding_mask = (y_input == PAD_TOKEN).to(torch.bool)
+        src_key_padding_mask = (x == PAD_TOKEN).to(torch.bool).to(device)
+        tgt_key_padding_mask = (y_input == PAD_TOKEN).to(torch.bool).to(device)
 
         pred = model(x, y_input, tgt_mask=tgt_mask, src_pad_mask=src_key_padding_mask,
                      tgt_pad_mask=tgt_key_padding_mask)
@@ -91,8 +91,8 @@ def validation_loop(model, loss_fn, dataloader):
             # Get mask to mask out the next words
             sequence_length = y_input.size(1)
             tgt_mask = model.get_tgt_mask(sequence_length).to(device)
-            src_key_padding_mask = (x == PAD_TOKEN).to(torch.bool)
-            tgt_key_padding_mask = (y_input == PAD_TOKEN).to(torch.bool)
+            src_key_padding_mask = (x == PAD_TOKEN).to(torch.bool).to(device)
+            tgt_key_padding_mask = (y_input == PAD_TOKEN).to(torch.bool).to(device)
 
             pred = model(x, y_input, tgt_mask=tgt_mask, src_pad_mask=src_key_padding_mask,
                          tgt_pad_mask=tgt_key_padding_mask)

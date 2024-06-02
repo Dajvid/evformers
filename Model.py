@@ -63,6 +63,7 @@ class Transformer(nn.Module):
         mask = mask.float()
         mask = mask.masked_fill(mask == 0, float('-inf'))  # Convert zeros to -inf
         mask = mask.masked_fill(mask == 1, float(0.0))  # Convert ones to 0
+        mask = mask.masked_fill(mask ==  float('-inf'), 1)
 
         # EX for size=5:
         # [[0., -inf, -inf, -inf, -inf],
@@ -71,4 +72,4 @@ class Transformer(nn.Module):
         #  [0.,   0.,   0.,   0., -inf],
         #  [0.,   0.,   0.,   0.,   0.]]
 
-        return mask
+        return mask.to(torch.bool)
