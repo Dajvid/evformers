@@ -24,6 +24,35 @@ class PositionalEncoding(nn.Module):
         return self.dropout(token_embedding + self.pos_embedding[:token_embedding.size(0), :])
 
 
+class LearnedPositionalEncoding(nn.Module):
+    def __init__(self, max_len, d_model):
+        super(LearnedPositionalEncoding, self).__init__()
+        self.max_len = max_len
+        self.d_model = d_model
+
+        # Create a tensor of shape (max_len, d_model) for the positional embeddings
+        self.positional_embeddings = nn.Embedding(max_len, d_model)
+
+        # Initialize the positional embeddings
+        self._reset_parameters()
+
+    def _reset_parameters(self):
+        # Initialize embeddings with a normal distribution
+        nn.init.normal_(self.positional_embeddings.weight, mean=0, std=self.d_model ** -0.5)
+
+    def forward(self, x):
+        # Get the batch size and sequence length from the input
+        batch_size, seq_len = x.size(0), x.size(1)
+
+        # Create a tensor containing the positions [0, 1, 2, ..., seq_len-1]
+        positions = torch.arange(seq_len, device=x.device).unsqueeze(0).expand(batch_size, -1)
+
+        # Look up the positional embeddings for each position
+        position_embeddings = self.positional_embeddings(positions)
+
+        return position_embeddings
+
+
 class Transformer(nn.Module):
     def __init__(self, num_tokens: int, dim_model: int, num_heads: int, num_encoder_layers: int,
                  num_decoder_layers: int, dropout: float = 0.1, dim_feedforward: int = 2048):
@@ -31,7 +60,9 @@ class Transformer(nn.Module):
         self.model_type = 'Transformer'
         self.dim_model = dim_model
 
-        self.positional_encoder = PositionalEncoding(dim_model, dropout)
+        #self.positional_encoder = PositionalEncoding(dim_model, dropout)
+        self.positional_encoder = LearnedPositionalEncoding(num_tokens, dim_model)
+
         self.embedding = nn.Embedding(num_tokens, dim_model)
         self.transformer = nn.Transformer(d_model=dim_model, nhead=num_heads, num_encoder_layers=num_encoder_layers,
                                           num_decoder_layers=num_decoder_layers, dropout=dropout,
@@ -52,7 +83,7 @@ class Transformer(nn.Module):
         tgt = tgt.permute(1, 0, 2)
 
         transformer_out = self.transformer(src, tgt, tgt_mask=tgt_mask, src_key_padding_mask=src_pad_mask,
-                                           tgt_key_padding_mask=tgt_pad_mask)
+                                           tgt_key_padding_mask=tgt_pad_mask, memory_key_padding_mask=src_pad_mask)
         out = self.out(transformer_out)
 
         return out
