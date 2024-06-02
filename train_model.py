@@ -58,7 +58,7 @@ def train_loop(model, opt, loss_fn, dataloader):
         # compute statistics
         pad_mask = y_expected != 0
         correct_prediction = (log_probs.argmax(dim=2) == y_expected) * pad_mask
-        sequence_accuracy = correct_prediction.all(axis=1).sum() / len(pad_mask)
+        sequence_accuracy = (correct_prediction + (~pad_mask)).all(axis=1).sum() / len(pad_mask)
         token_accuracy = correct_prediction.sum() / (pad_mask).sum()
 
         total_sequence_accuracy += sequence_accuracy.detach().item()
@@ -105,7 +105,8 @@ def validation_loop(model, loss_fn, dataloader):
             # compute statistics
             pad_mask = y_expected != 0
             correct_prediction = (log_probs.argmax(dim=2) == y_expected) * pad_mask
-            sequence_accuracy = correct_prediction.all(axis=1).sum() / len(pad_mask)
+
+            sequence_accuracy = (correct_prediction + (~pad_mask)).all(axis=1).sum() / len(pad_mask)
             token_accuracy = correct_prediction.sum() / (pad_mask).sum()
 
             total_sequence_accuracy += sequence_accuracy.detach().item()
