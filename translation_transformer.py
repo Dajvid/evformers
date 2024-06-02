@@ -221,7 +221,7 @@ def train_epoch(model, optimizer):
         pad_mask = tgt_input != 0
         correct_prediction = (logits.argmax(dim=2) == tgt_input) * pad_mask
         sequence_accuracy = correct_prediction.all(axis=1).sum() / len(pad_mask)
-        token_accuracy = correct_prediction.sum() / (~pad_mask).sum()
+        token_accuracy = correct_prediction.sum() / (pad_mask).sum()
 
         total_sequence_accuracy += sequence_accuracy.detach().item()
         total_token_accuracy += token_accuracy.detach().item()
@@ -256,7 +256,7 @@ def evaluate(model):
         pad_mask = tgt_input != 0
         correct_prediction = (logits.argmax(dim=2) == tgt_input) * pad_mask
         sequence_accuracy = correct_prediction.all(axis=1).sum() / len(pad_mask)
-        token_accuracy = correct_prediction.sum() / (~pad_mask).sum()
+        token_accuracy = correct_prediction.sum() / (pad_mask).sum()
 
         total_sequence_accuracy += sequence_accuracy.detach().item()
         total_token_accuracy += token_accuracy.detach().item()
