@@ -44,15 +44,15 @@ def train_loop(model, opt, loss_fn, dataloader):
                      tgt_pad_mask=tgt_key_padding_mask)
 
         # Permute pred to have batch size first again
-        log_probs = F.log_softmax(pred.permute(1, 0, 2), dim=2)
-        pred = pred.permute(1, 2, 0)
+        #log_probs = F.log_softmax(pred.permute(1, 0, 2), dim=2)
+        pred = pred.permute(1, 0, 2)
 
-        # # Apply log_softmax to predictions
-        # log_probs = F.log_softmax(pred, dim=2)
-        # # One-hot encode the expected outputs
-        # y_one_hot = torch.nn.functional.one_hot(y_expected, num_classes=pred.size(2)).float()
-        # loss = loss_fn(log_probs, y_one_hot)
-        loss = loss_fn(pred, y_expected)
+        # Apply log_softmax to predictions
+        log_probs = F.log_softmax(pred, dim=2)
+        # One-hot encode the expected outputs
+        y_one_hot = torch.nn.functional.one_hot(y_expected, num_classes=pred.size(2)).float()
+        loss = loss_fn(log_probs, y_one_hot)
+        # loss = loss_fn(pred, y_expected)
 
         opt.zero_grad()
         loss.backward()
@@ -97,15 +97,15 @@ def validation_loop(model, loss_fn, dataloader):
                          tgt_pad_mask=tgt_key_padding_mask)
 
             # Permute pred to have batch size first again
-            log_probs = F.log_softmax(pred.permute(1, 0, 2), dim=2)
-            pred = pred.permute(1, 2, 0)
+            #log_probs = F.log_softmax(pred.permute(1, 0, 2), dim=2)
+            pred = pred.permute(1, 0, 2)
 
             # Apply log_softmax to predictions
-            # log_probs = F.log_softmax(pred, dim=2)
-            # # One-hot encode the expected outputs
-            # y_one_hot = torch.nn.functional.one_hot(y_expected, num_classes=pred.size(2)).float()
-            # loss = loss_fn(log_probs, y_one_hot)
-            loss = loss_fn(pred, y_expected)
+            log_probs = F.log_softmax(pred, dim=2)
+            # One-hot encode the expected outputs
+            y_one_hot = torch.nn.functional.one_hot(y_expected, num_classes=pred.size(2)).float()
+            loss = loss_fn(log_probs, y_one_hot)
+            # loss = loss_fn(pred, y_expected)
 
             # compute statistics
             pad_mask = y_expected != 0
@@ -160,8 +160,8 @@ parameters = {
     "data_source": "geomusic_dataset_depth5-5.txt",
     "batch_size": 16,
     "lr": 0.001,
-    #"loss": torch.nn.KLDivLoss(reduction="batchmean"),
-    "loss": torch.nn.CrossEntropyLoss(ignore_index=0),
+    "loss": torch.nn.KLDivLoss(reduction="batchmean"),
+    #"loss": torch.nn.CrossEntropyLoss(ignore_index=0),
     "epochs": 50,
 }
 with open(os.path.join(out_dir, "parameters.txt"), "w") as f:
