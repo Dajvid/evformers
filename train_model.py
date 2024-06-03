@@ -19,6 +19,7 @@ writer = SummaryWriter(out_dir)
 
 PAD_TOKEN = 0
 
+
 def train_loop(model, opt, loss_fn, dataloader):
     model.train()
     total_loss = 0
@@ -53,13 +54,17 @@ def train_loop(model, opt, loss_fn, dataloader):
         y_one_hot = torch.nn.functional.one_hot(y_expected, num_classes=pred.size(2)).float()
         loss = loss_fn(log_probs, y_one_hot)
         # loss = loss_fn(pred, y_expected)
+        pad_mask = y_expected != PAD_TOKEN
+        pad_mask_unsquezed = pad_mask.unsqueeze(-1).expand_as(loss)
+        masked_kl_loss = loss * (pad_mask_unsquezed.float())
+        loss_sum = masked_kl_loss.sum()
+        loss = loss_sum / len(pad_mask)
 
         opt.zero_grad()
         loss.backward()
         opt.step()
 
         # compute statistics
-        pad_mask = y_expected != 0
         correct_prediction = (log_probs.argmax(dim=2) == y_expected) * pad_mask
         sequence_accuracy = (correct_prediction + (~pad_mask)).all(axis=1).sum() / len(pad_mask)
         token_accuracy = correct_prediction.sum() / (pad_mask).sum()
@@ -108,7 +113,12 @@ def validation_loop(model, loss_fn, dataloader):
             # loss = loss_fn(pred, y_expected)
 
             # compute statistics
-            pad_mask = y_expected != 0
+            pad_mask = y_expected != PAD_TOKEN
+            pad_mask_unsquezed = pad_mask.unsqueeze(-1).expand_as(loss)
+            masked_kl_loss = loss * (pad_mask_unsquezed.float())
+            loss_sum = masked_kl_loss.sum()
+            loss = loss_sum / len(pad_mask)
+
             correct_prediction = (log_probs.argmax(dim=2) == y_expected) * pad_mask
 
             sequence_accuracy = (correct_prediction + (~pad_mask)).all(axis=1).sum() / len(pad_mask)
@@ -160,7 +170,7 @@ parameters = {
     "data_source": "geomusic_dataset_depth5-5.txt",
     "batch_size": 16,
     "lr": 0.001,
-    "loss": torch.nn.KLDivLoss(reduction="batchmean"),
+    "loss": torch.nn.KLDivLoss(reduction="none"),
     #"loss": torch.nn.CrossEntropyLoss(ignore_index=0),
     "epochs": 50,
 }
