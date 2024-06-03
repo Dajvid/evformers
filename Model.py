@@ -53,6 +53,51 @@ class LearnedPositionalEncoding(nn.Module):
         return position_embeddings
 
 
+def generate_tree_levels_torch(depth):
+    def dfs(node_depth, current_depth):
+        if node_depth == current_depth:
+            return []
+        left_subtree = dfs(node_depth + 1, current_depth)
+        right_subtree = dfs(node_depth + 1, current_depth)
+        return [node_depth] + left_subtree + right_subtree
+
+    levels = dfs(0, depth)
+    return torch.tensor(levels)
+
+
+class HybridPositionalEmbeddings(nn.Module):
+    def __init__(self, max_len, d_model, dropout):
+        super(HybridPositionalEmbeddings, self).__init__()
+        self.max_len = max_len
+        self.d_model = d_model
+
+        self.seq_pos_embeddings = nn.Embedding(max_len, d_model)
+        self.depth_embeddings = nn.Embedding(max_len, d_model)
+
+        self.depths = generate_tree_levels_torch(int(math.log2(max_len + 1))).reshape(max_len, 1)
+        self.positions = torch.arange(max_len)
+
+        den = torch.exp(- torch.arange(0, d_model, 2)* math.log(10000) / d_model)
+        pos = torch.arange(0, max_len).reshape(max_len, 1)
+        pos_embedding_depths = torch.zeros((max_len, d_model))
+        pos_embeding_seq_pos = torch.zeros((max_len, d_model))
+
+        pos_embedding_depths[:, 0::2] = torch.sin(pos * den)
+        pos_embedding_depths[:, 1::2] = torch.cos(pos * den)
+
+        pos_embeding_seq_pos[:, 0::2] = torch.sin(self.depths * den)
+        pos_embeding_seq_pos[:, 1::2] = torch.cos(self.depths * den)
+
+        pos_embedding = pos_embedding_depths.unsqueeze(-2)
+        pos_embedding += pos_embeding_seq_pos.unsqueeze(-2)
+
+        self.dropout = nn.Dropout(dropout)
+        self.register_buffer('pos_embedding', pos_embedding)
+
+    def forward(self, token_embedding: Tensor):
+        return self.dropout(token_embedding + self.pos_embedding[:token_embedding.size(0), :])
+
+
 class Transformer(nn.Module):
     def __init__(self, num_tokens: int, dim_model: int, num_heads: int, num_encoder_layers: int,
                  num_decoder_layers: int, dropout: float = 0.1, dim_feedforward: int = 2048):
@@ -61,7 +106,8 @@ class Transformer(nn.Module):
         self.dim_model = dim_model
 
         #self.positional_encoder = PositionalEncoding(dim_model, dropout)
-        self.positional_encoder = LearnedPositionalEncoding(num_tokens, dim_model)
+        #self.positional_encoder = LearnedPositionalEncoding(num_tokens, dim_model)
+        self.positional_encoder = HybridPositionalEmbeddings(127, dim_model, dropout)
 
         self.embedding = nn.Embedding(num_tokens, dim_model)
         self.transformer = nn.Transformer(d_model=dim_model, nhead=num_heads, num_encoder_layers=num_encoder_layers,
