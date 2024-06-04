@@ -3,6 +3,8 @@ import math
 from torch import nn, Tensor
 from torch.nn import TransformerEncoder, TransformerEncoderLayer, TransformerDecoderLayer, TransformerDecoder
 
+from TreePosEncoding import TreePositionalEncodings
+
 
 class PositionalEncoding(nn.Module):
     def __init__(self,
@@ -107,7 +109,8 @@ class Transformer(nn.Module):
 
         #self.positional_encoder = PositionalEncoding(dim_model, dropout)
         #self.positional_encoder = LearnedPositionalEncoding(num_tokens, dim_model)
-        self.positional_encoder = HybridPositionalEmbeddings(127, dim_model, dropout)
+        #self.positional_encoder = HybridPositionalEmbeddings(127, dim_model, dropout)
+        self.positional_encoder = TreePositionalEncodings(emb_size=10, width=2, depth=5)
 
         self.embedding = nn.Embedding(num_tokens, dim_model)
         self.transformer = nn.Transformer(d_model=dim_model, nhead=num_heads, num_encoder_layers=num_encoder_layers,
