@@ -162,7 +162,7 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs):
 
 parameters = {
     "num_tokens": 146,
-    "dim_model": 10,
+    "dim_model": 12,
     "num_heads": 1,
     "num_encoder_layers": 1,
     "num_decoder_layers": 1,

@@ -79,7 +79,7 @@ class HybridPositionalEmbeddings(nn.Module):
         self.depths = generate_tree_levels_torch(int(math.log2(max_len + 1))).reshape(max_len, 1)
         self.positions = torch.arange(max_len)
 
-        den = torch.exp(- torch.arange(0, d_model, 2)* math.log(10000) / d_model)
+        den = torch.exp(- torch.arange(0, d_model, 2) * math.log(10000) / d_model)
         pos = torch.arange(0, max_len).reshape(max_len, 1)
         pos_embedding_depths = torch.zeros((max_len, d_model))
         pos_embeding_seq_pos = torch.zeros((max_len, d_model))
@@ -110,7 +110,7 @@ class Transformer(nn.Module):
         #self.positional_encoder = PositionalEncoding(dim_model, dropout)
         #self.positional_encoder = LearnedPositionalEncoding(num_tokens, dim_model)
         #self.positional_encoder = HybridPositionalEmbeddings(127, dim_model, dropout)
-        self.positional_encoder = TreePositionalEncodings(emb_size=10, width=2, depth=5)
+        self.positional_encoder = TreePositionalEncodings(emb_size=12, width=2, depth=6)
 
         self.embedding = nn.Embedding(num_tokens, dim_model)
         self.transformer = nn.Transformer(d_model=dim_model, nhead=num_heads, num_encoder_layers=num_encoder_layers,
