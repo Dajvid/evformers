@@ -33,7 +33,7 @@ class TreePositionalEncodings(torch.nn.Module):
         dfs_step(max_depth, 0, "left", current_path, paths)
         dfs_step(max_depth, 0, "right", current_path, paths)
 
-        return torch.tensor(paths).to(device=self.p.device)
+        return torch.tensor(paths, device=self.p.device)
 
 
     def init_weights(self):
