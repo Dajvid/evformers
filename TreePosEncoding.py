@@ -51,6 +51,7 @@ class TreePositionalEncodings(torch.nn.Module):
         return tree_weights
 
     def treeify_positions(self, positions, tree_weights):
+        positions = positions.to(device=self.p.device)
         treeified = positions.unsqueeze(-1) * tree_weights
         shape = treeified.shape[:-2] + (self.d_pos,)
         return treeified.reshape(shape)
