@@ -110,7 +110,7 @@ class Transformer(nn.Module):
         #self.positional_encoder = PositionalEncoding(dim_model, dropout)
         #self.positional_encoder = LearnedPositionalEncoding(num_tokens, dim_model)
         #self.positional_encoder = HybridPositionalEmbeddings(127, dim_model, dropout)
-        self.positional_encoder = TreePositionalEncodings(emb_size=12, width=2, depth=6)
+        self.positional_encoder = TreePositionalEncodings(emb_size=40, width=2, depth=5)
 
         self.embedding = nn.Embedding(num_tokens, dim_model)
         self.transformer = nn.Transformer(d_model=dim_model, nhead=num_heads, num_encoder_layers=num_encoder_layers,
@@ -121,8 +121,8 @@ class Transformer(nn.Module):
     def forward(self, src: Tensor, tgt, tgt_mask=None, src_pad_mask=None, tgt_pad_mask=None) -> Tensor:
         src = self.embedding(src) * math.sqrt(self.dim_model)
         tgt = self.embedding(tgt) * math.sqrt(self.dim_model)
-        src = self.positional_encoder(src)
-        tgt = self.positional_encoder(tgt)
+        src = self.positional_encoder(src, mode="src")
+        tgt = self.positional_encoder(tgt, mode="tgt")
 
         # device = src.device
         # mask = self._generate_square_subsequent_mask(len(src)).to(device)
