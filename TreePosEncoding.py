@@ -47,7 +47,7 @@ class TreePositionalEncodings(torch.nn.Module):
             .reshape(-1, 1, 1).repeat(1, self.width, d_tree_param)
         tree_norm = torch.sqrt((1 - tree_params ** 2) * self.d_pos / 2)
         tree_weights = (torch.pow(tiled_tree_params, tiled_depths) * tree_norm) \
-            .reshape(self.depth * self.width, d_tree_param)
+            .reshape(self.depth * self.width, d_tree_param).to(device=self.p.device)
         return tree_weights
 
     def treeify_positions(self, positions, tree_weights):
