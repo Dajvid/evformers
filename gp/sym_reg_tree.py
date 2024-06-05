@@ -1,21 +1,4 @@
-import copy
-
 from deap import gp
-
-
-# TOKEN_MAPPING = {
-#     "PAD": 0,
-#     "UNKNOWN": 1,
-#
-# }
-
-
-def hash_elements(elements, pset):
-    mapping = get_mapping(pset, ["PAD", "UNKNOWN"])
-
-    hashed = [mapping[element] for element in elements]
-
-    return hashed
 
 
 def get_mapping(pset, extra_elements=None):
@@ -33,8 +16,13 @@ def get_mapping(pset, extra_elements=None):
 class SymRegTree(gp.PrimitiveTree):
 
     def tokenize(self, pset, max_depth):
+        def hash_elements(elements):
+            mapping = get_mapping(pset, ["PAD", "UNKNOWN"])
+            hashed = [mapping[element] for element in elements]
+            return hashed
+
         padded = self.add_padding(max_depth, max_depth)
-        return hash_elements(padded, pset)
+        return hash_elements(padded)
 
     def add_padding(self, pset, max_depth):
         if len(self) > 2 ** (max_depth + 1) - 1:
@@ -60,3 +48,6 @@ class SymRegTree(gp.PrimitiveTree):
                 padded[i+1:i+1] = ["PAD"] * int(n)
 
         return padded
+
+    def compile(self):
+        return gp.compile(self, self.pset)
