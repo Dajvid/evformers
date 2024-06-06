@@ -32,7 +32,7 @@ def parse_args(argv):
     parser.add_argument("--n_generations", type=int, default=55)
     parser.add_argument("--n_trees_per_generation", type=int, default=900)
     parser.add_argument("--skip_first_n_generations", type=int, default=5)
-    parser.add_argument("--output-dir", type=str, default="datasets")
+    parser.add_argument("--output-dir", type=str, default="../datasets")
     args = parser.parse_args(argv)
 
     return args
@@ -42,7 +42,7 @@ def main(argv=None):
     args = parse_args(argv)
     os.makedirs(args.output_dir, exist_ok=True)
     stats = {}
-    dataset = pmlb.fetch_data(args.dataset, local_cache_dir="datasets/pmlb_cache", dropna=True)
+    dataset = pmlb.fetch_data(args.dataset, dropna=True)
     pset = create_basic_symreg_pset(dataset)
     mapping = get_mapping(pset, ["PAD", "UNKNOWN"])
 
