@@ -4,7 +4,6 @@ import time
 import torch
 
 import torch.nn.functional as F
-from torch.utils.tensorboard import SummaryWriter
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -76,7 +75,7 @@ def run_epoch(model, loss_fn, dataloader, mode, opt=None,
             total_sequence_accuracy / len(dataloader))
 
 
-def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs, writer=None):
+def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs, idx_pad, writer=None):
     print("Training and validating model")
 
     for epoch in range(epochs):
@@ -85,7 +84,7 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs, writer=No
                                                                               opt=opt, mode="train")
         val_loss, val_token_accuracy, val_sequence_accuracy = run_epoch(model, loss_fn, val_dataloader, mode="eval")
 
-        # log to tensorboard
+        # log to writer
         if writer:
             writer.add_scalar("Accuracy per token/validation", val_token_accuracy, global_step=epoch)
             writer.add_scalar("Accuracy per sequence/validation", val_sequence_accuracy, global_step=epoch)

@@ -6,16 +6,19 @@ from torch.nn import TransformerEncoder, TransformerEncoderLayer, TransformerDec
 from .TreePosEncoding import TreePositionalEncodings
 
 class Transformer(nn.Module):
-    def __init__(self, num_tokens: int, dim_model: int, num_heads: int, num_encoder_layers: int,
-                 num_decoder_layers: int, dropout: float = 0.1, dim_feedforward: int = 2048):
+    def __init__(self, dictionary: dict, dim_model: int, num_heads: int, num_encoder_layers: int,
+                 num_decoder_layers: int, tree_depth: int, tree_width: int, dim_feedforward: int = 2048,
+                 dropout: float = 0.1):
         super().__init__()
         self.model_type = 'Transformer'
         self.dim_model = dim_model
+        self.dictionary = dictionary
+        num_tokens = len(dictionary)
 
         #self.positional_encoder = PositionalEncoding(dim_model, dropout)
         #self.positional_encoder = LearnedPositionalEncoding(num_tokens, dim_model)
         #self.positional_encoder = HybridPositionalEmbeddings(127, dim_model, dropout)
-        self.positional_encoder = TreePositionalEncodings(emb_size=dim_model, width=2, depth=8)
+        self.positional_encoder = TreePositionalEncodings(emb_size=dim_model, width=tree_width, depth=tree_depth)
 
         self.embedding = nn.Embedding(num_tokens, dim_model)
         self.transformer = nn.Transformer(d_model=dim_model, nhead=num_heads, num_encoder_layers=num_encoder_layers,
