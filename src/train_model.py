@@ -25,8 +25,10 @@ def parse_args(argv):
     parser.add_argument("--epochs", type=int, default=50)
     parser.add_argument("--tree-depth", type=int, default=8)
     parser.add_argument("--tree-width", type=int, default=2)
-    parser.add_argument("--fitness-ignore-pad", type=bool, default=True)
-    parser.add_argument("--attention-ignore-pad", type=bool, default=True)
+    parser.add_argument("--fitness-ignore-pad", type=bool,
+                        action=argparse.BooleanOptionalAction,default=True)
+    parser.add_argument("--attention-ignore-pad", type=bool,
+                        action=argparse.BooleanOptionalAction, default=True)
     args = parser.parse_args(argv)
 
     if args.dim_model is None:
