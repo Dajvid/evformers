@@ -1,4 +1,5 @@
 import os
+import pickle
 import time
 
 import torch
@@ -151,23 +152,25 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs):
 
 
 parameters = {
-    "num_tokens": 153,
     "dim_model": 16,
     "num_heads": 1,
     "num_encoder_layers": 1,
     "num_decoder_layers": 1,
     "dropout": 0.1,
-    "data_source": "../datasets/505_tecator_depth0-8-145K.txt",
+    "dataset": "../datasets/505_tecator-depth-0-8-145K",
     "batch_size": 16,
     "lr": 0.001,
     "loss": torch.nn.KLDivLoss(reduction="none"),
-    #"loss": torch.nn.CrossEntropyLoss(ignore_index=0),
     "epochs": 50,
 }
+
+data = np.loadtxt(f"{parameters["dataset"]}.data")
+dict = pickle.load(open(f"{parameters["dataset"]}.dict", "rb"))
+parameters["num_tokens"] = len(dict)
+
 with open(os.path.join(out_dir, "parameters.txt"), "w") as f:
     f.write(str(parameters))
 
-data = np.loadtxt(parameters["data_source"])
 train_data = data[:int(0.8 * len(data))]
 val_data = data[int(0.8 * len(data)):]
 

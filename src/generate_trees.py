@@ -8,7 +8,7 @@ from gp.Generate_data import generate_random_trees, generate_trees_from_evolutio
 import numpy as np
 from gp.Pset import create_basic_symreg_pset
 from gp.sym_reg_tree import get_mapping
-
+import pickle
 
 def human_format(num):
     num = float('{:.3g}'.format(num))
@@ -27,8 +27,8 @@ def parse_args(argv):
     parser.add_argument("--n_random_trees", type=int, default=100000)
     parser.add_argument("--min_depth", type=int, default=0)
     parser.add_argument("--max_depth", type=int, default=8)
-    parser.add_argument("--dataset", type=str, default="4544_GeographicalOriginalofMusic")
-    parser.add_argument("--output_file", type=str)
+    parser.add_argument("--dataset", type=str, default="505_tecator")
+    parser.add_argument("--output_name", type=str)
     parser.add_argument("--n_generations", type=int, default=55)
     parser.add_argument("--n_trees_per_generation", type=int, default=900)
     parser.add_argument("--skip_first_n_generations", type=int, default=5)
@@ -42,7 +42,7 @@ def main(argv=None):
     args = parse_args(argv)
     os.makedirs(args.output_dir, exist_ok=True)
     stats = {}
-    dataset = pmlb.fetch_data(args.dataset, dropna=True)
+    dataset = pmlb.fetch_data(args.dataset, local_cache_dir=os.path.join(args.output_dir, "pmlb_cache"), dropna=True)
     pset = create_basic_symreg_pset(dataset)
     mapping = get_mapping(pset, ["PAD", "UNKNOWN"])
 
@@ -69,10 +69,11 @@ def main(argv=None):
     print(f"Generated {stats["n_from_evolution_trees"]} trees from evolution")
     stats["from_evolution_trees_depth_avg"] = sum([tree.height for tree in evolution_trees]) / len(evolution_trees)
     print(f"Average depth of trees generated from evolution: {stats["from_evolution_trees_depth_avg"]}")
-    tokenized_trees = [tree.tokenize(pset, args.max_depth) for tree in random_trees]
+    tokenized_trees = [tree.tokenize(pset, args.max_depth) for tree in evolution_trees]
     evolution_trees_array = np.array(tokenized_trees)
+    stats["from_evolution_trees_pad_percentage"] = np.sum(evolution_trees_array == 0) / evolution_trees_array.size * 100
     print(f"Percentage of PAD tokens in trees generated from evolution: "
-          f"{np.sum(evolution_trees_array == 0) / evolution_trees_array.size * 100} %")
+          f"{stats["from_evolution_trees_pad_percentage"]} %")
 
     print()
     trees = random_trees + evolution_trees
@@ -84,16 +85,17 @@ def main(argv=None):
     print(f"Tree array shape: {trees_array.shape}")
     print(f"Percentage of PAD tokens in all trees: {np.sum(trees_array == 0) / trees_array.size * 100} %")
 
-    if args.output_file is None:
-        args.output_file = (f"{args.dataset}_depth{args.min_depth}-{args.max_depth}"
-                            f"-{human_format(len(trees_array))}.txt")
+    if args.output_name is None:
+        args.output_name = f"{args.dataset}-depth-{args.min_depth}-{args.max_depth}-{human_format(len(trees_array))}"
 
-    output_path = os.path.join(args.output_dir, args.output_file)
-    print(f"Saving trees to {output_path}")
-    np.savetxt(output_path, trees_array)
-    with open(f"{output_path}.info", "w") as f:
+    output_name_path = os.path.join(args.output_dir, args.output_name)
+    print(f"Saving trees to {output_name_path}.data")
+    np.savetxt(f"{output_name_path}.data", trees_array)
+    with open(f"{output_name_path}.info", "w") as f:
         info = {"args": args, "mapping": mapping, "pset": pset}
         pprint(info, stream=f)
+    with open(f"{output_name_path}.dict", "wb") as f:
+        pickle.dump(mapping, f)
 
 
 if __name__ == '__main__':
