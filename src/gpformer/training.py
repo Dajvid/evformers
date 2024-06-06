@@ -7,8 +7,6 @@ import torch.nn.functional as F
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-PAD_TOKEN = 0
-
 
 def check_args_compatibility(mode, opt):
     if mode == "train" and opt is None:
@@ -40,8 +38,10 @@ def run_epoch(model, loss_fn, dataloader, mode, opt=None,
         # Get mask to mask out the next words
         sequence_length = y_input.size(1)
         tgt_mask = model.get_tgt_mask(sequence_length).to(device)
-        src_key_padding_mask = (x == PAD_TOKEN).to(torch.bool).to(device) if attention_ignore_pad else None
-        tgt_key_padding_mask = (y_input == PAD_TOKEN).to(torch.bool).to(device) if attention_ignore_pad else None
+        src_key_padding_mask = (x == model.dictionary["PAD"]).to(torch.bool).to(device)\
+            if attention_ignore_pad else None
+        tgt_key_padding_mask = (y_input == model.dictionary["PAD"]).to(torch.bool).to(device) \
+            if attention_ignore_pad else None
 
         pred = model(x, y_input, tgt_mask=tgt_mask, src_pad_mask=src_key_padding_mask,
                      tgt_pad_mask=tgt_key_padding_mask)
@@ -51,7 +51,7 @@ def run_epoch(model, loss_fn, dataloader, mode, opt=None,
         # One-hot encode the expected outputs
         y_one_hot = torch.nn.functional.one_hot(y_expected, num_classes=pred.size(2)).float()
         loss = loss_fn(log_probs, y_one_hot)
-        pad_mask = y_expected != PAD_TOKEN
+        pad_mask = y_expected != model.dictionary["PAD"]
         pad_mask_unsquezed = pad_mask.unsqueeze(-1).expand_as(loss)
         masked_kl_loss = loss * (pad_mask_unsquezed.float())
         loss_sum = masked_kl_loss.sum() if fitness_ignore_pad else loss.sum()
@@ -75,14 +75,29 @@ def run_epoch(model, loss_fn, dataloader, mode, opt=None,
             total_sequence_accuracy / len(dataloader))
 
 
-def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs, idx_pad, writer=None):
+def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs, writer=None,
+        fitness_ignore_pad=True, attention_ignore_pad=True):
     print("Training and validating model")
 
     for epoch in range(epochs):
         print("-" * 25, f"Epoch {epoch + 1} / {epochs}", "-" * 25)
-        train_loss, train_token_accuracy, train_sequence_accuracy = run_epoch(model, loss_fn, train_dataloader,
-                                                                              opt=opt, mode="train")
-        val_loss, val_token_accuracy, val_sequence_accuracy = run_epoch(model, loss_fn, val_dataloader, mode="eval")
+        train_loss, train_token_accuracy, train_sequence_accuracy = run_epoch(
+            model,
+            loss_fn,
+            train_dataloader,
+            opt=opt,
+            mode="train",
+            fitness_ignore_pad=fitness_ignore_pad,
+            attention_ignore_pad=attention_ignore_pad
+        )
+        val_loss, val_token_accuracy, val_sequence_accuracy = run_epoch(
+            model,
+            loss_fn,
+            val_dataloader,
+            mode="eval",
+            fitness_ignore_pad=fitness_ignore_pad,
+            attention_ignore_pad=attention_ignore_pad
+        )
 
         # log to writer
         if writer:
