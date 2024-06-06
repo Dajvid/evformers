@@ -11,7 +11,7 @@ from gp.sym_reg_tree import SymRegTree, get_mapping
 
 
 def eaSimple_with_population_log(population, toolbox, cxpb, mutpb, ngen, stats=None,
-             halloffame=None, verbose=__debug__, trees=None):
+             halloffame=None, verbose=__debug__, trees=None, skip_first_n_generations=5):
     logbook = tools.Logbook()
     logbook.header = ['gen', 'nevals'] + (stats.fields if stats else [])
 
@@ -50,7 +50,7 @@ def eaSimple_with_population_log(population, toolbox, cxpb, mutpb, ngen, stats=N
 
         # Replace the current population by the offspring
         population[:] = offspring
-        if gen > 5 and trees is not None:
+        if gen > skip_first_n_generations and trees is not None:
             for ind in population:
                 trees.append(ind)
 
@@ -63,17 +63,17 @@ def eaSimple_with_population_log(population, toolbox, cxpb, mutpb, ngen, stats=N
     return population, logbook
 
 
-def generate_random_trees(pset, n_trees, min_depth=0, max_depth=9):
+def generate_random_trees(pset, n_trees, min_depth=0, max_depth=8):
     trees = [SymRegTree(genHalfAndHalf(pset, min_depth, max_depth)) for _ in range(n_trees)]
     return trees
 
 
-def generate_trees_from_evolution(pset, dataset, min_height=0, max_height=9,
+def generate_trees_from_evolution(pset, dataset, min_depth=0, max_depth=8,
                                   n_generations=55, n_trees_per_generation=900, skip_first_n_generations=5):
     creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
     creator.create("Individual", SymRegTree, fitness=creator.FitnessMin, pset=pset)
     toolbox = base.Toolbox()
-    toolbox.register("expr", gp.genHalfAndHalf, pset=pset, min_=min_height, max_=max_height)
+    toolbox.register("expr", gp.genHalfAndHalf, pset=pset, min_=min_depth, max_=max_depth)
     toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.expr)
     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
     toolbox.register("compile", gp.compile, pset=pset)
@@ -83,15 +83,15 @@ def generate_trees_from_evolution(pset, dataset, min_height=0, max_height=9,
                      targets=dataset['target'])
     toolbox.register("select", tools.selTournament, tournsize=7)
     toolbox.register("mate", gp.cxOnePoint)
-    toolbox.register("expr_mut", gp.genFull, min_=min_height, max_=max_height)
+    toolbox.register("expr_mut", gp.genFull, min_=min_depth, max_=max_depth)
     toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
 
-    toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"), max_value=max_height))
-    toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max_value=max_height))
+    toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"), max_value=max_depth))
+    toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max_value=max_depth))
 
     trees = []
     pop = toolbox.population(n=n_trees_per_generation)
     eaSimple_with_population_log(pop, toolbox, 0.8, 0.05, ngen=n_generations,
-                                 verbose=False, trees=trees)
+                                 verbose=False, trees=trees, skip_first_n_generations=skip_first_n_generations)
 
     return trees
