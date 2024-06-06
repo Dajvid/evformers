@@ -48,7 +48,7 @@ val_dataloader = batchify_data(val_data, batch_size=parameters["batch_size"])
 model = Transformer(parameters["num_tokens"], parameters["dim_model"], parameters["num_heads"],
                     parameters["num_encoder_layers"], parameters["num_decoder_layers"],
                     dropout=parameters["dropout"]).to(device)
-opt = torch.optim.SGD(model.parameters(), lr=parameters["lr"])
+opt = torch.optim.AdamW(model.parameters(), lr=parameters["lr"])
 loss_fn = parameters["loss"]
 
 fit(model, opt, loss_fn, train_dataloader, val_dataloader, parameters["epochs"])
