@@ -1,5 +1,4 @@
 import os
-import random
 import time
 
 import torch
@@ -8,7 +7,6 @@ import numpy as np
 from data import batchify_data
 from Model import Transformer
 import torch.nn.functional as F
-import matplotlib.pyplot as plt
 from torch.utils.tensorboard import SummaryWriter
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -43,10 +41,6 @@ def train_loop(model, opt, loss_fn, dataloader):
 
         pred = model(x, y_input, tgt_mask=tgt_mask, src_pad_mask=src_key_padding_mask,
                      tgt_pad_mask=tgt_key_padding_mask)
-
-        # Permute pred to have batch size first again
-        #log_probs = F.log_softmax(pred.permute(1, 0, 2), dim=2)
-        pred = pred.permute(1, 0, 2)
 
         # Apply log_softmax to predictions
         log_probs = F.log_softmax(pred, dim=2)
@@ -100,10 +94,6 @@ def validation_loop(model, loss_fn, dataloader):
 
             pred = model(x, y_input, tgt_mask=tgt_mask, src_pad_mask=src_key_padding_mask,
                          tgt_pad_mask=tgt_key_padding_mask)
-
-            # Permute pred to have batch size first again
-            #log_probs = F.log_softmax(pred.permute(1, 0, 2), dim=2)
-            pred = pred.permute(1, 0, 2)
 
             # Apply log_softmax to predictions
             log_probs = F.log_softmax(pred, dim=2)
@@ -161,13 +151,13 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs):
 
 
 parameters = {
-    "num_tokens": 146,
-    "dim_model": 40,
+    "num_tokens": 153,
+    "dim_model": 16,
     "num_heads": 1,
     "num_encoder_layers": 1,
     "num_decoder_layers": 1,
     "dropout": 0.1,
-    "data_source": "../geomusic_dataset_depth5-5.txt",
+    "data_source": "../datasets/505_tecator_depth0-8-145K.txt",
     "batch_size": 16,
     "lr": 0.001,
     "loss": torch.nn.KLDivLoss(reduction="none"),

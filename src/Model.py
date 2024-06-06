@@ -110,12 +110,12 @@ class Transformer(nn.Module):
         #self.positional_encoder = PositionalEncoding(dim_model, dropout)
         #self.positional_encoder = LearnedPositionalEncoding(num_tokens, dim_model)
         #self.positional_encoder = HybridPositionalEmbeddings(127, dim_model, dropout)
-        self.positional_encoder = TreePositionalEncodings(emb_size=40, width=2, depth=5)
+        self.positional_encoder = TreePositionalEncodings(emb_size=dim_model, width=2, depth=8)
 
         self.embedding = nn.Embedding(num_tokens, dim_model)
         self.transformer = nn.Transformer(d_model=dim_model, nhead=num_heads, num_encoder_layers=num_encoder_layers,
                                           num_decoder_layers=num_decoder_layers, dropout=dropout,
-                                          dim_feedforward=dim_feedforward)
+                                          dim_feedforward=dim_feedforward, batch_first=True)
         self.out = nn.Linear(dim_model, num_tokens)
 
     def forward(self, src: Tensor, tgt, tgt_mask=None, src_pad_mask=None, tgt_pad_mask=None) -> Tensor:
@@ -123,13 +123,6 @@ class Transformer(nn.Module):
         tgt = self.embedding(tgt) * math.sqrt(self.dim_model)
         src = self.positional_encoder(src, mode="src")
         tgt = self.positional_encoder(tgt, mode="tgt")
-
-        # device = src.device
-        # mask = self._generate_square_subsequent_mask(len(src)).to(device)
-        # self.src_mask = mask
-
-        src = src.permute(1, 0, 2)
-        tgt = tgt.permute(1, 0, 2)
 
         transformer_out = self.transformer(src, tgt, tgt_mask=tgt_mask, src_key_padding_mask=src_pad_mask,
                                            tgt_key_padding_mask=tgt_pad_mask, memory_key_padding_mask=src_pad_mask)
