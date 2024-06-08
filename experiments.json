@@ -1,0 +1,8 @@
+[
+    {
+    "command": "[python train_model.py --no-ignore-pad]",
+    "total-runs": 3,
+    "remaining-runs": 3,
+    "requires-gpu": "true"
+    }
+]
