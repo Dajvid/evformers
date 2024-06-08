@@ -1,6 +1,7 @@
 import os
 import time
 
+import pandas as pd
 import torch
 
 import torch.nn.functional as F
@@ -55,7 +56,7 @@ def run_epoch(model, loss_fn, dataloader, mode, opt=None,
         pad_mask_unsquezed = pad_mask.unsqueeze(-1).expand_as(loss)
         masked_kl_loss = loss * (pad_mask_unsquezed.float())
         loss_sum = masked_kl_loss.sum() if fitness_ignore_pad else loss.sum()
-        loss = loss_sum / len(pad_mask)
+        loss = loss_sum / len(batch)
 
         if mode == "train":
             opt.zero_grad()
@@ -77,6 +78,7 @@ def run_epoch(model, loss_fn, dataloader, mode, opt=None,
 
 def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs, writer=None,
         fitness_ignore_pad=True, attention_ignore_pad=True):
+    statistics = []
     print("Training and validating model")
 
     for epoch in range(epochs):
@@ -99,6 +101,8 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs, writer=No
             attention_ignore_pad=attention_ignore_pad
         )
 
+        statistics.append((train_loss, train_token_accuracy, train_sequence_accuracy,
+                           val_loss, val_token_accuracy, val_sequence_accuracy))
         # log to writer
         if writer:
             writer.add_scalar("Accuracy per token/validation", val_token_accuracy, global_step=epoch)
@@ -112,6 +116,15 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs, writer=No
         print(f"Validation loss: {val_loss:.4f}")
         print(f"Validation token accuracy: {val_token_accuracy:.4f}")
         print(f"Validation sequence accuracy: {val_sequence_accuracy:.4f}")
-        print()
+        val_loss_last5 = (lambda lst: lst[-5:] if len(lst) >= 5 else None)(statistics)
 
-    return
+        if val_loss_last5 is not None and all(val_loss_last5[i] <= val_loss_last5[i + 1]
+                                              for i in range(len(val_loss_last5) - 1)):
+            print("Early stopping")
+            break
+
+    statistics = pd.DataFrame(statistics, columns=["train_loss", "train_token_accuracy", "train_sequence_accuracy",
+                                                   "val_loss", "val_token_accuracy", "val_sequence_accuracy"])
+    statistics.index.name = "epoch"
+
+    return statistics
