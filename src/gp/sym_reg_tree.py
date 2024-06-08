@@ -15,13 +15,25 @@ def get_mapping(pset, extra_elements=None):
 
 class SymRegTree(gp.PrimitiveTree):
 
-    def tokenize(self, pset, max_depth):
+    def tokenize(self, max_depth, mapping, add_SOT=False, add_EOT=False):
         def hash_elements(elements):
-            mapping = get_mapping(pset, ["PAD", "UNKNOWN"])
             hashed = [mapping[element] for element in elements]
             return hashed
 
+        def get_last_non_pad_index(padded):
+            non_pad_i = 1
+            while non_pad_i < len(padded):
+                if padded[-non_pad_i] != "PAD":
+                    break
+                non_pad_i += 1
+            return len(padded) - non_pad_i
+
         padded = self.add_padding(max_depth, max_depth)
+        if add_SOT:
+            padded = ["SOT"] + padded
+        if add_EOT:
+            last_non_pad_index = get_last_non_pad_index(padded)
+            padded = padded[:last_non_pad_index + 1] + ["EOT"] + padded[last_non_pad_index + 1:]
         return hash_elements(padded)
 
     def add_padding(self, pset, max_depth):
