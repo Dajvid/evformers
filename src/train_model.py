@@ -43,7 +43,7 @@ def main(argv=None):
     args = parse_args(argv)
     device = "cuda" if torch.cuda.is_available() else "cpu"
     start_timestamp = time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime(time.time()))
-    out_dir = os.path.join("../runs", f"{start_timestamp}_{os.uname()[1]}")
+    out_dir = os.path.join(args.output_path, f"{start_timestamp}_{os.uname()[1]}")
 
     os.makedirs(out_dir, exist_ok=True)
 
@@ -55,10 +55,8 @@ def main(argv=None):
     train_data = data[:int(0.8 * len(data))]
     val_data = data[int(0.8 * len(data)):]
 
-    train_dataloader = batchify_data(train_data, batch_size=args.batch_size, dictionary=dict,
-                                     add_SOT=args.add_SOT, add_EOT=args.add_EOT)
-    val_dataloader = batchify_data(val_data, batch_size=args.batch_size, dicionar=dict,
-                                   add_SOT=args.add_SOT, add_EOT=args.add_EOT)
+    train_dataloader = batchify_data(train_data, batch_size=args.batch_size)
+    val_dataloader = batchify_data(val_data, batch_size=args.batch_size)
 
     model = Transformer(
         dictionary=dict,

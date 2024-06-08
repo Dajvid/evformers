@@ -1,8 +1,122 @@
 [
     {
-    "command": "[python train_model.py --no-ignore-pad]",
-    "total-runs": 3,
-    "remaining-runs": 3,
-    "requires-gpu": "true"
+        "command": [
+            "python",
+            "train_model.py",
+            "--dataset",
+            "../datasets/228_elusage-depth-0-8-145K/228_elusage-depth-0-8-145K",
+            "--fitness-ignore-pad",
+            "--attention-ignore-pad",
+            "--output-path",
+            "../experiments/pad_handling/ignore_pad/elusage"
+        ],
+        "remaining-runs": 0,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dataset",
+            "../datasets/228_elusage-depth-0-8-145K/228_elusage-depth-0-8-145K",
+            "--no-fitness-ignore-pad",
+            "--no-attention-ignore-pad",
+            "--output-path",
+            "../experiments/pad_handling/no_ignore_pad/elusage"
+        ],
+        "remaining-runs": 0,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dataset",
+            "../datasets/503_wind-depth-0-8-145K/503_wind-depth-0-8-145K",
+            "--fitness-ignore-pad",
+            "--attention-ignore-pad",
+            "--output-path",
+            "../experiments/pad_handling/ignore_pad/wind"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dataset",
+            "../datasets/503_wind-depth-0-8-145K/503_wind-depth-0-8-145K",
+            "--no-fitness-ignore-pad",
+            "--no-attention-ignore-pad",
+            "--output-path",
+            "../experiments/pad_handling/no_ignore_pad/wind"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dataset",
+            "../datasets/505_tecator-depth-0-8-145K/505_tecator-depth-0-8-145K",
+            "--fitness-ignore-pad",
+            "--attention-ignore-pad",
+            "--output-path",
+            "../experiments/pad_handling/ignore_pad/505_tecator"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dataset",
+            "../datasets/505_tecator-depth-0-8-145K/505_tecator-depth-0-8-145K",
+            "--no-fitness-ignore-pad",
+            "--no-attention-ignore-pad",
+            "--output-path",
+            "../experiments/pad_handling/no_ignore_pad/505_tecator"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dataset",
+            "../datasets/588_fri_c4_1000_100-depth-0-8-145K/588_fri_c4_1000_100-depth-0-8-145K",
+            "--fitness-ignore-pad",
+            "--attention-ignore-pad",
+            "--output-path",
+            "../experiments/pad_handling/ignore_pad/fri_c4"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dataset",
+            "../datasets/588_fri_c4_1000_100-depth-0-8-145K/588_fri_c4_1000_100-depth-0-8-145K",
+            "--no-fitness-ignore-pad",
+            "--no-attention-ignore-pad",
+            "--output-path",
+            "../experiments/pad_handling/no_ignore_pad/fri_c4"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
     }
 ]
