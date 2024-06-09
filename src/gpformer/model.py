@@ -27,8 +27,8 @@ class Transformer(nn.Module):
         self.out = nn.Linear(dim_model, num_tokens)
 
     def forward(self, src: Tensor, tgt, tgt_mask=None, src_pad_mask=None, tgt_pad_mask=None) -> Tensor:
-        src = self.embedding(src) * math.sqrt(self.dim_model)
-        tgt = self.embedding(tgt) * math.sqrt(self.dim_model)
+        src = self.embedding(src)
+        tgt = self.embedding(tgt)
         src = self.positional_encoder(src, mode="src")
         tgt = self.positional_encoder(tgt, mode="tgt")
 
