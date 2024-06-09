@@ -27,9 +27,9 @@ def parse_args(argv):
     parser.add_argument("--tree-depth", type=int, default=8)
     parser.add_argument("--tree-width", type=int, default=2)
     parser.add_argument("--fitness-ignore-pad", type=bool,
-                        action=argparse.BooleanOptionalAction, default=True)
+                        action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--attention-ignore-pad", type=bool,
-                        action=argparse.BooleanOptionalAction, default=True)
+                        action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--output-path", type=str, default="../training-runs")
     parser.add_argument("--run-id", type=int, default=None)
     args = parser.parse_args(argv)
