@@ -83,8 +83,8 @@ def add_experiments(new_expr_fn, experiments_fn):
 
 
 def run_only_gpu_experiments(experiments_f):
-    while True:
-        with open(experiments_f, "r+") as experiments_f:
+    with open(experiments_f, "r+") as experiments_f:
+        while True:
             obtain_file(experiments_f)
             experiments = json.loads(experiments_f.read())
             experiment_to_run = find_runable_experiment(experiments, gpu_only=True)
