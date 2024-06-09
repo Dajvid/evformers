@@ -105,6 +105,7 @@ def run_only_gpu_experiments(experiments_f):
                 else:
                     print(f"Experiment ran successfully: {experiment_to_run}")
             else:
+                release_file(experiments_fh)
                 time.sleep(30)
 
 
