@@ -114,7 +114,7 @@
             "--tree-depth",
             "6"
         ],
-        "remaining-runs": 1,
+        "remaining-runs": 0,
         "requires-gpu": true,
         "total-runs": 1
     },
@@ -131,7 +131,7 @@
             "--tree-depth",
             "6"
         ],
-        "remaining-runs": 1,
+        "remaining-runs": 0,
         "requires-gpu": true,
         "total-runs": 1
     }
