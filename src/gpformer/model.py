@@ -1,3 +1,5 @@
+from typing import List
+
 import torch
 import math
 from torch import nn, Tensor
@@ -71,9 +73,21 @@ class Transformer(nn.Module):
             src = self.embedding(src)
             src = self.positional_encoder(src, mode="src")
             encoded = self.transformer.encoder(src, src_key_padding_mask=src_key_padding_mask)
-        return encoded
+        return encoded[0]
 
-    def decode(self, encoded) -> Tensor:
+    def decode(self, encoded, start_token=None) -> List:
         self.eval()
+        tgt_seq = [start_token] if start_token else [self.dictionary["SOT"]]
+        encoded = encoded.unsqueeze(0)
+        pos_encodings = self.positional_encoder(torch.zeros_like(encoded), mode="src")
         with torch.no_grad():
-            self.transformer.decoder(encoded)
+            for i in range(encoded.size(1)):
+                tgt_seq_tensor = torch.tensor(tgt_seq).unsqueeze(0).to(encoded.device)
+                tgt_emb = self.embedding(tgt_seq_tensor) + pos_encodings[:, :tgt_seq_tensor.size(1), :]
+                # also construct key_pad mask...
+                output = self.transformer.decoder(tgt_emb, encoded)
+                output = self.out(output)
+                next_token = output.argmax(dim=-1)[:, -1].item()
+                tgt_seq.append(next_token)
+
+        return tgt_seq
