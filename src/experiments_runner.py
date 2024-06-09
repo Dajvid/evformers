@@ -83,19 +83,20 @@ def add_experiments(new_expr_fn, experiments_fn):
 
 
 def run_only_gpu_experiments(experiments_f):
-    with open(experiments_f, "r+") as experiments_f:
-        while True:
-            obtain_file(experiments_f)
-            experiments = json.loads(experiments_f.read())
+
+    while True:
+        with open(experiments_f, "r+") as experiments_fh:
+            obtain_file(experiments_fh)
+            experiments = json.loads(experiments_fh.read())
             experiment_to_run = find_runable_experiment(experiments, gpu_only=True)
             if experiment_to_run is not None:
                 experiment_to_run["remaining-runs"] -= 1
                 print(f"Running experiment: {experiment_to_run}")
-                experiments_f.seek(0)
-                experiments_f.truncate(0)
-                experiments_f.write(json.dumps(experiments, indent=4, sort_keys=True))
-                experiments_f.flush()
-                release_file(experiments_f)
+                experiments_fh.seek(0)
+                experiments_fh.truncate(0)
+                experiments_fh.write(json.dumps(experiments, indent=4, sort_keys=True))
+                experiments_fh.flush()
+                release_file(experiments_fh)
                 experiment_to_run["command"] += ["--run-id", str(experiment_to_run["total-runs"])]
                 sub_completed = subprocess.run(experiment_to_run["command"], stdout=subprocess.PIPE,
                                                stderr=subprocess.STDOUT)
