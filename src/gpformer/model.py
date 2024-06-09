@@ -76,5 +76,4 @@ class Transformer(nn.Module):
     def decode(self, encoded) -> Tensor:
         self.eval()
         with torch.no_grad():
-
-        self.transformer.decoder(encoded)
+            self.transformer.decoder(encoded)
