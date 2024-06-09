@@ -5,15 +5,17 @@ from torch.nn import TransformerEncoder, TransformerEncoderLayer, TransformerDec
 
 from .TreePosEncoding import TreePositionalEncodings
 
+
 class Transformer(nn.Module):
     def __init__(self, dictionary: dict, dim_model: int, num_heads: int, num_encoder_layers: int,
                  num_decoder_layers: int, tree_depth: int, tree_width: int, dim_feedforward: int = 2048,
-                 dropout: float = 0.1):
+                 dropout: float = 0.1, ignore_pad: bool = True):
         super().__init__()
         self.model_type = 'Transformer'
         self.dim_model = dim_model
         self.dictionary = dictionary
         self.SOT_token_prepended = "SOT" in dictionary.keys()
+        self.ignore_pad = ignore_pad
         num_tokens = len(dictionary)
 
 
@@ -58,3 +60,21 @@ class Transformer(nn.Module):
         #  [0.,   0.,   0.,   0.,   0.]]
 
         return mask.to(torch.bool)
+
+    def encode(self, src: Tensor) -> Tensor:
+        self.eval()
+        with torch.no_grad():
+            src = torch.tensor(src).unsqueeze(0)  # Add batch dimension
+            src_key_padding_mask = (src == self.dictionary["PAD"]).to(torch.bool).to(src.device) \
+                if self.ignore_pad else None
+
+            src = self.embedding(src)
+            src = self.positional_encoder(src, mode="src")
+            encoded = self.transformer.encoder(src, src_key_padding_mask=src_key_padding_mask)
+        return encoded
+
+    def decode(self, encoded) -> Tensor:
+        self.eval()
+        with torch.no_grad():
+
+        self.transformer.decoder(encoded)
