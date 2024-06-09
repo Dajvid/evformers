@@ -1,0 +1,230 @@
+[
+  {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dim-model",
+            "16",
+            "--dataset",
+            "../datasets/228_elusage-depth-0-6-145K/228_elusage-depth-0-6-145K",
+            "--fitness-ignore-pad",
+            "--attention-ignore-pad",
+            "--output-path",
+            "../experiments/model_training/dim_model/16/elusage",
+            "--tree-depth",
+            "6"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dim-model",
+            "16",
+            "--dataset",
+            "../datasets/503_wind-depth-0-6-145K/503_wind-depth-0-6-145K",
+            "--fitness-ignore-pad",
+            "--attention-ignore-pad",
+            "--output-path",
+            "../experiments/model_training/dim_model/16/wind",
+            "--tree-depth",
+            "6"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dim-model",
+            "16",
+            "--dataset",
+            "../datasets/505_tecator-depth-0-6-145K/505_tecator-depth-0-6-145K",
+            "--fitness-ignore-pad",
+            "--attention-ignore-pad",
+            "--output-path",
+            "../experiments/model_training/dim_model/16/505_tecator",
+            "--tree-depth",
+            "6"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dim-model",
+            "16",
+            "--dataset",
+            "../datasets/588_fri_c4_1000_100-depth-0-6-145K/588_fri_c4_1000_100-depth-0-6-145K",
+            "--fitness-ignore-pad",
+            "--attention-ignore-pad",
+            "--output-path",
+            "../experiments/model_training/dim_model/16/fri_c4",
+            "--tree-depth",
+            "6"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dim-model",
+            "32",
+            "--dataset",
+            "../datasets/228_elusage-depth-0-6-145K/228_elusage-depth-0-6-145K",
+            "--fitness-ignore-pad",
+            "--attention-ignore-pad",
+            "--output-path",
+            "../experiments/model_training/dim_model/32/elusage",
+            "--tree-depth",
+            "6"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dim-model",
+            "32",
+            "--dataset",
+            "../datasets/503_wind-depth-0-6-145K/503_wind-depth-0-6-145K",
+            "--fitness-ignore-pad",
+            "--attention-ignore-pad",
+            "--output-path",
+            "../experiments/model_training/dim_model/32/wind",
+            "--tree-depth",
+            "6"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dim-model",
+            "32",
+            "--dataset",
+            "../datasets/505_tecator-depth-0-6-145K/505_tecator-depth-0-6-145K",
+            "--fitness-ignore-pad",
+            "--attention-ignore-pad",
+            "--output-path",
+            "../experiments/model_training/dim_model/32/505_tecator",
+            "--tree-depth",
+            "6"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dim-model",
+            "32",
+            "--dataset",
+            "../datasets/588_fri_c4_1000_100-depth-0-6-145K/588_fri_c4_1000_100-depth-0-6-145K",
+            "--fitness-ignore-pad",
+            "--attention-ignore-pad",
+            "--output-path",
+            "../experiments/model_training/dim_model/32/fri_c4",
+            "--tree-depth",
+            "6"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dim-model",
+            "64",
+            "--dataset",
+            "../datasets/228_elusage-depth-0-6-145K/228_elusage-depth-0-6-145K",
+            "--fitness-ignore-pad",
+            "--attention-ignore-pad",
+            "--output-path",
+            "../experiments/model_training/dim_model/64/elusage",
+            "--tree-depth",
+            "6"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dim-model",
+            "64",
+            "--dataset",
+            "../datasets/503_wind-depth-0-6-145K/503_wind-depth-0-6-145K",
+            "--fitness-ignore-pad",
+            "--attention-ignore-pad",
+            "--output-path",
+            "../experiments/model_training/dim_model/64/wind",
+            "--tree-depth",
+            "6"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dim-model",
+            "64",
+            "--dataset",
+            "../datasets/505_tecator-depth-0-6-145K/505_tecator-depth-0-6-145K",
+            "--fitness-ignore-pad",
+            "--attention-ignore-pad",
+            "--output-path",
+            "../experiments/model_training/dim_model/64/505_tecator",
+            "--tree-depth",
+            "6"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dim-model",
+            "64",
+            "--dataset",
+            "../datasets/588_fri_c4_1000_100-depth-0-6-145K/588_fri_c4_1000_100-depth-0-6-145K",
+            "--fitness-ignore-pad",
+            "--attention-ignore-pad",
+            "--output-path",
+            "../experiments/model_training/dim_model/64/fri_c4",
+            "--tree-depth",
+            "6"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    }
+]
