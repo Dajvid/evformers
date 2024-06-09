@@ -83,6 +83,7 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs, writer=No
 
     for epoch in range(epochs):
         print("-" * 25, f"Epoch {epoch + 1} / {epochs}", "-" * 25)
+        t_start = time.time()
         train_loss, train_token_accuracy, train_sequence_accuracy = run_epoch(
             model,
             loss_fn,
@@ -114,8 +115,11 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs, writer=No
 
         print(f"Training loss: {train_loss:.4f}")
         print(f"Validation loss: {val_loss:.4f}")
+        print(f"Training token accuracy: {train_token_accuracy:.4f}")
         print(f"Validation token accuracy: {val_token_accuracy:.4f}")
         print(f"Validation sequence accuracy: {val_sequence_accuracy:.4f}")
+        print(f"Training sequence accuracy: {train_sequence_accuracy:.4f}")
+        print(f"Epoch took {time.time() - t_start:.2f} seconds")
         val_loss_last5 = (lambda lst: lst[-5:] if len(lst) >= 5 else None)(statistics)
 
         if val_loss_last5 is not None and all(val_loss_last5[i] <= val_loss_last5[i + 1]
