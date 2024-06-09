@@ -19,7 +19,8 @@ def parse_args(argv):
     parser.add_argument("--num-encoder-layers", type=int, default=1)
     parser.add_argument("--num-decoder-layers", type=int, default=1)
     parser.add_argument("--dropout", type=float, default=0.1)
-    parser.add_argument("--dataset", type=str, default="../datasets/505_tecator-depth-0-8-145K")
+    parser.add_argument("--dataset", type=str,
+                        default="../datasets/505_tecator-depth-0-8-145K/505_tecator-depth-0-8-145K")
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--lr", type=float, default=0.001)
     parser.add_argument("--epochs", type=int, default=50)
