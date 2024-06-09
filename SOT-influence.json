@@ -1,0 +1,62 @@
+[
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dataset",
+            "../datasets/228_elusage-depth-0-6-145K/228_elusage-depth-0-6-145K-SOT",
+            "--output-path",
+            "../experiments/model_training/SOT_influence/SOT/elusage",
+            "--tree-depth",
+            "6"
+        ],
+        "remaining-runs": 0,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dataset",
+            "../datasets/503_wind-depth-0-6-145K/503_wind-depth-0-6-145K-SOT",
+            "--output-path",
+            "../experiments/model_training/SOT_influence/SOT/wind",
+            "--tree-depth",
+            "6"
+        ],
+        "remaining-runs": 0,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dataset",
+            "../datasets/505_tecator-depth-0-6-145K/505_tecator-depth-0-6-145K-SOT",
+            "--output-path",
+            "../experiments/model_training/SOT_influence/SOT/505_tecator",
+            "--tree-depth",
+            "6"
+        ],
+        "remaining-runs": 0,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dataset",
+            "../datasets/588_fri_c4_1000_100-depth-0-6-145K/588_fri_c4_1000_100-depth-0-6-145K-SOT",
+            "--output-path",
+            "../experiments/model_training/SOT_influence/SOT/fri_c4",
+            "--tree-depth",
+            "6"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    }
+]
