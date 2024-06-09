@@ -3,7 +3,7 @@ import torch
 
 
 class TreePositionalEncodings(torch.nn.Module):
-    def __init__(self, emb_size, width, depth):
+    def __init__(self, emb_size, width, depth, sot_token_prepended):
         super(TreePositionalEncodings, self).__init__()
         self.depth = depth
         self.width = width
@@ -12,6 +12,7 @@ class TreePositionalEncodings(torch.nn.Module):
         self.p = torch.nn.Parameter(torch.ones(self.d_tree_param, dtype=torch.float32), requires_grad=True)
         self.init_weights()
         self.positions = self.calculate_positions(depth, width)
+        self.sot_token_prepended = sot_token_prepended
 
     def calculate_positions(self, max_depth, degree):
 
@@ -63,6 +64,8 @@ class TreePositionalEncodings(torch.nn.Module):
         tree_weights = self.build_weights()
 
         positions = self.treeify_positions(self.positions, tree_weights)
+        if self.sot_token_prepended:
+            positions = torch.cat((positions[0].unsqueeze(0), positions))
 
         if mode == "tgt":
             positions = positions[:-1, :]

@@ -13,12 +13,16 @@ class Transformer(nn.Module):
         self.model_type = 'Transformer'
         self.dim_model = dim_model
         self.dictionary = dictionary
+        self.SOT_token_prepended = "SOT" in dictionary.keys()
         num_tokens = len(dictionary)
+
 
         #self.positional_encoder = PositionalEncoding(dim_model, dropout)
         #self.positional_encoder = LearnedPositionalEncoding(num_tokens, dim_model)
         #self.positional_encoder = HybridPositionalEmbeddings(127, dim_model, dropout)
-        self.positional_encoder = TreePositionalEncodings(emb_size=dim_model, width=tree_width, depth=tree_depth)
+        self.positional_encoder = TreePositionalEncodings(emb_size=dim_model, width=tree_width,
+                                                          depth=tree_depth,
+                                                          sot_token_prepended=self.SOT_token_prepended)
 
         self.embedding = nn.Embedding(num_tokens, dim_model)
         self.transformer = nn.Transformer(d_model=dim_model, nhead=num_heads, num_encoder_layers=num_encoder_layers,
