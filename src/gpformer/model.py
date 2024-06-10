@@ -66,7 +66,7 @@ class Transformer(nn.Module):
     def encode(self, src: Tensor) -> Tensor:
         self.eval()
         with torch.no_grad():
-            src = torch.tensor(src).unsqueeze(0)  # Add batch dimension
+            src = src.unsqueeze(0)  # Add batch dimension
             src_key_padding_mask = (src == self.dictionary["PAD"]).to(torch.bool).to(src.device) \
                 if self.ignore_pad else None
 
@@ -81,7 +81,7 @@ class Transformer(nn.Module):
         encoded = encoded.unsqueeze(0)
         pos_encodings = self.positional_encoder(torch.zeros_like(encoded), mode="src")
         with torch.no_grad():
-            for i in range(encoded.size(1)):
+            for i in range(encoded.size(1) - 1):
                 tgt_seq_tensor = torch.tensor(tgt_seq).unsqueeze(0).to(encoded.device)
                 tgt_emb = self.embedding(tgt_seq_tensor) + pos_encodings[:, :tgt_seq_tensor.size(1), :]
                 # also construct key_pad mask...

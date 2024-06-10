@@ -5,8 +5,11 @@ import subprocess
 import time
 import json
 import jsonschema
+import concurrent.futures
 
 from train_model import parse_args as parse_train_args
+from evolve import main as evolve_main
+from multiprocessing import Manager
 
 # Experiment to run entry example:
 
@@ -109,6 +112,67 @@ def run_only_gpu_experiments(experiments_f):
                 time.sleep(30)
 
 
+def get_task(experiments_fh, gpu_only=False):
+    obtain_file(experiments_fh)
+    experiments = json.loads(experiments_fh.read())
+    experiment_to_run = find_runable_experiment(experiments, gpu_only=gpu_only)
+    if experiment_to_run is not None:
+        experiment_to_run["remaining-runs"] -= 1
+        print(f"Running experiment: {experiment_to_run}")
+        experiments_fh.seek(0)
+        experiments_fh.truncate(0)
+        experiments_fh.write(json.dumps(experiments, indent=4, sort_keys=True))
+        experiments_fh.flush()
+        experiments_fh.seek(0)
+        release_file(experiments_fh)
+        return experiment_to_run
+    else:
+        experiments_fh.seek(0)
+        release_file(experiments_fh)
+        return None
+
+
+class CustomProcessPoolExecutor(concurrent.futures.ProcessPoolExecutor):
+    def __init__(self, max_tasks_per_child=1):
+        super().__init__(max_tasks_per_child=max_tasks_per_child)
+        self.manager = Manager()
+        self.idle_workers = self.manager.Value('i', self._max_workers)
+        self.lock = self.manager.Lock()
+
+    def submit(self, *args, **kwargs):
+        with self.lock:
+            self.idle_workers.value -= 1  # Decrease idle worker count when submitting a task
+        future = super().submit(*args, **kwargs)
+        future.add_done_callback(self._task_done_callback)
+        return future
+
+    def _task_done_callback(self, future):
+        with self.lock:
+            self.idle_workers.value += 1  # Increase idle worker count when a task is done
+
+    def get_idle_workers_count(self):
+        with self.lock:
+            return self.idle_workers.value
+
+
+def run_cpu_paralell_experiments(experiments_f):
+    with CustomProcessPoolExecutor(max_tasks_per_child=1) as executor:
+        futures = set()
+        while True:
+            with open(experiments_f, "r+") as experiments_fh:
+                print("waiting for idle workers")
+                while executor.idle_workers.value > 0:
+                    print("idle workers: ", executor.idle_workers.value)
+                    experiment = get_task(experiments_fh, gpu_only=False)
+                    if experiment is not None:
+                        experiment["command"] += ["--run-id", str(experiment["remaining-runs"])]
+                        futures.add(executor.submit(evolve_main, experiment["command"]))
+                    else:
+                        time.sleep(30)
+
+                _, futures = concurrent.futures.wait(futures, return_when=concurrent.futures.FIRST_COMPLETED)
+
+
 def main(argv=None):
     args = parse_args(argv)
     new_expr_fn = "../new_expr.json"
@@ -123,7 +187,8 @@ def main(argv=None):
         run_only_gpu_experiments(args.experiments_file)
 
     elif not args.gpu_only:
-        print("Running CPU experiments")
+        print("Running CPU experiments in parallel")
+        run_cpu_paralell_experiments(args.experiments_file)
 
 
 if __name__ == '__main__':
