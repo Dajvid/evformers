@@ -6,6 +6,74 @@
             "--dataset",
             "../datasets/228_elusage-depth-0-6-145K/228_elusage-depth-0-6-145K-SOT",
             "--output-path",
+            "../experiments/model_training/dropout_influence/0/elusage",
+            "--tree-depth",
+            "6",
+            "--dropout",
+            "0"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dataset",
+            "../datasets/503_wind-depth-0-6-145K/503_wind-depth-0-6-145K-SOT",
+            "--output-path",
+            "../experiments/model_training/dropout_influence/0/wind",
+            "--tree-depth",
+            "6",
+            "--dropout",
+            "0"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dataset",
+            "../datasets/505_tecator-depth-0-6-145K/505_tecator-depth-0-6-145K-SOT",
+            "--output-path",
+            "../experiments/model_training/dropout_influence/0/505_tecator",
+            "--tree-depth",
+            "6",
+            "--dropout",
+            "0"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dataset",
+            "../datasets/588_fri_c4_1000_100-depth-0-6-145K/588_fri_c4_1000_100-depth-0-6-145K-SOT",
+            "--output-path",
+            "../experiments/model_training/dropout_influence/0/fri_c4",
+            "--tree-depth",
+            "6",
+            "--dropout",
+            "0"
+        ],
+        "remaining-runs": 1,
+        "requires-gpu": true,
+        "total-runs": 1
+    },
+    {
+        "command": [
+            "python",
+            "train_model.py",
+            "--dataset",
+            "../datasets/228_elusage-depth-0-6-145K/228_elusage-depth-0-6-145K-SOT",
+            "--output-path",
             "../experiments/model_training/SOT_influence/SOT/elusage",
             "--tree-depth",
             "6"
@@ -55,7 +123,7 @@
             "--tree-depth",
             "6"
         ],
-        "remaining-runs": 1,
+        "remaining-runs": 0,
         "requires-gpu": true,
         "total-runs": 1
     },
@@ -70,7 +138,7 @@
             "--output-path",
             "../experiments/model_training/dim_model/16/elusage"
         ],
-        "remaining-runs": 1,
+        "remaining-runs": 0,
         "requires-gpu": true,
         "total-runs": 1
     },
@@ -85,7 +153,7 @@
             "--output-path",
             "../experiments/model_training/dim_model/16/wind"
         ],
-        "remaining-runs": 1,
+        "remaining-runs": 0,
         "requires-gpu": true,
         "total-runs": 1
     },
@@ -100,7 +168,7 @@
             "--output-path",
             "../experiments/model_training/dim_model/16/505_tecator"
         ],
-        "remaining-runs": 1,
+        "remaining-runs": 0,
         "requires-gpu": true,
         "total-runs": 1
     },
