@@ -1,0 +1,2626 @@
+[
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--popsize": 2000,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--popsize-2000/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 1,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-cross-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 1,
+            "--pop-size": 50,
+            "--tournament-size": 3,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--p-mut-1/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    },
+    {
+        "command": {
+            "--crossover_operator": "cxOnePoint",
+            "--dataset": "228_elusage",
+            "--generations": 100,
+            "--max-depth": 8,
+            "--min-depth": 0,
+            "--mutation_operator": "mutUniform",
+            "--p-cross": 0.7,
+            "--p-mut": 0.3,
+            "--pop-size": 50,
+            "--tournament-size": 50,
+            "--verbose": false,
+            "output-dir": "../runs/evolution/228_elusage/--tournament-size-50/"
+        },
+        "remaining-runs": 100,
+        "requires-gpu": false,
+        "total-runs": 100
+    }
+]
