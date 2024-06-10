@@ -9,6 +9,7 @@ import concurrent.futures
 
 from train_model import parse_args as parse_train_args
 from evolve import main as evolve_main
+from evolve import parse_args as parse_evolve_args
 from multiprocessing import Manager
 
 # Experiment to run entry example:
@@ -160,14 +161,15 @@ def run_cpu_paralell_experiments(experiments_f):
         futures = set()
         while True:
             with open(experiments_f, "r+") as experiments_fh:
-                print("waiting for idle workers")
                 while executor.idle_workers.value > 0:
-                    print("idle workers: ", executor.idle_workers.value)
+                    print(f"idle workers: {executor.idle_workers.value}\r", end="")
                     experiment = get_task(experiments_fh, gpu_only=False)
                     if experiment is not None:
                         experiment["command"] += ["--run-id", str(experiment["remaining-runs"])]
+                        parse_evolve_args(experiment["command"])
                         futures.add(executor.submit(evolve_main, experiment["command"]))
                     else:
+                        print(f"Waiting for more experiments, idle workers: {executor.idle_workers.value}\r", end="")
                         time.sleep(30)
 
                 _, futures = concurrent.futures.wait(futures, return_when=concurrent.futures.FIRST_COMPLETED)
