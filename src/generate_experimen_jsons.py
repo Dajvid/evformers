@@ -32,7 +32,7 @@ def generate_variant_over_datasets(variant_name, variants):
             params[variant_name] = variant
             params["output-dir"] = f"../runs/evolution/{dataset}/{variant_name}-{variant}/"
             experiments.append({
-                "command": params,
+                "command": [item for pair in params.items() for item in pair],
                 "remaining-runs": runs_per_experiment,
                 "requires-gpu": False,
                 "total-runs": runs_per_experiment
