@@ -1,3 +1,5 @@
+from typing import List, Dict
+
 from deap import gp
 
 
@@ -63,3 +65,15 @@ class SymRegTree(gp.PrimitiveTree):
 
     def compile(self):
         return gp.compile(self, self.pset)
+
+    @classmethod
+    def from_tokenized_tree(cls, tokenized: List, mapping: Dict, pset: gp.PrimitiveSet):
+        inv_mapping = {v: k for k, v in mapping.items()}
+        demaped = [inv_mapping[i] for i in tokenized]
+        depaded = [x for x in demaped if x not in ["PAD", "SOT", "EOT"]]
+        instanciated = [pset.mapping[x] for x in depaded]
+        tree = cls(instanciated)
+        tree.pset = pset
+        # TODO include fitness to make it a full individual compatible with deap
+
+        return cls(instanciated)
