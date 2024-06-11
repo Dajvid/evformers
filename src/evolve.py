@@ -36,7 +36,7 @@ def parse_args(argv):
 def main(argv=None):
     args = parse_args(argv)
 
-    dataset = pmlb.fetch_data(args.dataset)
+    dataset = pmlb.fetch_data(args.dataset, local_cache_dir="../datasets/pmlb_cache")
     pset = create_basic_symreg_pset(dataset)
 
     creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
