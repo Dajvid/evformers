@@ -36,7 +36,8 @@ def generate_variant(variant_name, variants, non_default_params=None):
                 params["--pop-size"] = str(max_fitness_evaluations // variant)
 
             params[variant_name] = str(variant)
-            params["--output-dir"] = f"../runs/evolution/{variant_name}/{dataset}/{variant_name}-{variant}/"
+            params["--output-dir"] = (f"../runs/evolution/{params["--mutation-operator"]}_{params["--crossover-operator"]}"
+                                      f"/{variant_name}/{dataset}/{variant_name}-{variant}/")
             experiments.append({
                 "command": [item for pair in params.items() for item in pair],
                 "remaining-runs": runs_per_experiment,
