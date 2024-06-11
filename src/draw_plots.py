@@ -25,8 +25,10 @@ def plot_data(df: pd.DataFrame, feature: str):
 
 
 def main():
-    df = load_data("../runs/evolution/--p-cross")
-    plot_data(df, "p_cross")
+    df = load_data("../runs/evolution/--tournament-size")
+    plot_data(df, "tournament_size")
+    # df = load_data("../runs/evolution/--p-cross")
+    # plot_data(df, "p_cross")
 
     # df = load_data("../runs/evolution/--p-mut")
     # plot_data(df, "p_mut")
