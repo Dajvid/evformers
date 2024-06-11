@@ -25,10 +25,15 @@ def plot_data(df: pd.DataFrame, feature: str):
 
 
 def main():
-    # df = load_data("../runs/evolution/--p-cross")
-    # plot_data(df, "p_cross")
-    df = load_data("../runs/evolution/--pop-size")
-    plot_data(df, "pop_size")
+    df = load_data("../runs/evolution/--p-cross")
+    plot_data(df, "p_cross")
+
+    # df = load_data("../runs/evolution/--p-mut")
+    # plot_data(df, "p_mut")
+
+    # df = load_data("../runs/evolution/--pop-size")
+    # plot_data(df, "pop_size")
+
     # #grouped = df.groupby(["dataset", "pop_size", "run_id"]).agg({"fit-min": "min"})
     # grouped = df.groupby(["pop_size", "run_id"]).agg({"fit-min": "min"})
     # indexed = df.set_index(["dataset", "pop_size"])
