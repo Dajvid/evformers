@@ -38,7 +38,7 @@ def parse_args(argv):
     parser.add_argument("--verbose", type=bool, action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--run-id", type=int, default=0)
     parser.add_argument("--model-weights", type=str, default="../model-tecator-0-6-SOT.pth")
-    parser.add_argument("--mut-param", type=float, default=0.005)
+    parser.add_argument("--mut-param", type=float, default=0.05)
 
     return parser.parse_args(argv)
 
