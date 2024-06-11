@@ -1,5 +1,8 @@
 import numpy as np
 import torch
+from deap import gp
+from deap.gp import mutUniform
+from functools import partial
 
 from gp.sym_reg_tree import SymRegTree
 
@@ -82,6 +85,7 @@ def mut_rev_cosine_dist(individual, pset, mapping, max_depth, model, distance):
             mutated = None
 
     if mutated is None:
-        mutated = individual
+        # fallback to mutuniform if no valid mutation is found in 3 trials
+        mutated = mutUniform(individual, expr=partial(gp.genFull, min_=0, max_=max_depth), pset=pset)[0]
 
     return mutated,

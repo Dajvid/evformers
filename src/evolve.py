@@ -43,6 +43,28 @@ def parse_args(argv):
     return parser.parse_args(argv)
 
 
+def handle_mut_operator(toolbox, args, pset):
+    if args.mutation_operator == "mutUniform":
+        toolbox.register("expr_mut", gp.genFull, min_=args.min_depth, max_=args.max_depth)
+        toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
+    else:
+        mapping = get_mapping(pset, ["PAD", "UNKNOWN", "SOT"])
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        model = Transformer(mapping, 2 * args.max_depth, 2, 1, 1,
+                            args.max_depth, 2, ignore_pad=False)
+        model.load_state_dict(torch.load(args.model_weights, map_location=torch.device(device)))
+
+        if args.mutation_operator == "mut_add_random_noise_gaussian":
+            toolbox.register("mutate", mut_add_random_noise_gaussian, pset=pset,
+                         mapping=get_mapping(pset, ["PAD", "UNKNOWN", "SOT"]),
+                         max_depth=args.max_depth, model=model)
+        elif args.mutation_operator == "mut_rev_cosine_dist":
+            toolbox.register("mutate", mut_rev_cosine_dist, pset=pset,
+                             max_depth=args.max_depth, model=model, mapping=mapping, distance=args.mut_param)
+    toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"),
+                                              max_value=args.max_depth))
+
+
 def main(argv=None):
     args = parse_args(argv)
 
@@ -62,31 +84,13 @@ def main(argv=None):
                      targets=dataset['target'])
     toolbox.register("select", tools.selTournament, tournsize=args.tournament_size)
     toolbox.register("mate", gp.cxOnePoint)
-    toolbox.register("expr_mut", gp.genFull, min_=args.min_depth, max_=args.max_depth)
     #
 
-    if args.mutation_operator == "mutUniform":
-        toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
-    else:
-        mapping = get_mapping(pset, ["PAD", "UNKNOWN", "SOT"])
-        device = "cuda" if torch.cuda.is_available() else "cpu"
-        model = Transformer(mapping, 2 * args.max_depth, 2, 1, 1,
-                            args.max_depth, 2, ignore_pad=False)
-        model.load_state_dict(torch.load(args.model_weights, map_location=torch.device(device)))
-
-        if args.mutation_operator == "mut_add_random_noise_gaussian":
-            toolbox.register("mutate", mut_add_random_noise_gaussian, pset=pset,
-                         mapping=get_mapping(pset, ["PAD", "UNKNOWN", "SOT"]),
-                         max_depth=args.max_depth, model=model)
-        elif args.mutation_operator == "mut_rev_cosine_dist":
-            toolbox.register("mutate", mut_rev_cosine_dist, pset=pset,
-                             max_depth=args.max_depth, model=model, mapping=mapping, distance=args.mut_param)
-
+    handle_mut_operator(toolbox, args, pset)
 
     toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"),
                                             max_value=args.max_depth))
-    # toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"),
-    #                                           max_value=args.max_depth))
+
 
     pop = toolbox.population(n=args.pop_size)
     hof = tools.HallOfFame(1)
