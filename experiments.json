@@ -327,7 +327,7 @@
             "--dropout",
             "0"
         ],
-        "remaining-runs": 1,
+        "remaining-runs": 0,
         "requires-gpu": true,
         "total-runs": 1
     },
@@ -344,7 +344,7 @@
             "--dropout",
             "0"
         ],
-        "remaining-runs": 1,
+        "remaining-runs": 0,
         "requires-gpu": true,
         "total-runs": 1
     },
@@ -361,7 +361,7 @@
             "--dropout",
             "0"
         ],
-        "remaining-runs": 1,
+        "remaining-runs": 0,
         "requires-gpu": true,
         "total-runs": 1
     },
@@ -378,7 +378,7 @@
             "--dropout",
             "0"
         ],
-        "remaining-runs": 1,
+        "remaining-runs": 0,
         "requires-gpu": true,
         "total-runs": 1
     },

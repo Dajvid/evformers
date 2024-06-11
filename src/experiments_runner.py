@@ -37,6 +37,8 @@ def parse_args(argv):
     parser.add_argument("--experiments-file", type=str,
                         help="Path to the file containing the experiments to run", default="../experiments.json")
     parser.add_argument("--add-new", type=bool, action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--new-file", type=str,
+                        help="Path to the file containing the new experiments to add", default="../new_expr.json")
     parser.add_argument("--gpu-only", action=argparse.BooleanOptionalAction, default=False)
     return parser.parse_args(argv)
 
@@ -72,7 +74,10 @@ def add_experiments(new_expr_fn, experiments_fn):
             new_experiments = json.loads(f.read())
             jsonschema.validate(new_experiments, schema)
             for experiment in new_experiments:
-                parse_train_args(experiment["command"][2:])
+                if experiment["requires-gpu"]:
+                    parse_train_args(experiment["command"][2:])
+                else:
+                    parse_evolve_args(experiment["command"])
             print("Adding new experiments to the file")
             obtain_file(experiments_f)
             current_experiments = json.loads(experiments_f.read())
@@ -115,8 +120,13 @@ def run_only_gpu_experiments(experiments_f):
 
 def get_task(experiments_fh, gpu_only=False):
     obtain_file(experiments_fh)
-    experiments = json.loads(experiments_fh.read())
-    experiment_to_run = find_runable_experiment(experiments, gpu_only=gpu_only)
+    f_content = experiments_fh.read()
+    if f_content:
+        print("Empty file          ")
+        experiments = json.loads(f_content)
+        experiment_to_run = find_runable_experiment(experiments, gpu_only=gpu_only)
+    else:
+        experiment_to_run = None
     if experiment_to_run is not None:
         experiment_to_run["remaining-runs"] -= 1
         print(f"Running experiment: {experiment_to_run}")
@@ -128,6 +138,7 @@ def get_task(experiments_fh, gpu_only=False):
         release_file(experiments_fh)
         return experiment_to_run
     else:
+        experiments_fh.flush()
         experiments_fh.seek(0)
         release_file(experiments_fh)
         return None
@@ -177,7 +188,7 @@ def run_cpu_paralell_experiments(experiments_f):
 
 def main(argv=None):
     args = parse_args(argv)
-    new_expr_fn = "../new_expr.json"
+    new_expr_fn = args.new_file
     print(f"Running experiments from file: {args.experiments_file}")
 
     if args.add_new:
