@@ -150,7 +150,7 @@ class CustomProcessPoolExecutor(concurrent.futures.ProcessPoolExecutor):
     def __init__(self, max_workers):
         super().__init__()
         self.manager = Manager()
-        self.idle_workers = self.manager.Value('i', self._max_workers)
+        self.idle_workers = self.manager.Value('i', max_workers)
         self.lock = self.manager.Lock()
 
     def submit(self, *args, **kwargs):
