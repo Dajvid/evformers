@@ -1,6 +1,7 @@
 import argparse
 import errno
 import fcntl
+import multiprocessing
 import subprocess
 import time
 import json
@@ -40,6 +41,7 @@ def parse_args(argv):
     parser.add_argument("--new-file", type=str,
                         help="Path to the file containing the new experiments to add", default="../new_expr.json")
     parser.add_argument("--gpu-only", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--max-workers", type=int, default=multiprocessing.cpu_count())
     return parser.parse_args(argv)
 
 
@@ -145,7 +147,7 @@ def get_task(experiments_fh, gpu_only=False):
 
 
 class CustomProcessPoolExecutor(concurrent.futures.ProcessPoolExecutor):
-    def __init__(self, max_tasks_per_child=1):
+    def __init__(self, max_workers):
         super().__init__()
         self.manager = Manager()
         self.idle_workers = self.manager.Value('i', self._max_workers)
@@ -167,8 +169,8 @@ class CustomProcessPoolExecutor(concurrent.futures.ProcessPoolExecutor):
             return self.idle_workers.value
 
 
-def run_cpu_paralell_experiments(experiments_f):
-    with CustomProcessPoolExecutor(max_tasks_per_child=1) as executor:
+def run_cpu_paralell_experiments(experiments_f, max_workers):
+    with CustomProcessPoolExecutor(max_workers) as executor:
         futures = set()
         while True:
             with open(experiments_f, "r+") as experiments_fh:
@@ -201,7 +203,7 @@ def main(argv=None):
 
     elif not args.gpu_only:
         print("Running CPU experiments in parallel")
-        run_cpu_paralell_experiments(args.experiments_file)
+        run_cpu_paralell_experiments(args.experiments_file, args.max_workers)
 
 
 if __name__ == '__main__':
