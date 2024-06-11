@@ -13,6 +13,9 @@ from gp.Fitness import eval_symb_reg_pmlb
 from gp.Pset import create_basic_symreg_pset
 from gp.sym_reg_tree import SymRegTree
 
+import warnings
+warnings.filterwarnings("ignore")
+
 
 def parse_args(argv):
     parser = argparse.ArgumentParser()
