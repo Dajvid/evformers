@@ -11,7 +11,7 @@ def generate_variant_over_datasets(variant_name, variants):
 
     params = {
         "--pop-size": str(50),
-        "--generations": str(100),
+        "--generations": str(int(max_fitness_evaluations // 50)),
         "--max-depth": str(8),
         "--min-depth": str(0),
         "--p-cross": str(0.7),
@@ -41,8 +41,8 @@ def generate_variant_over_datasets(variant_name, variants):
 
 
 experiments = []
-#experiments.extend(generate_variant_over_datasets("--pop-size", [1, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]))
-experiments.extend(generate_variant_over_datasets("--p-cross", [0.01, 0.1, 0.2, 0.5, 0.7, 0.8, 0.95, 1]))
+experiments.extend(generate_variant_over_datasets("--pop-size", [1, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]))
+#experiments.extend(generate_variant_over_datasets("--p-cross", [0.01, 0.1, 0.2, 0.5, 0.7, 0.8, 0.95, 1]))
 # experiments.extend(generate_variant_over_datasets("--p-mut", [0.01, 0.1, 0.2, 0.5, 0.7, 0.8, 0.95, 1]))
 # experiments.extend(generate_variant_over_datasets("--tournament-size", [1, 2, 3, 5, 7, 10, 20, 50]))
 
