@@ -24,7 +24,7 @@
             "--output-dir",
             "../runs/evolution/--p-cross/505_tecator/--p-cross-0.01/"
         ],
-        "remaining-runs": 100,
+        "remaining-runs": 0,
         "requires-gpu": false,
         "total-runs": 100
     },
@@ -53,7 +53,7 @@
             "--output-dir",
             "../runs/evolution/--p-cross/505_tecator/--p-cross-0.1/"
         ],
-        "remaining-runs": 100,
+        "remaining-runs": 0,
         "requires-gpu": false,
         "total-runs": 100
     },
@@ -82,7 +82,7 @@
             "--output-dir",
             "../runs/evolution/--p-cross/505_tecator/--p-cross-0.2/"
         ],
-        "remaining-runs": 100,
+        "remaining-runs": 0,
         "requires-gpu": false,
         "total-runs": 100
     },
@@ -111,7 +111,7 @@
             "--output-dir",
             "../runs/evolution/--p-cross/505_tecator/--p-cross-0.5/"
         ],
-        "remaining-runs": 100,
+        "remaining-runs": 0,
         "requires-gpu": false,
         "total-runs": 100
     },
@@ -140,7 +140,7 @@
             "--output-dir",
             "../runs/evolution/--p-cross/505_tecator/--p-cross-0.7/"
         ],
-        "remaining-runs": 100,
+        "remaining-runs": 0,
         "requires-gpu": false,
         "total-runs": 100
     },
@@ -169,7 +169,7 @@
             "--output-dir",
             "../runs/evolution/--p-cross/505_tecator/--p-cross-0.8/"
         ],
-        "remaining-runs": 100,
+        "remaining-runs": 0,
         "requires-gpu": false,
         "total-runs": 100
     },
@@ -198,7 +198,7 @@
             "--output-dir",
             "../runs/evolution/--p-cross/505_tecator/--p-cross-0.95/"
         ],
-        "remaining-runs": 100,
+        "remaining-runs": 0,
         "requires-gpu": false,
         "total-runs": 100
     },
@@ -227,7 +227,7 @@
             "--output-dir",
             "../runs/evolution/--p-cross/505_tecator/--p-cross-1/"
         ],
-        "remaining-runs": 100,
+        "remaining-runs": 0,
         "requires-gpu": false,
         "total-runs": 100
     }
