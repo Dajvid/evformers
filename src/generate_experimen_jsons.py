@@ -13,7 +13,7 @@ default_params = {
     "--crossover-operator": "cxOnePoint",
     "--mutation-operator": "mutUniform",
     "--tournament-size": str(7),
-    "--model-weights": "../experiments/model_training/dropout_influence/0/505_tecator/model.pth",
+    "--model-weights": "../experiments/model_training/dropout_influence/0/505_tecator/2024-06-10_15-21-16_dhcpf118.fit.vutbr.cz/model.pth",
     "--mut-param": str(0.005)
 }
 
