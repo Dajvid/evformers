@@ -135,7 +135,7 @@ def get_task(experiments_fh, gpu_only=False):
 
 class CustomProcessPoolExecutor(concurrent.futures.ProcessPoolExecutor):
     def __init__(self, max_tasks_per_child=1):
-        super().__init__(max_tasks_per_child=max_tasks_per_child)
+        super().__init__()
         self.manager = Manager()
         self.idle_workers = self.manager.Value('i', self._max_workers)
         self.lock = self.manager.Lock()
