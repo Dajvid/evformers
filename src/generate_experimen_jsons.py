@@ -1,25 +1,31 @@
 import json
 
-runs_per_experiment = 100
-max_fitness_evaluations = 30000
+runs_per_experiment = 50
+max_fitness_evaluations = 10000
+
+default_params = {
+    "--pop-size": str(50),
+    "--generations": str(int(max_fitness_evaluations // 50)),
+    "--max-depth": str(6),
+    "--min-depth": str(0),
+    "--p-cross": str(0.5),
+    "--p-mut": str(0.5),
+    "--crossover-operator": "cxOnePoint",
+    "--mutation-operator": "mutUniform",
+    "--tournament-size": str(7),
+    "--model-weights": "../experiments/model_training/dropout_influence/0/505_tecator/model.pth",
+    "--mut-param": str(0.005)
+}
 
 
-def generate_variant_over_datasets(variant_name, variants):
-    #datasets = ["505_tecator", "588_fri_c4_1000_100", "503_wind", "228_elusage"]
+def generate_variant(variant_name, variants, non_default_params=None):
+    params = default_params.copy()
+    if non_default_params is not None:
+        params.update(non_default_params)
     datasets = ["505_tecator"]
     experiments = []
 
-    params = {
-        "--pop-size": str(50),
-        "--generations": str(int(max_fitness_evaluations // 50)),
-        "--max-depth": str(8),
-        "--min-depth": str(0),
-        "--p-cross": str(0.7),
-        "--p-mut": str(0.3),
-        "--crossover-operator": "cxOnePoint",
-        "--mutation-operator": "mutUniform",
-        "--tournament-size": str(3)
-    }
+
 
     for dataset in datasets:
         for variant in variants:
@@ -41,10 +47,14 @@ def generate_variant_over_datasets(variant_name, variants):
 
 
 experiments = []
-experiments.extend(generate_variant_over_datasets("--pop-size", [1, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]))
-#experiments.extend(generate_variant_over_datasets("--p-cross", [0.01, 0.1, 0.2, 0.5, 0.7, 0.8, 0.95, 1]))
-# experiments.extend(generate_variant_over_datasets("--p-mut", [0.01, 0.1, 0.2, 0.5, 0.7, 0.8, 0.95, 1]))
-# experiments.extend(generate_variant_over_datasets("--tournament-size", [1, 2, 3, 5, 7, 10, 20, 50]))
+#experiments.extend(generate_variant("--pop-size", [1, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]))
+#experiments.extend(generate_variant(default_params, "--p-cross", [0.01, 0.1, 0.2, 0.5, 0.7, 0.8, 0.95, 1]))
+# experiments.extend(generate_variant(default_params, "--p-mut", [0.01, 0.1, 0.2, 0.5, 0.7, 0.8, 0.95, 1]))
+# experiments.extend(generate_variant(default_params, "--tournament-size", [1, 2, 3, 5, 7, 10, 20, 50]))
+
+experiments.extend(generate_variant("--mut-param", [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1],
+                                    non_default_params={"--mutation-operator": "mut_rev_cosine_dist"}))
+#experiments.extend(generate_variant("--generations", [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000]))
 
 with open("../new_expr.json", "w") as experiments_f:
     experiments_f.write(json.dumps(experiments, indent=4, sort_keys=True))

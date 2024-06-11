@@ -5,15 +5,20 @@ import os.path
 import numpy as np
 import pandas as pd
 import pmlb
+import torch
 
 from deap import creator, base, gp, tools
 from deap.algorithms import eaSimple
 
 from gp.Fitness import eval_symb_reg_pmlb
 from gp.Pset import create_basic_symreg_pset
-from gp.sym_reg_tree import SymRegTree
+from gp.sym_reg_tree import SymRegTree, get_mapping
+from gp.mutations import mut_add_random_noise_gaussian, mut_rev_cosine_dist
 
 import warnings
+
+from gpformer.model import Transformer
+
 warnings.filterwarnings("ignore")
 
 
@@ -21,17 +26,19 @@ def parse_args(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument("--pop-size", type=int, default=50)
     parser.add_argument("--generations", type=int, default=100)
-    parser.add_argument("--max-depth", type=int, default=8)
+    parser.add_argument("--max-depth", type=int, default=6)
     parser.add_argument("--min-depth", type=int, default=0)
-    parser.add_argument("--p-cross", type=float, default=0.7)
-    parser.add_argument("--p-mut", type=float, default=0.3)
+    parser.add_argument("--p-cross", type=float, default=0.5)
+    parser.add_argument("--p-mut", type=float, default=0.5)
     parser.add_argument("--crossover-operator", type=str)
-    parser.add_argument("--mutation-operator", type=str)
-    parser.add_argument("--tournament-size", type=int, default=3)
+    parser.add_argument("--mutation-operator", type=str, default="mutUniform")
+    parser.add_argument("--tournament-size", type=int, default=7)
     parser.add_argument("--dataset", type=str, default="505_tecator")
     parser.add_argument("--output-dir", type=str, default="../runs/evolution")
     parser.add_argument("--verbose", type=bool, action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--run-id", type=int, default=0)
+    parser.add_argument("--model-weights", type=str, default="../model-tecator-0-6-SOT.pth")
+    parser.add_argument("--mut-param", type=float, default=0.005)
 
     return parser.parse_args(argv)
 
@@ -56,12 +63,30 @@ def main(argv=None):
     toolbox.register("select", tools.selTournament, tournsize=args.tournament_size)
     toolbox.register("mate", gp.cxOnePoint)
     toolbox.register("expr_mut", gp.genFull, min_=args.min_depth, max_=args.max_depth)
-    toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
+    #
+
+    if args.mutation_operator == "mutUniform":
+        toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
+    else:
+        mapping = get_mapping(pset, ["PAD", "UNKNOWN", "SOT"])
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        model = Transformer(mapping, 2 * args.max_depth, 2, 1, 1,
+                            args.max_depth, 2, ignore_pad=False)
+        model.load_state_dict(torch.load(args.model_weights, map_location=torch.device(device)))
+
+        if args.mutation_operator == "mut_add_random_noise_gaussian":
+            toolbox.register("mutate", mut_add_random_noise_gaussian, pset=pset,
+                         mapping=get_mapping(pset, ["PAD", "UNKNOWN", "SOT"]),
+                         max_depth=args.max_depth, model=model)
+        elif args.mutation_operator == "mut_rev_cosine_dist":
+            toolbox.register("mutate", mut_rev_cosine_dist, pset=pset,
+                             max_depth=args.max_depth, model=model, mapping=mapping, distance=args.mut_param)
+
 
     toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"),
                                             max_value=args.max_depth))
-    toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"),
-                                              max_value=args.max_depth))
+    # toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"),
+    #                                           max_value=args.max_depth))
 
     pop = toolbox.population(n=args.pop_size)
     hof = tools.HallOfFame(1)
@@ -77,7 +102,6 @@ def main(argv=None):
     stats_height.register("height-min", np.min)
     stats_height.register("height-max", np.max)
     mstats = tools.MultiStatistics(fitness=stats_fit, height=stats_height)
-    #mstats = tools.Statistics(lambda ind: ind.fitness.values)
 
     pop, log = eaSimple(pop, toolbox, args.p_cross, args.p_mut, args.generations, stats=mstats, halloffame=hof,
                         verbose=args.verbose)
