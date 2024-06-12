@@ -13,7 +13,7 @@ from deap.algorithms import eaSimple
 from gp.Fitness import eval_symb_reg_pmlb
 from gp.Pset import create_basic_symreg_pset
 from gp.sym_reg_tree import SymRegTree, get_mapping
-from gp.mutations import mut_add_random_noise_gaussian, mut_rev_cosine_dist
+from gp.mutations import mut_add_random_noise_gaussian, mut_rev_cosine_dist, mut_rev_euqlid_dist, de_mut
 
 import warnings
 
@@ -44,7 +44,7 @@ def parse_args(argv):
     return parser.parse_args(argv)
 
 
-def handle_mut_operator(toolbox, args, pset):
+def handle_mut_operator(toolbox, args, pset, pop):
     if args.mutation_operator == "mutUniform":
         toolbox.register("expr_mut", gp.genFull, min_=args.min_depth, max_=args.max_depth)
         toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
@@ -62,6 +62,12 @@ def handle_mut_operator(toolbox, args, pset):
         elif args.mutation_operator == "mut_rev_cosine_dist":
             toolbox.register("mutate", mut_rev_cosine_dist, pset=pset,
                              max_depth=args.max_depth, model=model, mapping=mapping, distance=args.mut_param)
+        elif args.mutation_operator == "mut_rev_euqlid_dist":
+            toolbox.register("mutate", mut_rev_euqlid_dist, pset=pset,
+                             max_depth=args.max_depth, model=model, mapping=mapping, distance=args.mut_param)
+        elif args.mutation_operator == "de_mut":
+            toolbox.register("mutate", de_mut, pset=pset, model=model, mapping=mapping,
+                             max_depth=args.max_depth, population=pop)
     toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"),
                                               max_value=args.max_depth))
 
@@ -85,15 +91,13 @@ def main(argv=None):
                      targets=dataset['target'])
     toolbox.register("select", tools.selTournament, tournsize=args.tournament_size)
     toolbox.register("mate", gp.cxOnePoint)
-    #
-
-    handle_mut_operator(toolbox, args, pset)
-
     toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"),
                                             max_value=args.max_depth))
 
 
     pop = toolbox.population(n=args.pop_size)
+    handle_mut_operator(toolbox, args, pset, pop)
+
     hof = tools.HallOfFame(1)
     stats_fit = tools.Statistics(lambda ind: ind.fitness.values)
     stats_fit.register("fit-avg", np.mean)

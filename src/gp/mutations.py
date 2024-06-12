@@ -1,3 +1,5 @@
+import random
+
 import numpy as np
 import torch
 from deap import gp
@@ -92,5 +94,73 @@ def mut_rev_cosine_dist(individual, pset, mapping, max_depth, model, distance):
     if mutated is None:
         # fallback to mutuniform if no valid mutation is found in 3 trials
         mutated = mutUniform(individual, expr=partial(gp.genFull, min_=0, max_=max_depth), pset=pset)[0]
+
+    return mutated,
+
+
+def mut_rev_euqlid_dist(individual, pset, mapping, max_depth, model, distance):
+
+    def generate_vector_with_distance(A, D):
+        # Ensure A is a tensor
+        A = torch.tensor(A, dtype=torch.float32)
+        # Generate a random vector orthogonal to A
+        random_vector = torch.randn_like(A)
+        # Project the random vector onto the plane orthogonal to A
+        projection = random_vector - torch.dot(random_vector, A) / torch.dot(A, A) * A
+        # Normalize the projection to have a unit length
+        unit_vector = projection / torch.norm(projection)
+        # Scale the unit vector by the desired distance D
+        scaled_vector = unit_vector * D
+        # Add the scaled vector to A to get B
+        B = A + scaled_vector
+        return B
+
+    tokenized = individual.tokenize(max_depth, mapping, add_SOT=True)
+    encoded = model.encode(torch.tensor(tokenized).to(device))
+    trials = 0
+    mutated = None
+
+    while mutated is None and trials < 3:
+        trials += 1
+        original_shape = encoded.shape
+        distanced = generate_vector_with_distance(encoded.flatten(), distance)
+        decoded = model.decode(distanced.reshape(original_shape))
+
+        mutated = SymRegTree.from_tokenized_tree(decoded, mapping, pset)
+        try:
+            mutated.padded = mutated.add_padding(pset, max_depth)
+            mutated.fitness = individual.fitness
+            mutated.pset = individual.pset
+        except (RuntimeError, IndexError):
+            mutated = None
+
+    if mutated is None:
+        # fallback to mutuniform if no valid mutation is found in 3 trials
+        print("Fallback to mutuniform")
+        mutated = mutUniform(individual, expr=partial(gp.genFull, min_=0, max_=max_depth), pset=pset)[0]
+
+    return mutated,
+
+
+def de_mut(individual, pset, mapping, max_depth, model, population, F=0.5, CR=0.5):
+    inds = random.sample(population, 3)
+    x1, x2, x3 = [model.encode(torch.tensor(ind.tokenize(max_depth, mapping, add_SOT=True), device=device)) for ind in inds]
+    mutant_vector = x1 + F * (x2 - x3)
+    target = model.encode(torch.tensor(individual.tokenize(max_depth, mapping, add_SOT=True), device=device))
+
+    mask = (torch.randn_like(x1) < CR).float()
+    mask[torch.randint(0, len(x1), (1,)).item()] = 1.0
+
+    trial_vector = mutant_vector * mask + target * (1 - mask)
+    decoded = model.decode(trial_vector)
+
+    mutated = SymRegTree.from_tokenized_tree(decoded, mapping, pset)
+    try:
+        mutated.padded = mutated.add_padding(pset, max_depth)
+        mutated.fitness = individual.fitness
+        mutated.pset = individual.pset
+    except (RuntimeError, IndexError):
+        mutated = mutUniform(individual, expr=partial(gp.genFull, min_=0, max_=max_depth), pset=pset)[0]
+
 
     return mutated,
