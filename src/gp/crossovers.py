@@ -1,7 +1,7 @@
 import torch
 from deap.gp import cxOnePoint
 
-from src.gp.sym_reg_tree import SymRegTree
+from gp.sym_reg_tree import SymRegTree
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 

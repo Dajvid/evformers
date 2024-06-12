@@ -19,7 +19,7 @@ from gp.mutations import mut_add_random_noise_gaussian, mut_rev_cosine_dist, mut
 import warnings
 
 from gpformer.model import Transformer
-from src.gp.crossovers import cross_average_dif, cross_half_half
+from gp.crossovers import cross_average_dif, cross_half_half
 
 warnings.filterwarnings("ignore")
 
@@ -46,7 +46,7 @@ def parse_args(argv):
     if args.mutation_operator not in ["mutUniform", "mut_add_random_noise_gaussian", "mut_rev_cosine_dist",
                                       "mut_rev_euclid_dist", "de_mut"]:
         raise ValueError(f"Unknown mutation operator: {args.mutation_operator}")
-    if args.crossover_operator not in ["cxOnePoint", "cxAverage", "cxHalHalf"]:
+    if args.crossover_operator not in ["cxOnePoint", "cxAverage", "cxHalfHalf"]:
         raise ValueError(f"Unknown crossover operator: {args.crossover_operator}")
 
     return args
@@ -81,7 +81,7 @@ def handle_cross_operator(toolbox, args, pset, stats, model, mapping):
     elif args.crossover_operator == "cxAverage":
         toolbox.register("mate", cross_average_dif, pset=pset, mapping=mapping, model=model,
                          max_depth=args.max_depth, stats=stats)
-    elif args.crossover_operator == "cxHalHalf":
+    elif args.crossover_operator == "cxHalfHalf":
         toolbox.register("mate", cross_half_half, pset=pset, mapping=mapping, model=model,
                             max_depth=args.max_depth, stats=stats)
     else:
