@@ -8,6 +8,15 @@ def plot_evolution_results(results: pd.DataFrame, output_dir: str):
     pass
 
 
+def add_property(folder: str, property: str, value: float):
+    pathlist = list(Path(folder).rglob('*.pkl'))
+    for i, path in enumerate(pathlist):
+        print(f"Altering {i + 1} / {len(pathlist)}: {path}")
+        df = pd.read_pickle(path)
+        df[property] = value
+        df.to_pickle(path)
+
+
 def load_data(folder: str = "../runs/evolution/--p-cross"):
     pathlist = list(Path(folder).rglob('*.pkl'))
     dataframes = []
@@ -25,8 +34,16 @@ def plot_data(df: pd.DataFrame, feature: str):
 
 
 def main():
-    df = load_data("../runs/evolution/--tournament-size")
-    plot_data(df, "tournament_size")
+    add_property("../runs/evolution/mut_rev_cosine_dist_cxOnePoint/--mut-param/505_tecator/--mut-param-1e-05",
+                 "mut_param", 0.00001)
+
+    # df = load_data("../runs/evolution/--tournament-size")
+    # plot_data(df, "tournament_size")
+    # df = load_data("../runs/evolution/mutUniform_cxOnePoint")
+    # plot_data(df, "pop_size")
+
+    df = load_data("../runs/evolution/mut_rev_cosine_dist_cxOnePoint/--mut-param")
+    plot_data(df, "mut_param")
     # df = load_data("../runs/evolution/--p-cross")
     # plot_data(df, "p_cross")
 
