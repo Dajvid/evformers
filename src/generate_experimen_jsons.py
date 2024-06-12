@@ -14,7 +14,8 @@ default_params = {
     "--mutation-operator": "mutUniform",
     "--tournament-size": str(7),
     "--model-weights": "../experiments/model_training/dropout_influence/0/505_tecator/2024-06-10_15-21-16_dhcpf118.fit.vutbr.cz/model.pth",
-    "--mut-param": str(0.005)
+    "--mut-param": str(0.005),
+    "--noise-mut-ration": str(0.1)
 }
 
 
@@ -61,6 +62,9 @@ experiments = []
 
 # experiments.extend(generate_variant("--mut-param", [0.0001, 0.00001],
 #                                     non_default_params={"--mutation-operator": "mut_rev_cosine_dist"}))
+
+experiments.extend(generate_variant("--mut-param", [0.1, 0.25, 0.5, 1, 2],
+                                    non_default_params={"--mutation-operator": "mut_add_random_noise_gaussian"}))
 
 
 with open("../new_expr.json", "w") as experiments_f:

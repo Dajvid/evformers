@@ -11,7 +11,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 def mut_add_random_noise_gaussian(individual, pset, mapping, max_depth, model, scaler, ratio=0.1):
     tokenized = individual.tokenize(max_depth, mapping, add_SOT=True)
-    encoded = model.encode(torch.tensor(tokenized))
+    encoded = model.encode(torch.tensor(tokenized).to(device))
     trials = 0
     mutated = None
 
