@@ -63,6 +63,7 @@ class Transformer(nn.Module):
 
         return mask.to(torch.bool)
 
+    @torch.inference_mode()
     def encode(self, src: Tensor) -> Tensor:
         self.eval()
         with torch.no_grad():
@@ -75,6 +76,7 @@ class Transformer(nn.Module):
             encoded = self.transformer.encoder(src, src_key_padding_mask=src_key_padding_mask)
         return encoded[0]
 
+    @torch.inference_mode()
     def decode(self, encoded, start_token=None) -> List:
         self.eval()
         tgt_seq = [start_token] if start_token else [self.dictionary["SOT"]]
@@ -84,7 +86,6 @@ class Transformer(nn.Module):
             for i in range(encoded.size(1) - 1):
                 tgt_seq_tensor = torch.tensor(tgt_seq).unsqueeze(0).to(encoded.device)
                 tgt_emb = self.embedding(tgt_seq_tensor) + pos_encodings[:, :tgt_seq_tensor.size(1), :]
-                # also construct key_pad mask...
                 output = self.transformer.decoder(tgt_emb, encoded)
                 output = self.out(output)
                 next_token = output.argmax(dim=-1)[:, -1].item()
