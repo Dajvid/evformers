@@ -1,538 +1,72 @@
 [
     {
         "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/228_elusage-depth-0-6-145K/228_elusage-depth-0-6-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dropout_influence/0.05/elusage",
-            "--tree-depth",
+            "--pop-size",
+            "500",
+            "--generations",
+            "20",
+            "--max-depth",
             "6",
-            "--dropout",
-            "0.05"
+            "--min-depth",
+            "0",
+            "--p-cross",
+            "0.5",
+            "--p-mut",
+            "0.5",
+            "--crossover-operator",
+            "cxOnePoint",
+            "--mutation-operator",
+            "mut_add_random_noise_gaussian",
+            "--tournament-size",
+            "7",
+            "--model-weights",
+            "../experiments/model_training/dropout_influence/0/505_tecator/2024-06-10_15-21-16_dhcpf118.fit.vutbr.cz/model.pth",
+            "--mut-param",
+            "1.25",
+            "--mut-ratio-param",
+            "0.2",
+            "--dataset",
+            "505_tecator",
+            "--output-dir",
+            "../runs/evolution/mut_add_random_noise_gaussian_cxOnePoint/--pop-size/505_tecator/--pop-size-500/"
         ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
+        "remaining-runs": 50,
+        "requires-gpu": false,
+        "total-runs": 50
     },
     {
         "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/503_wind-depth-0-6-145K/503_wind-depth-0-6-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dropout_influence/0.05/wind",
-            "--tree-depth",
+            "--pop-size",
+            "1000",
+            "--generations",
+            "10",
+            "--max-depth",
             "6",
-            "--dropout",
-            "0.05"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
+            "--min-depth",
+            "0",
+            "--p-cross",
+            "0.5",
+            "--p-mut",
+            "0.5",
+            "--crossover-operator",
+            "cxOnePoint",
+            "--mutation-operator",
+            "mut_add_random_noise_gaussian",
+            "--tournament-size",
+            "7",
+            "--model-weights",
+            "../experiments/model_training/dropout_influence/0/505_tecator/2024-06-10_15-21-16_dhcpf118.fit.vutbr.cz/model.pth",
+            "--mut-param",
+            "1.25",
+            "--mut-ratio-param",
+            "0.2",
             "--dataset",
-            "../datasets/505_tecator-depth-0-6-145K/505_tecator-depth-0-6-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dropout_influence/0.05/505_tecator",
-            "--tree-depth",
-            "6",
-            "--dropout",
-            "0.05"
+            "505_tecator",
+            "--output-dir",
+            "../runs/evolution/mut_add_random_noise_gaussian_cxOnePoint/--pop-size/505_tecator/--pop-size-1000/"
         ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/588_fri_c4_1000_100-depth-0-6-145K/588_fri_c4_1000_100-depth-0-6-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dropout_influence/0.05/fri_c4",
-            "--tree-depth",
-            "6",
-            "--dropout",
-            "0.05"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/228_elusage-depth-0-6-145K/228_elusage-depth-0-6-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dropout_influence/0/elusage",
-            "--tree-depth",
-            "6",
-            "--dropout",
-            "0"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/503_wind-depth-0-6-145K/503_wind-depth-0-6-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dropout_influence/0/wind",
-            "--tree-depth",
-            "6",
-            "--dropout",
-            "0"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/505_tecator-depth-0-6-145K/505_tecator-depth-0-6-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dropout_influence/0/505_tecator",
-            "--tree-depth",
-            "6",
-            "--dropout",
-            "0"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/588_fri_c4_1000_100-depth-0-6-145K/588_fri_c4_1000_100-depth-0-6-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dropout_influence/0/fri_c4",
-            "--tree-depth",
-            "6",
-            "--dropout",
-            "0"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/228_elusage-depth-0-6-145K/228_elusage-depth-0-6-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/SOT_influence/SOT/elusage",
-            "--tree-depth",
-            "6"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/503_wind-depth-0-6-145K/503_wind-depth-0-6-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/SOT_influence/SOT/wind",
-            "--tree-depth",
-            "6"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/505_tecator-depth-0-6-145K/505_tecator-depth-0-6-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/SOT_influence/SOT/505_tecator",
-            "--tree-depth",
-            "6"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/588_fri_c4_1000_100-depth-0-6-145K/588_fri_c4_1000_100-depth-0-6-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/SOT_influence/SOT/fri_c4",
-            "--tree-depth",
-            "6"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dim-model",
-            "16",
-            "--dataset",
-            "../datasets/228_elusage-depth-0-8-145K/228_elusage-depth-0-8-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dim_model/16/elusage",
-            "--dropout",
-            "0"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dim-model",
-            "16",
-            "--dataset",
-            "../datasets/503_wind-depth-0-8-145K/503_wind-depth-0-8-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dim_model/16/wind",
-            "--dropout",
-            "0"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dim-model",
-            "16",
-            "--dataset",
-            "../datasets/505_tecator-depth-0-8-145K/505_tecator-depth-0-8-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dim_model/16/505_tecator",
-            "--dropout",
-            "0"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dim-model",
-            "16",
-            "--dataset",
-            "../datasets/588_fri_c4_1000_100-depth-0-8-145K/588_fri_c4_1000_100-depth-0-8-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dim_model/16/fri_c4",
-            "--dropout",
-            "0"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dim-model",
-            "32",
-            "--dataset",
-            "../datasets/228_elusage-depth-0-8-145K/228_elusage-depth-0-8-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dim_model/32/elusage",
-            "--dropout",
-            "0"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dim-model",
-            "32",
-            "--dataset",
-            "../datasets/503_wind-depth-0-8-145K/503_wind-depth-0-8-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dim_model/32/wind",
-            "--dropout",
-            "0"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dim-model",
-            "32",
-            "--dataset",
-            "../datasets/505_tecator-depth-0-8-145K/505_tecator-depth-0-8-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dim_model/32/505_tecator",
-            "--dropout",
-            "0"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dim-model",
-            "32",
-            "--dataset",
-            "../datasets/588_fri_c4_1000_100-depth-0-8-145K/588_fri_c4_1000_100-depth-0-8-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dim_model/32/fri_c4",
-            "--dropout",
-            "0"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dim-model",
-            "64",
-            "--dataset",
-            "../datasets/228_elusage-depth-0-8-145K/228_elusage-depth-0-8-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dim_model/64/elusage",
-            "--dropout",
-            "0"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dim-model",
-            "64",
-            "--dataset",
-            "../datasets/503_wind-depth-0-8-145K/503_wind-depth-0-8-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dim_model/64/wind",
-            "--dropout",
-            "0"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dim-model",
-            "64",
-            "--dataset",
-            "../datasets/505_tecator-depth-0-8-145K/505_tecator-depth-0-8-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dim_model/64/505_tecator",
-            "--dropout",
-            "0"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dim-model",
-            "64",
-            "--dataset",
-            "../datasets/588_fri_c4_1000_100-depth-0-8-145K/588_fri_c4_1000_100-depth-0-8-145K-SOT",
-            "--output-path",
-            "../experiments/model_training/dim_model/64/fri_c4",
-            "--dropout",
-            "0"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/228_elusage-depth-0-6-145K/228_elusage-depth-0-6-145K",
-            "--fitness-ignore-pad",
-            "--attention-ignore-pad",
-            "--output-path",
-            "../experiments/model_training/pad_handling/ignore_pad/elusage",
-            "--tree-depth",
-            "6"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/228_elusage-depth-0-6-145K/228_elusage-depth-0-6-145K",
-            "--no-fitness-ignore-pad",
-            "--no-attention-ignore-pad",
-            "--output-path",
-            "../experiments/model_training/pad_handling/no_ignore_pad/elusage",
-            "--tree-depth",
-            "6"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/503_wind-depth-0-6-145K/503_wind-depth-0-6-145K",
-            "--fitness-ignore-pad",
-            "--attention-ignore-pad",
-            "--output-path",
-            "../experiments/model_training/pad_handling/ignore_pad/wind",
-            "--tree-depth",
-            "6"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/503_wind-depth-0-6-145K/503_wind-depth-0-6-145K",
-            "--no-fitness-ignore-pad",
-            "--no-attention-ignore-pad",
-            "--output-path",
-            "../experiments/model_training/pad_handling/no_ignore_pad/wind",
-            "--tree-depth",
-            "6"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/505_tecator-depth-0-6-145K/505_tecator-depth-0-6-145K",
-            "--fitness-ignore-pad",
-            "--attention-ignore-pad",
-            "--output-path",
-            "../experiments/model_training/pad_handling/ignore_pad/505_tecator",
-            "--tree-depth",
-            "6"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/505_tecator-depth-0-6-145K/505_tecator-depth-0-6-145K",
-            "--no-fitness-ignore-pad",
-            "--no-attention-ignore-pad",
-            "--output-path",
-            "../experiments/model_training/pad_handling/no_ignore_pad/505_tecator",
-            "--tree-depth",
-            "6"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/588_fri_c4_1000_100-depth-0-6-145K/588_fri_c4_1000_100-depth-0-6-145K",
-            "--fitness-ignore-pad",
-            "--attention-ignore-pad",
-            "--output-path",
-            "../experiments/model_training/pad_handling/ignore_pad/fri_c4",
-            "--tree-depth",
-            "6"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
-    },
-    {
-        "command": [
-            "python",
-            "train_model.py",
-            "--dataset",
-            "../datasets/588_fri_c4_1000_100-depth-0-6-145K/588_fri_c4_1000_100-depth-0-6-145K",
-            "--no-fitness-ignore-pad",
-            "--no-attention-ignore-pad",
-            "--output-path",
-            "../experiments/model_training/pad_handling/no_ignore_pad/fri_c4",
-            "--tree-depth",
-            "6"
-        ],
-        "remaining-runs": 0,
-        "requires-gpu": true,
-        "total-runs": 1
+        "remaining-runs": 50,
+        "requires-gpu": false,
+        "total-runs": 50
     }
 ]
