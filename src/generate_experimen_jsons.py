@@ -53,9 +53,15 @@ experiments = []
 # experiments.extend(generate_variant(default_params, "--p-mut", [0.01, 0.1, 0.2, 0.5, 0.7, 0.8, 0.95, 1]))
 # experiments.extend(generate_variant(default_params, "--tournament-size", [1, 2, 3, 5, 7, 10, 20, 50]))
 
-experiments.extend(generate_variant("--mut-param", [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1],
-                                    non_default_params={"--mutation-operator": "mut_rev_cosine_dist"}))
+# experiments.extend(generate_variant("--mut-param", [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1],
+#                                    non_default_params={"--mutation-operator": "mut_rev_cosine_dist"}))
 #experiments.extend(generate_variant("--generations", [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000]))
+
+#experiments.extend(generate_variant("--pop-size", [50]))
+
+# experiments.extend(generate_variant("--mut-param", [0.0001, 0.00001],
+#                                     non_default_params={"--mutation-operator": "mut_rev_cosine_dist"}))
+
 
 with open("../new_expr.json", "w") as experiments_f:
     experiments_f.write(json.dumps(experiments, indent=4, sort_keys=True))

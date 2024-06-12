@@ -24,7 +24,6 @@ def mut_add_random_noise_gaussian(individual, pset, mapping, max_depth, model, s
         mutated = SymRegTree.from_tokenized_tree(decoded, mapping, pset)
         try:
             mutated.padded = mutated.add_padding(pset, max_depth)
-            mask = torch.rand(5, 10) < ratio
             mutated.fitness = individual.fitness
             mutated.pset = individual.pset
         except (RuntimeError, IndexError):
