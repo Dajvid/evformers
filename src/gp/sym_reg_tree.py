@@ -1,6 +1,9 @@
+from collections import namedtuple
 from typing import List, Dict
 
+import torch
 from deap import gp
+
 
 
 def get_mapping(pset, extra_elements=None):
@@ -62,6 +65,12 @@ class SymRegTree(gp.PrimitiveTree):
                 padded[i+1:i+1] = ["PAD"] * int(n)
 
         return padded
+
+    def embedding(self, model, device, max_depth, mapping):
+        if not hasattr(self, "emb"):
+            self.emb = model.encode(torch.tensor(self.tokenize(max_depth, mapping, add_SOT=True), device=device))
+
+        return self.emb
 
     def compile(self):
         return gp.compile(self, self.pset)

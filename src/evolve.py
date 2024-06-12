@@ -1,6 +1,7 @@
 import argparse
 import operator
 import os.path
+from collections import namedtuple
 
 import numpy as np
 import pandas as pd
@@ -8,19 +9,18 @@ import pmlb
 import torch
 
 from deap import creator, base, gp, tools
-from deap.algorithms import eaSimple
 
+from gp.custom_ea_simple import eaSimple
 from gp.Fitness import eval_symb_reg_pmlb
 from gp.Pset import create_basic_symreg_pset
 from gp.sym_reg_tree import SymRegTree, get_mapping
-from gp.mutations import mut_add_random_noise_gaussian, mut_rev_cosine_dist, mut_rev_euqlid_dist, de_mut
+from gp.mutations import mut_add_random_noise_gaussian, mut_rev_cosine_dist, mut_rev_euclid_dist, de_mut
 
 import warnings
 
 from gpformer.model import Transformer
 
 warnings.filterwarnings("ignore")
-
 
 def parse_args(argv):
     parser = argparse.ArgumentParser()
@@ -39,12 +39,17 @@ def parse_args(argv):
     parser.add_argument("--run-id", type=int, default=0)
     parser.add_argument("--model-weights", type=str, default="../model-tecator-0-6-SOT.pth")
     parser.add_argument("--mut-param", type=float, default=0.05)
-    parser.add_argument("--noise-mut-ration", type=float, default=0.1)
+    parser.add_argument("--mut-ratio-param", type=float, default=0.1)
 
-    return parser.parse_args(argv)
+    args = parser.parse_args(argv)
+    if args.mutation_operator not in ["mutUniform", "mut_add_random_noise_gaussian", "mut_rev_cosine_dist",
+                                      "mut_rev_euclid_dist", "de_mut"]:
+        raise ValueError(f"Unknown mutation operator: {args.mutation_operator}")
+
+    return args
 
 
-def handle_mut_operator(toolbox, args, pset, pop):
+def handle_mut_operator(toolbox, args, pset, pop, stats):
     if args.mutation_operator == "mutUniform":
         toolbox.register("expr_mut", gp.genFull, min_=args.min_depth, max_=args.max_depth)
         toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
@@ -57,23 +62,26 @@ def handle_mut_operator(toolbox, args, pset, pop):
 
         if args.mutation_operator == "mut_add_random_noise_gaussian":
             toolbox.register("mutate", mut_add_random_noise_gaussian, pset=pset,
-                         mapping=get_mapping(pset, ["PAD", "UNKNOWN", "SOT"]),
-                         max_depth=args.max_depth, model=model, scaler=args.mut_param, ratio=args.noise_mut_ration)
+                         mapping=get_mapping(pset, ["PAD", "UNKNOWN", "SOT"]), stats=stats,
+                         max_depth=args.max_depth, model=model, scaler=args.mut_param, ratio=args.mut_ratio_param)
         elif args.mutation_operator == "mut_rev_cosine_dist":
-            toolbox.register("mutate", mut_rev_cosine_dist, pset=pset,
+            toolbox.register("mutate", mut_rev_cosine_dist, pset=pset, stats=stats,
                              max_depth=args.max_depth, model=model, mapping=mapping, distance=args.mut_param)
-        elif args.mutation_operator == "mut_rev_euqlid_dist":
-            toolbox.register("mutate", mut_rev_euqlid_dist, pset=pset,
+        elif args.mutation_operator == "mut_rev_euclid_dist":
+            toolbox.register("mutate", mut_rev_euclid_dist, pset=pset, stats=stats,
                              max_depth=args.max_depth, model=model, mapping=mapping, distance=args.mut_param)
         elif args.mutation_operator == "de_mut":
-            toolbox.register("mutate", de_mut, pset=pset, model=model, mapping=mapping,
-                             max_depth=args.max_depth, population=pop)
+            toolbox.register("mutate", de_mut, pset=pset, model=model, mapping=mapping, stats=stats,
+                             max_depth=args.max_depth, population=pop, F=args.mut_param, CR=args.mut_ratio_param)
     toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"),
                                               max_value=args.max_depth))
 
 
 def main(argv=None):
     args = parse_args(argv)
+
+    mut_stats = {name: 0 for name in ["success", "trials", "fallbacked", "called"]}
+    cross_stats = {name: 0 for name in ["success", "trials", "fallbacked", "called"]}
 
     dataset = pmlb.fetch_data(args.dataset, local_cache_dir="../datasets/pmlb_cache")
     pset = create_basic_symreg_pset(dataset)
@@ -96,7 +104,7 @@ def main(argv=None):
 
 
     pop = toolbox.population(n=args.pop_size)
-    handle_mut_operator(toolbox, args, pset, pop)
+    handle_mut_operator(toolbox, args, pset, pop, mut_stats)
 
     hof = tools.HallOfFame(1)
     stats_fit = tools.Statistics(lambda ind: ind.fitness.values)
@@ -130,7 +138,18 @@ def main(argv=None):
     statistics["output_dir"] = args.output_dir
     statistics["model_weights"] = args.model_weights
     statistics["mut_param"] = args.mut_param
-    statistics["noise_mut_ration"] = args.noise_mut_ration
+    statistics["mut_ratio_param"] = args.mut_ratio_param
+    statistics["mut_called"] = mut_stats["called"]
+    statistics["mut_success"] = mut_stats["success"]
+    statistics["mut_trials"] = mut_stats["trials"]
+    statistics["mut_fallbacked"] = mut_stats["fallbacked"]
+    statistics["cross_called"] = cross_stats["called"]
+    statistics["cross_success"] = cross_stats["success"]
+    statistics["cross_trials"] = cross_stats["trials"]
+    statistics["cross_fallbacked"] = cross_stats["fallbacked"]
+
+    print("mutation stats", mut_stats)
+    print("crossover stats", cross_stats)
 
     os.makedirs(args.output_dir, exist_ok=True)
     statistics.to_pickle(os.path.join(args.output_dir, f"{args.dataset}_run_{args.run_id}.pkl"))
