@@ -6,8 +6,10 @@ from functools import partial
 
 from gp.sym_reg_tree import SymRegTree
 
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
-def mut_add_random_noise_gaussian(individual, pset, mapping, max_depth, model):
+
+def mut_add_random_noise_gaussian(individual, pset, mapping, max_depth, model, scaler, ratio=0.1):
     tokenized = individual.tokenize(max_depth, mapping, add_SOT=True)
     encoded = model.encode(torch.tensor(tokenized))
     trials = 0
@@ -15,18 +17,22 @@ def mut_add_random_noise_gaussian(individual, pset, mapping, max_depth, model):
 
     while mutated is None and trials < 3:
         trials += 1
-        decoded = model.decode(encoded + ((torch.randn_like(encoded)) / 10))
+        mask = (torch.randn_like(encoded) < 0.1).float()
+        noise = torch.randn_like(encoded) * mask * scaler
+        decoded = model.decode(encoded + noise)
 
         mutated = SymRegTree.from_tokenized_tree(decoded, mapping, pset)
         try:
             mutated.padded = mutated.add_padding(pset, max_depth)
+            mask = torch.rand(5, 10) < ratio
             mutated.fitness = individual.fitness
             mutated.pset = individual.pset
         except (RuntimeError, IndexError):
             mutated = None
 
     if mutated is None:
-        mutated = individual
+        # fallback to mutuniform if no valid mutation is found in 3 trials
+        mutated = mutUniform(individual, expr=partial(gp.genFull, min_=0, max_=max_depth), pset=pset)[0]
 
     return mutated,
 
@@ -56,7 +62,7 @@ def mut_rev_cosine_dist(individual, pset, mapping, max_depth, model, distance):
 
         A = A / torch.norm(A)  # Ensure A is a unit vector
         cos_theta = 1 - D
-        cos_theta = torch.tensor(cos_theta, dtype=torch.float32)
+        cos_theta = torch.tensor(cos_theta, dtype=torch.float32).to(device)
         sin_theta = torch.sqrt(1 - cos_theta ** 2)
 
         U = random_orthogonal_unit_vector(A)
@@ -66,7 +72,7 @@ def mut_rev_cosine_dist(individual, pset, mapping, max_depth, model, distance):
 
 
     tokenized = individual.tokenize(max_depth, mapping, add_SOT=True)
-    encoded = model.encode(torch.tensor(tokenized))
+    encoded = model.encode(torch.tensor(tokenized).to(device))
     trials = 0
     mutated = None
 
