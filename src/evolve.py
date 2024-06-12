@@ -19,6 +19,7 @@ from gp.mutations import mut_add_random_noise_gaussian, mut_rev_cosine_dist, mut
 import warnings
 
 from gpformer.model import Transformer
+from src.gp.crossovers import cross_average_dif, cross_half_half
 
 warnings.filterwarnings("ignore")
 
@@ -45,36 +46,49 @@ def parse_args(argv):
     if args.mutation_operator not in ["mutUniform", "mut_add_random_noise_gaussian", "mut_rev_cosine_dist",
                                       "mut_rev_euclid_dist", "de_mut"]:
         raise ValueError(f"Unknown mutation operator: {args.mutation_operator}")
+    if args.crossover_operator not in ["cxOnePoint", "cxAverage", "cxHalHalf"]:
+        raise ValueError(f"Unknown crossover operator: {args.crossover_operator}")
 
     return args
 
 
-def handle_mut_operator(toolbox, args, pset, pop, stats):
+def handle_mut_operator(toolbox, args, pset, pop, stats, model, mapping):
     if args.mutation_operator == "mutUniform":
         toolbox.register("expr_mut", gp.genFull, min_=args.min_depth, max_=args.max_depth)
         toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
-    else:
-        mapping = get_mapping(pset, ["PAD", "UNKNOWN", "SOT"])
-        device = "cuda" if torch.cuda.is_available() else "cpu"
-        model = Transformer(mapping, 2 * args.max_depth, 2, 1, 1,
-                            args.max_depth, 2, ignore_pad=False).to(device)
-        model.load_state_dict(torch.load(args.model_weights, map_location=torch.device(device)))
-
-        if args.mutation_operator == "mut_add_random_noise_gaussian":
-            toolbox.register("mutate", mut_add_random_noise_gaussian, pset=pset,
-                         mapping=get_mapping(pset, ["PAD", "UNKNOWN", "SOT"]), stats=stats,
+    elif args.mutation_operator == "mut_add_random_noise_gaussian":
+        toolbox.register("mutate", mut_add_random_noise_gaussian, pset=pset, mapping=mapping, stats=stats,
                          max_depth=args.max_depth, model=model, scaler=args.mut_param, ratio=args.mut_ratio_param)
-        elif args.mutation_operator == "mut_rev_cosine_dist":
-            toolbox.register("mutate", mut_rev_cosine_dist, pset=pset, stats=stats,
-                             max_depth=args.max_depth, model=model, mapping=mapping, distance=args.mut_param)
-        elif args.mutation_operator == "mut_rev_euclid_dist":
-            toolbox.register("mutate", mut_rev_euclid_dist, pset=pset, stats=stats,
-                             max_depth=args.max_depth, model=model, mapping=mapping, distance=args.mut_param)
-        elif args.mutation_operator == "de_mut":
-            toolbox.register("mutate", de_mut, pset=pset, model=model, mapping=mapping, stats=stats,
-                             max_depth=args.max_depth, population=pop, F=args.mut_param, CR=args.mut_ratio_param)
+    elif args.mutation_operator == "mut_rev_cosine_dist":
+        toolbox.register("mutate", mut_rev_cosine_dist, pset=pset, stats=stats,
+                         max_depth=args.max_depth, model=model, mapping=mapping, distance=args.mut_param)
+    elif args.mutation_operator == "mut_rev_euclid_dist":
+        toolbox.register("mutate", mut_rev_euclid_dist, pset=pset, stats=stats,
+                         max_depth=args.max_depth, model=model, mapping=mapping, distance=args.mut_param)
+    elif args.mutation_operator == "de_mut":
+        toolbox.register("mutate", de_mut, pset=pset, model=model, mapping=mapping, stats=stats,
+                         max_depth=args.max_depth, population=pop, F=args.mut_param, CR=args.mut_ratio_param)
+    else:
+        raise ValueError(f"Unknown mutation operator: {args.mutation_operator}")
+
     toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"),
                                               max_value=args.max_depth))
+
+
+def handle_cross_operator(toolbox, args, pset, stats, model, mapping):
+    if args.crossover_operator == "cxOnePoint":
+        toolbox.register("mate", gp.cxOnePoint)
+    elif args.crossover_operator == "cxAverage":
+        toolbox.register("mate", cross_average_dif, pset=pset, mapping=mapping, model=model,
+                         max_depth=args.max_depth, stats=stats)
+    elif args.crossover_operator == "cxHalHalf":
+        toolbox.register("mate", cross_half_half, pset=pset, mapping=mapping, model=model,
+                            max_depth=args.max_depth, stats=stats)
+    else:
+        raise ValueError(f"Unknown crossover operator: {args.crossover_operator}")
+
+    toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"),
+                                            max_value=args.max_depth))
 
 
 def main(argv=None):
@@ -98,13 +112,16 @@ def main(argv=None):
     toolbox.register("evaluate", eval_symb_reg_pmlb, inputs=dataset.drop('target', axis=1),
                      targets=dataset['target'])
     toolbox.register("select", tools.selTournament, tournsize=args.tournament_size)
-    toolbox.register("mate", gp.cxOnePoint)
-    toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"),
-                                            max_value=args.max_depth))
-
-
     pop = toolbox.population(n=args.pop_size)
-    handle_mut_operator(toolbox, args, pset, pop, mut_stats)
+
+    mapping = get_mapping(pset, ["PAD", "UNKNOWN", "SOT"])
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    model = Transformer(mapping, 2 * args.max_depth, 2, 1, 1,
+                        args.max_depth, 2, ignore_pad=False).to(device)
+    model.load_state_dict(torch.load(args.model_weights, map_location=torch.device(device)))
+
+    handle_mut_operator(toolbox, args, pset, pop, mut_stats, model, mapping)
+    handle_cross_operator(toolbox, args, pset, cross_stats, model, mapping)
 
     hof = tools.HallOfFame(1)
     stats_fit = tools.Statistics(lambda ind: ind.fitness.values)
