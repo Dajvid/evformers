@@ -39,9 +39,12 @@ def main():
     # plot_data(df, "tournament_size")
     # df = load_data("../runs/evolution/mutUniform_cxOnePoint")
     # plot_data(df, "pop_size")
+    #
+    # df = load_data("../runs/evolution/mut_add_random_noise_gaussian_cxOnePoint/--mut-param")
+    # plot_data(df, "mut_param")
 
-    df = load_data("../runs/evolution/mut_add_random_noise_gaussian_cxOnePoint/--mut-param")
-    plot_data(df, "mut_param")
+    df = load_data("../runs/evolution/mut_add_random_noise_gaussian_cxOnePoint/--noise-mut-ration")
+    plot_data(df, "noise_mut_ration")
 
     # df = load_data("../runs/evolution/mut_rev_cosine_dist_cxOnePoint/--mut-param")
     # plot_data(df, "mut_param")
