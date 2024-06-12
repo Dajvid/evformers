@@ -39,6 +39,7 @@ def parse_args(argv):
     parser.add_argument("--run-id", type=int, default=0)
     parser.add_argument("--model-weights", type=str, default="../model-tecator-0-6-SOT.pth")
     parser.add_argument("--mut-param", type=float, default=0.05)
+    parser.add_argument("--noise-mut-ration", type=float, default=0.1)
 
     return parser.parse_args(argv)
 
@@ -51,13 +52,13 @@ def handle_mut_operator(toolbox, args, pset):
         mapping = get_mapping(pset, ["PAD", "UNKNOWN", "SOT"])
         device = "cuda" if torch.cuda.is_available() else "cpu"
         model = Transformer(mapping, 2 * args.max_depth, 2, 1, 1,
-                            args.max_depth, 2, ignore_pad=False)
+                            args.max_depth, 2, ignore_pad=False).to(device)
         model.load_state_dict(torch.load(args.model_weights, map_location=torch.device(device)))
 
         if args.mutation_operator == "mut_add_random_noise_gaussian":
             toolbox.register("mutate", mut_add_random_noise_gaussian, pset=pset,
                          mapping=get_mapping(pset, ["PAD", "UNKNOWN", "SOT"]),
-                         max_depth=args.max_depth, model=model)
+                         max_depth=args.max_depth, model=model, scaler=args.mut_param, ratio=args.noise_mut_ration)
         elif args.mutation_operator == "mut_rev_cosine_dist":
             toolbox.register("mutate", mut_rev_cosine_dist, pset=pset,
                              max_depth=args.max_depth, model=model, mapping=mapping, distance=args.mut_param)
@@ -123,6 +124,8 @@ def main(argv=None):
     statistics["crossover_operator"] = args.crossover_operator
     statistics["mutation_operator"] = args.mutation_operator
     statistics["output_dir"] = args.output_dir
+    statistics["model_weights"] = args.model_weights
+    statistics["mut_param"] = args.mut_param
 
     os.makedirs(args.output_dir, exist_ok=True)
     statistics.to_pickle(os.path.join(args.output_dir, f"{args.dataset}_run_{args.run_id}.pkl"))
