@@ -17,6 +17,16 @@ def add_property(folder: str, property: str, value: float):
         df.to_pickle(path)
 
 
+def rename_property(folder: str, old_property: str, new_property: str):
+    pathlist = list(Path(folder).rglob('*.pkl'))
+    for i, path in enumerate(pathlist):
+        print(f"Altering {i + 1} / {len(pathlist)}: {path}")
+        df = pd.read_pickle(path)
+        df[new_property] = df[old_property]
+        df.drop(columns=[old_property], inplace=True)
+        df.to_pickle(path)
+
+
 def load_data(folder: str = "../runs/evolution/--p-cross"):
     pathlist = list(Path(folder).rglob('*.pkl'))
     dataframes = []
@@ -43,8 +53,9 @@ def main():
     # df = load_data("../runs/evolution/mut_add_random_noise_gaussian_cxOnePoint/--mut-param")
     # plot_data(df, "mut_param")
 
-    df = load_data("../runs/evolution/mut_add_random_noise_gaussian_cxOnePoint/--noise-mut-ration")
-    plot_data(df, "noise_mut_ration")
+    # TODO add pop-size 50 from mut-ratio-param benchmarks to pop-size benchmarks to not recalculate it
+    df = load_data("../runs/evolution/mut_add_random_noise_gaussian_cxOnePoint/--mut-ratio-param")
+    plot_data(df, "mut_ratio_param")
 
     # df = load_data("../runs/evolution/mut_rev_cosine_dist_cxOnePoint/--mut-param")
     # plot_data(df, "mut_param")
