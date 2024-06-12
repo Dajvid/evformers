@@ -135,7 +135,7 @@
             "--output-dir",
             "../runs/evolution/mut_add_random_noise_gaussian_cxOnePoint/--noise-mut-ration/505_tecator/--noise-mut-ration-0.2/"
         ],
-        "remaining-runs": 37,
+        "remaining-runs": 36,
         "requires-gpu": false,
         "total-runs": 50
     },
