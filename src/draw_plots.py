@@ -34,16 +34,17 @@ def plot_data(df: pd.DataFrame, feature: str):
 
 
 def main():
-    add_property("../runs/evolution/mut_rev_cosine_dist_cxOnePoint/--mut-param/505_tecator/--mut-param-1e-05",
-                 "mut_param", 0.00001)
 
     # df = load_data("../runs/evolution/--tournament-size")
     # plot_data(df, "tournament_size")
     # df = load_data("../runs/evolution/mutUniform_cxOnePoint")
     # plot_data(df, "pop_size")
 
-    df = load_data("../runs/evolution/mut_rev_cosine_dist_cxOnePoint/--mut-param")
+    df = load_data("../runs/evolution/mut_add_random_noise_gaussian_cxOnePoint/--mut-param")
     plot_data(df, "mut_param")
+
+    # df = load_data("../runs/evolution/mut_rev_cosine_dist_cxOnePoint/--mut-param")
+    # plot_data(df, "mut_param")
     # df = load_data("../runs/evolution/--p-cross")
     # plot_data(df, "p_cross")
 
