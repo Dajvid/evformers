@@ -126,6 +126,7 @@ def main(argv=None):
     statistics["output_dir"] = args.output_dir
     statistics["model_weights"] = args.model_weights
     statistics["mut_param"] = args.mut_param
+    statistics["noise_mut_ration"] = args.noise_mut_ration
 
     os.makedirs(args.output_dir, exist_ok=True)
     statistics.to_pickle(os.path.join(args.output_dir, f"{args.dataset}_run_{args.run_id}.pkl"))
