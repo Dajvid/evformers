@@ -63,9 +63,13 @@ experiments = []
 # experiments.extend(generate_variant("--mut-param", [0.0001, 0.00001],
 #                                     non_default_params={"--mutation-operator": "mut_rev_cosine_dist"}))
 
-experiments.extend(generate_variant("--mut-param", [0.1, 0.25, 0.5, 1, 2],
-                                    non_default_params={"--mutation-operator": "mut_add_random_noise_gaussian"}))
-
+# experiments.extend(generate_variant("--mut-param", [5],
+#                                     non_default_params={"--mutation-operator": "mut_add_random_noise_gaussian"}))
+experiments.extend(generate_variant("--noise-mut-ration", [0.005, 0.01, 0.05, 0.2, 0.5],
+                                    non_default_params={
+                                        "--mutation-operator": "mut_add_random_noise_gaussian",
+                                        "--mut-param": str(1.25)
+                                    }))
 
 with open("../new_expr.json", "w") as experiments_f:
     experiments_f.write(json.dumps(experiments, indent=4, sort_keys=True))
