@@ -135,7 +135,7 @@
             "--output-dir",
             "../runs/evolution/mut_add_random_noise_gaussian_cxOnePoint/--noise-mut-ration/505_tecator/--noise-mut-ration-0.2/"
         ],
-        "remaining-runs": 36,
+        "remaining-runs": 0,
         "requires-gpu": false,
         "total-runs": 50
     },
@@ -170,7 +170,7 @@
             "--output-dir",
             "../runs/evolution/mut_add_random_noise_gaussian_cxOnePoint/--noise-mut-ration/505_tecator/--noise-mut-ration-0.5/"
         ],
-        "remaining-runs": 50,
+        "remaining-runs": 0,
         "requires-gpu": false,
         "total-runs": 50
     },
