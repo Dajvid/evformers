@@ -163,6 +163,7 @@ class CustomProcessPoolExecutor(concurrent.futures.ProcessPoolExecutor):
     def _task_done_callback(self, future):
         with self.lock:
             self.idle_workers.value += 1  # Increase idle worker count when a task is done
+            future.result()
 
     def get_idle_workers_count(self):
         with self.lock:
@@ -170,6 +171,7 @@ class CustomProcessPoolExecutor(concurrent.futures.ProcessPoolExecutor):
 
 
 def run_cpu_paralell_experiments(experiments_f, max_workers):
+    multiprocessing.set_start_method('spawn')
     with CustomProcessPoolExecutor(max_workers) as executor:
         futures = set()
         while True:
