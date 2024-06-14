@@ -49,10 +49,10 @@ def generate_variant(variant_name, variants, non_default_params=None):
 
 
 experiments = []
-#experiments.extend(generate_variant("--pop-size", [1, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]))
-#experiments.extend(generate_variant(default_params, "--p-cross", [0.01, 0.1, 0.2, 0.5, 0.7, 0.8, 0.95, 1]))
-# experiments.extend(generate_variant(default_params, "--p-mut", [0.01, 0.1, 0.2, 0.5, 0.7, 0.8, 0.95, 1]))
-# experiments.extend(generate_variant(default_params, "--tournament-size", [1, 2, 3, 5, 7, 10, 20, 50]))
+# experiments.extend(generate_variant("--pop-size", [1, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]))
+# experiments.extend(generate_variant("--p-cross", [0.01, 0.1, 0.2, 0.5, 0.7, 0.8, 0.95, 1]))
+# experiments.extend(generate_variant("--p-mut", [0.01, 0.1, 0.2, 0.5, 0.7, 0.8, 0.95, 1]))
+# experiments.extend(generate_variant("--tournament-size", [1, 2, 3, 5, 7, 10, 20, 50]))
 
 # experiments.extend(generate_variant("--mut-param", [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1],
 #                                    non_default_params={"--mutation-operator": "mut_rev_cosine_dist"}))
@@ -70,12 +70,58 @@ experiments = []
 #                                         "--mutation-operator": "mut_add_random_noise_gaussian",
 #                                         "--mut-param": str(1.25)
 #                                     }))
-experiments.extend(generate_variant("--pop-size", [500, 1000],
+# experiments.extend(generate_variant("--pop-size", [100, 25],
+#                                     non_default_params={
+#                                         "--mutation-operator": "mut_add_random_noise_gaussian",
+#                                         "--mut-param": str(1.25),
+#                                         "--mut-ratio-param": "0.2"
+#                                     }))
+
+# experiments.extend(generate_variant("--mut-param", [1.0, 1.5, 2.0],
+#                                     non_default_params={
+#                                         "--mutation-operator": "de_mut",
+#                                         "--mut-ratio-param": "0.5"
+#                                     }))
+
+# experiments.extend(generate_variant("--pop-size", [10, 100, 200, 500, 1000],
+#                                     non_default_params={
+#                                         "--mutation-operator": "de_mut",
+#                                         "--mut-ratio-param": "0.5",
+#                                         "--mut-param": "0.9"
+#                                     }))
+
+# experiments.extend(generate_variant("--mut-ratio-param", [0.1, 0.3, 0.5, 0.7, 0.9],
+#                                     non_default_params={
+#                                         "--mutation-operator": "de_mut",
+#                                         "--mut-param": "0.9",
+#                                         "--pop-size": "100"
+#                                     }))
+# experiments.extend(generate_variant("--mut-ratio-param", [0.075],
+#                                     non_default_params={
+#                                         "--mutation-operator": "de_mut",
+#                                         "--mut-param": "0.9",
+#                                         "--pop-size": "100"
+#                                     }))
+# TODO --p-mut = 0.5 can be taken from --mut-ratio-param experiments
+# experiments.extend(generate_variant("--p-mut", [0.8],
+#                                     non_default_params={
+#                                         "--mut-ratio-param": "0.1",
+#                                         "--mutation-operator": "de_mut",
+#                                         "--mut-param": "0.9",
+#                                         "--pop-size": "100"
+#                                     }))
+
+# TODO set best p-mut, also p-cross = 0.5 can be later taken from previous experiment, so do that later
+experiments.extend(generate_variant("--p-cross", [0, 0.1, 0.25, 0.75, 0.9, 1],
                                     non_default_params={
-                                        "--mutation-operator": "mut_add_random_noise_gaussian",
-                                        "--mut-param": str(1.25),
-                                        "--mut-ratio-param": "0.2"
+                                       "--p-mut": "0.7",
+                                        "--mut-ratio-param": "0.1",
+                                        "--mutation-operator": "de_mut",
+                                        "--mut-param": "0.9",
+                                        "--pop-size": "100"
                                     }))
+
+
 
 with open("../new_expr.json", "w") as experiments_f:
     experiments_f.write(json.dumps(experiments, indent=4, sort_keys=True))
