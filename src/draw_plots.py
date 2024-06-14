@@ -147,14 +147,26 @@ def benchmark_de_mut_cxOnePoint():
     # print("Mutation succes rate: ", df["mut_success"].sum() / df["mut_called"].sum())
     # plot_data(df, "mut_ratio_param", "CR", "../plots/de_mut_cxOnePoint_mut_ratio_param.pdf")
 
-    # "../plots/de_mut_cxOnePoint_p_mut.pdf"
     df = load_data("../runs/evolution/de_mut_cxOnePoint/--p-mut")
     print("Mutation succes rate: ", df["mut_success"].sum() / df["mut_called"].sum())
-    plot_data(df, "p_mut", "Mutation probability")
+    plot_data(df, "p_mut", "Mutation probability", "../plots/de_mut_cxOnePoint_p_mut.pdf")
+
+
+def benchmark_mutUniform_cxOnePoint():
+    df = load_data("../runs/evolution/mutUniform_cxOnePoint/--pop-size")
+    plot_data(df, "pop_size", "Population size", None)
+
+    df = load_data("../runs/evolution/mutUniform_cxOnePoint/--p-mut")
+    plot_data(df, "p_mut", "Mutation probability", None)
+
+    df = load_data("../runs/evolution/mutUniform_cxOnePoint/--p-cross")
+    plot_data(df, "p_cross", "Crossover probability", None)
+
+    df = load_data("../runs/evolution/mutUniform_cxOnePoint/--tournament-size")
+    plot_data(df, "tournament_size", "Tournament size", None)
 
 
 def model_plots():
-
     df = load_data("../experiments/model_training/SOT_influence/SOT/505_tecator/")
     df["epoch"] = df.index
 
@@ -182,7 +194,8 @@ def model_plots():
 def main():
     # similarity_heatmaps()
     #model_plots()
-    benchmark_de_mut_cxOnePoint()
+    #benchmark_de_mut_cxOnePoint()
+    benchmark_mutUniform_cxOnePoint()
     # similarity_heatmap("../training-runs/2024-06-13_15-32-01_dhcpg197.fit.vutbr.cz/model.pth",
     #                    "505_tecator", ignore_pad=False, SOT=True, masked=True, aggregate="sum")
     # similarity_heatmap("../training-runs/2024-06-13_17-03-03_dhcpf244.fit.vutbr.cz/model.pth",
