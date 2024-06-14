@@ -68,7 +68,7 @@ class SymRegTree(gp.PrimitiveTree):
 
     def embedding(self, model, device, max_depth, mapping):
         if not hasattr(self, "emb"):
-            self.emb = model.encode(torch.tensor(self.tokenize(max_depth, mapping, add_SOT=True), device=device))
+            self.emb = model.encode(torch.tensor(self.tokenize(max_depth, mapping, add_SOT="SOT" in mapping.keys()), device=device))
 
         return self.emb
 
