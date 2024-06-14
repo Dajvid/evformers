@@ -18,7 +18,7 @@ def check_args_compatibility(mode, opt):
         raise ValueError("Mode must be either 'train' or 'eval'")
 
 
-def run_epoch(model, loss_fn, dataloader, mode, opt=None,
+def run_epoch(model, loss_fn, dataloader, mode, opt=None, masked_learning=False,
               fitness_ignore_pad=True, attention_ignore_pad=True):
     check_args_compatibility(mode, opt)
     model.train() if mode == "train" else model.eval()
@@ -31,6 +31,17 @@ def run_epoch(model, loss_fn, dataloader, mode, opt=None,
         print(f"Batch {i + 1} / {len(dataloader)}\r", end="")
         x, y = batch, batch
         x, y = torch.tensor(x, dtype=torch.long, device=device), torch.tensor(y, dtype=torch.long, device=device)
+
+        if masked_learning:
+            # mask 15 % of the input tokens
+            non_pad_indices = (x != model.dictionary["PAD"]).nonzero(as_tuple=True)
+            num_elements_to_replace = int(0.15 * len(non_pad_indices[0]))
+            random_indices = torch.randperm(len(non_pad_indices[0]))[:num_elements_to_replace]
+            x[non_pad_indices[0][random_indices], non_pad_indices[1][random_indices]] = model.dictionary["MASK"]
+
+            # mask = torch.rand(x.size(), device=device) < 0.15
+            # x = torch.where(mask, torch.tensor(model.dictionary["MASK"], device=device, dtype=torch.long), x)
+            x = torch.tensor(x, dtype=torch.long, device=device)
 
         # Now we shift the tgt by one so with the <SOS> we predict the token at pos 1
         y_input = y[:, :-1]
@@ -77,7 +88,7 @@ def run_epoch(model, loss_fn, dataloader, mode, opt=None,
 
 
 def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs, writer=None,
-        fitness_ignore_pad=True, attention_ignore_pad=True):
+        fitness_ignore_pad=True, attention_ignore_pad=True, masked_learning=False):
     statistics = []
     print("Training and validating model")
 
@@ -91,7 +102,8 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs, writer=No
             opt=opt,
             mode="train",
             fitness_ignore_pad=fitness_ignore_pad,
-            attention_ignore_pad=attention_ignore_pad
+            attention_ignore_pad=attention_ignore_pad,
+            masked_learning=masked_learning
         )
         val_loss, val_token_accuracy, val_sequence_accuracy = run_epoch(
             model,

@@ -32,6 +32,8 @@ def parse_args(argv):
                         action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--output-path", type=str, default="../training-runs")
     parser.add_argument("--run-id", type=int, default=None)
+    parser.add_argument("--masked-learning", type=bool, action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--loss-from-masked-only", type=bool, action=argparse.BooleanOptionalAction, default=False)
     args = parser.parse_args(argv)
 
     if args.dim_model is None:
@@ -52,6 +54,10 @@ def main(argv=None):
 
     data = np.loadtxt(f"{args.dataset}.data")
     dict = pickle.load(open(f"{args.dataset}.dict", "rb"))
+
+    if args.masked_learning:
+        max_token_id = max(list(dict.values()))
+        dict["MASK"] = max_token_id + 1
 
     train_data = data[:int(0.8 * len(data))]
     val_data = data[int(0.8 * len(data)):]
@@ -86,7 +92,8 @@ def main(argv=None):
         epochs=args.epochs,
         writer=writer,
         fitness_ignore_pad=args.fitness_ignore_pad,
-        attention_ignore_pad=args.attention_ignore_pad
+        attention_ignore_pad=args.attention_ignore_pad,
+        masked_learning=args.masked_learning
     )
 
     torch.save(model.state_dict(), os.path.join(out_dir, "model.pth"))
