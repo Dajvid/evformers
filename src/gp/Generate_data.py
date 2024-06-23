@@ -1,5 +1,7 @@
 import operator
-
+import itertools
+import numpy as np
+import pandas as pd
 import pmlb
 from deap.algorithms import varAnd
 from deap import tools, base, creator, gp
@@ -64,11 +66,16 @@ def eaSimple_with_population_log(population, toolbox, cxpb, mutpb, ngen, stats=N
 
 
 def generate_random_trees(pset, n_trees, min_depth=0, max_depth=8):
-    trees = [SymRegTree(genHalfAndHalf(pset, min_depth, max_depth)) for _ in range(n_trees)]
+    trees = []
+    for _ in range(n_trees):
+        tree = SymRegTree(genHalfAndHalf(pset, min_depth, max_depth))
+        tree.pset = pset
+        trees.append(tree)
+
     return trees
 
 
-def generate_trees_from_evolution(pset, dataset, min_depth=0, max_depth=8,
+def generate_trees_from_evolution(pset, dataset, min_depth=0, max_depth=8, fitness=eval_symb_reg_pmlb,
                                   n_generations=55, n_trees_per_generation=900, skip_first_n_generations=5):
     creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
     creator.create("Individual", SymRegTree, fitness=creator.FitnessMin, pset=pset)
@@ -79,7 +86,7 @@ def generate_trees_from_evolution(pset, dataset, min_depth=0, max_depth=8,
     toolbox.register("compile", gp.compile, pset=pset)
     toolbox.pset = pset
 
-    toolbox.register("evaluate", eval_symb_reg_pmlb, inputs=dataset.drop('target', axis=1),
+    toolbox.register("evaluate", fitness, inputs=dataset.drop('target', axis=1),
                      targets=dataset['target'])
     toolbox.register("select", tools.selTournament, tournsize=7)
     toolbox.register("mate", gp.cxOnePoint)
@@ -95,3 +102,15 @@ def generate_trees_from_evolution(pset, dataset, min_depth=0, max_depth=8,
                                  verbose=False, trees=trees, skip_first_n_generations=skip_first_n_generations)
 
     return trees
+
+
+def even_parity_truth_table(number_of_inputs: int) -> pd.DataFrame:
+    inputs = list(itertools.product([0, 1], repeat=number_of_inputs))
+    outputs = [np.sum(i) % 2 for i in inputs]
+    df = pd.DataFrame(inputs, columns=[f'X{i}' for i in range(number_of_inputs)])
+    df["target"] = outputs
+
+    return df
+
+
+

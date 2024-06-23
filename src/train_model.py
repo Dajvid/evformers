@@ -21,6 +21,7 @@ def parse_args(argv):
     parser.add_argument("--dropout", type=float, default=0.1)
     parser.add_argument("--dataset", type=str,
                         default="../datasets/505_tecator-depth-0-8-145K/505_tecator-depth-0-8-145K-SOT")
+    parser.add_argument("--targets", type=str, default=None)
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--lr", type=float, default=0.001)
     parser.add_argument("--epochs", type=int, default=50)
@@ -32,7 +33,7 @@ def parse_args(argv):
                         action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--output-path", type=str, default="../training-runs")
     parser.add_argument("--run-id", type=int, default=None)
-    parser.add_argument("--masked-learning", type=bool, action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--masked-learning", type=bool, action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--loss-from-masked-only", type=bool, action=argparse.BooleanOptionalAction, default=False)
     args = parser.parse_args(argv)
 
@@ -58,6 +59,12 @@ def main(argv=None):
     if args.masked_learning:
         max_token_id = max(list(dict.values()))
         dict["MASK"] = max_token_id + 1
+    targets = None
+    train_targets, val_targets = None, None
+    if args.targets is not None:
+        targets = np.loadtxt(args.targets)
+        train_targets = batchify_data(targets[:int(0.8 * len(targets))], batch_size=args.batch_size)
+        val_targets = batchify_data(targets[int(0.8 * len(targets)):], batch_size=args.batch_size)
 
     train_data = data[:int(0.8 * len(data))]
     val_data = data[int(0.8 * len(data)):]
@@ -93,7 +100,9 @@ def main(argv=None):
         writer=writer,
         fitness_ignore_pad=args.fitness_ignore_pad,
         attention_ignore_pad=args.attention_ignore_pad,
-        masked_learning=args.masked_learning
+        masked_learning=args.masked_learning,
+        train_targets=train_targets,
+        val_targets=val_targets
     )
 
     torch.save(model.state_dict(), os.path.join(out_dir, "model.pth"))

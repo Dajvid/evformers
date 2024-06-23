@@ -77,7 +77,7 @@ class Transformer(nn.Module):
         return encoded[0]
 
     @torch.inference_mode()
-    def decode(self, encoded, start_token=None) -> List:
+    def decode(self, encoded, start_token=None, limited_dictionary=None, get_last_state=False) -> List:
         self.eval()
         tgt_seq = [start_token] if start_token else [self.dictionary["SOT"]]
         encoded = encoded.unsqueeze(0)
@@ -88,7 +88,17 @@ class Transformer(nn.Module):
                 tgt_emb = self.embedding(tgt_seq_tensor) + pos_encodings[:, :tgt_seq_tensor.size(1), :]
                 output = self.transformer.decoder(tgt_emb, encoded)
                 output = self.out(output)
+                if limited_dictionary:
+                    output = output[:, :, :len(limited_dictionary)]
                 next_token = output.argmax(dim=-1)[:, -1].item()
                 tgt_seq.append(next_token)
 
+        if get_last_state:
+            return self.transformer.decoder(tgt_emb, encoded).squeeze(0)
         return tgt_seq
+
+    @torch.inference_mode()
+    def decoder_embedding(self, src):
+        encoded = self.encode(src)
+
+        return self.decode(encoded, get_last_state=True)

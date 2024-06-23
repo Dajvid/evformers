@@ -19,7 +19,7 @@ def check_args_compatibility(mode, opt):
 
 
 def run_epoch(model, loss_fn, dataloader, mode, opt=None, masked_learning=False,
-              fitness_ignore_pad=True, attention_ignore_pad=True):
+              fitness_ignore_pad=True, attention_ignore_pad=True, targets=None):
     check_args_compatibility(mode, opt)
     model.train() if mode == "train" else model.eval()
 
@@ -29,7 +29,8 @@ def run_epoch(model, loss_fn, dataloader, mode, opt=None, masked_learning=False,
 
     for i, batch in enumerate(dataloader):
         print(f"Batch {i + 1} / {len(dataloader)}\r", end="")
-        x, y = batch, batch
+        x = batch
+        y = batch if targets is None else targets[i]
         x, y = torch.tensor(x, dtype=torch.long, device=device), torch.tensor(y, dtype=torch.long, device=device)
 
         if masked_learning:
@@ -87,8 +88,8 @@ def run_epoch(model, loss_fn, dataloader, mode, opt=None, masked_learning=False,
             total_sequence_accuracy / len(dataloader))
 
 
-def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs, writer=None,
-        fitness_ignore_pad=True, attention_ignore_pad=True, masked_learning=False):
+def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs, writer=None, train_targets=None,
+        val_targets=None, fitness_ignore_pad=True, attention_ignore_pad=True, masked_learning=False):
     statistics = []
     print("Training and validating model")
 
@@ -103,7 +104,8 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs, writer=No
             mode="train",
             fitness_ignore_pad=fitness_ignore_pad,
             attention_ignore_pad=attention_ignore_pad,
-            masked_learning=masked_learning
+            masked_learning=masked_learning,
+            targets=train_targets
         )
         val_loss, val_token_accuracy, val_sequence_accuracy = run_epoch(
             model,
@@ -111,7 +113,8 @@ def fit(model, opt, loss_fn, train_dataloader, val_dataloader, epochs, writer=No
             val_dataloader,
             mode="eval",
             fitness_ignore_pad=fitness_ignore_pad,
-            attention_ignore_pad=attention_ignore_pad
+            attention_ignore_pad=attention_ignore_pad,
+            targets=val_targets
         )
 
         statistics.append((train_loss, train_token_accuracy, train_sequence_accuracy,

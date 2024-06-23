@@ -1,6 +1,9 @@
+import re
 from collections import namedtuple
 from typing import List, Dict
+from sympy import And, Or, Not
 
+import sympy
 import torch
 from deap import gp
 
@@ -68,12 +71,66 @@ class SymRegTree(gp.PrimitiveTree):
 
     def embedding(self, model, device, max_depth, mapping):
         if not hasattr(self, "emb"):
-            self.emb = model.encode(torch.tensor(self.tokenize(max_depth, mapping, add_SOT="SOT" in mapping.keys()), device=device))
+            self.emb = model.encode(torch.tensor(self.tokenize(max_depth, mapping,
+                                                               add_SOT="SOT" in mapping.keys()), device=device))
 
         return self.emb
 
+    def decoder_embedding(self, model, device, max_depth, mapping):
+        return model.decoder_embedding(torch.tensor(self.tokenize(max_depth, mapping,
+                                                                  add_SOT="SOT" in mapping.keys()), device=device))
+
     def compile(self):
         return gp.compile(self, self.pset)
+
+    def simplify(self):
+        def binary_and(*args):
+            if len(args) == 2:
+                return f"And({args[0]}, {args[1]})"
+            else:
+                return f"And({args[0]}, {binary_and(*args[1:])})"
+
+        def binary_or(*args):
+            if len(args) == 2:
+                return f"Or({args[0]}, {args[1]})"
+            else:
+                return f"Or({args[0]}, {binary_or(*args[1:])})"
+
+        def to_binary_ops(expr):
+            if isinstance(expr, And):
+                args = list(map(to_binary_ops, expr.args))
+                return binary_and(*args)
+            elif isinstance(expr, Or):
+                args = list(map(to_binary_ops, expr.args))
+                return binary_or(*args)
+            elif isinstance(expr, Not):
+                return f"Not({to_binary_ops(expr.args[0])})"
+            else:
+                return str(expr)
+
+        def dfs(expr):
+            """Perform a DFS traversal on the expression tree and collect operators."""
+            if expr.is_Atom:
+                return [expr]
+            traversal = []
+
+            traversal.append(expr.func)
+            for arg in expr.args:
+                traversal.extend(dfs(arg))
+
+            return traversal
+
+        simplified_str = to_binary_ops(sympy.simplify(sympy.sympify(str(self))))
+        #simplified_tree_dfs = dfs(simplified)
+        #simplified_str = re.sub(r"Symbol\('(.*?)'\)", lambda x: x.group(1), str(sympy.srepr(simplified)))
+        simplified_str = simplified_str.replace("true", "True").replace("false", "False")
+        #simplified_str = simplified_str.replace("(", " ").replace(")", " ").replace(",", "")
+        elements = simplified_str.split()
+        #instanciated = [self.pset.mapping[x.replace("true", "True").replace("false", "False")] for x in simplified_tree_dfs]
+        simplified_tree = SymRegTree.from_string(simplified_str, self.pset)
+       # simplified_tree = SymRegTree(instanciated)
+        simplified_tree.pset = self.pset
+        return simplified_tree
 
     @classmethod
     def from_tokenized_tree(cls, tokenized: List, mapping: Dict, pset: gp.PrimitiveSet):
@@ -86,3 +143,9 @@ class SymRegTree(gp.PrimitiveTree):
         # TODO include fitness to make it a full individual compatible with deap
 
         return cls(instanciated)
+
+    @classmethod
+    def from_string(cls, string, pset):
+        tree = super().from_string(string, pset)
+        tree.pset = pset
+        return tree
