@@ -593,6 +593,11 @@ def plot_binary_semantics():
 
 
 def main():
+    df = load_data("../runs/evolution/mut_add_random_noise_gaussian_cxOnePoint/--mut-param--forceTrue-trials20")
+    plot_data(df, "mut_param", "mut_param_value", None)
+    plot_succes_rate(df, "mut_param", "Mutation succes rate", None)
+    exit()
+
     plot_binary_semantics()
     #plot_semantics()
     plot_random_noise_stats()

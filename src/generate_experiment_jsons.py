@@ -44,8 +44,19 @@ def generate_variant(variant_name, variants, non_default_params=None):
             if params["--mutation-force-change"] else ""
         params["--output-dir"] = (f"../runs/evolution/{params["--mutation-operator"]}_{params["--crossover-operator"]}"
                                   f"/{variant_name}{force_diff_string}/{params["--dataset"]}/{variant_name}-{variant}/")
+        command = {key: value for key, value in params.items()}
+
+        for key, value in command.items():
+            if type(value) is bool:
+                if value:
+                    command[key] = ""
+                else:
+                    command[f"--no-{key[:2]}"] = ""
+            else:
+                command[key] = value
+
         experiments.append({
-            "command": [item for pair in params.items() for item in pair],
+            "command": [item for pair in params.items() for item in pair if type(item) is not bool],
             "remaining-runs": runs_per_experiment,
             "requires-gpu": False,
             "total-runs": runs_per_experiment
@@ -137,20 +148,22 @@ def benchmark_add_random_noise():
         "--mut-ratio-param": "0.05",
         "--mutation-operator": "mut_add_random_noise_gaussian",
         "--mut-param": "0.5",
-        "--pop-size": "200"
+        "--pop-size": "200",
+        "--mutation-force-change": True,
+        "--mutation-max-trials": str(20)
     }
-    # experiments.extend(generate_variant("--mut-param",
-    #                                     [0.01, 0.05, 0.1, 0.3, 0.4, 0.5, 0.8, 1.0, 1.5, 2.0],
-    #                                     non_default_params=mut_rev_cosine_dist_defaults))
+    experiments.extend(generate_variant("--mut-param",
+                                        [0.01, 0.05, 0.1, 0.3, 0.4, 0.5, 0.8, 1.0, 1.5, 2.0],
+                                        non_default_params=mut_rev_cosine_dist_defaults))
     # experiments.extend(generate_variant("--mut-ratio-param",
     #                                     [0.02, 0.03, 0.04],
     #                                     non_default_params=mut_rev_cosine_dist_defaults))
     # experiments.extend(generate_variant("--pop-size",
     #                                     [1, 5, 10, 20, 50, 100, 200, 500, 1000, 2500],
     #                                     non_default_params=mut_rev_cosine_dist_defaults))
-    experiments.extend(generate_variant("--p-mut",
-                                        [0],
-                                        non_default_params=mut_rev_cosine_dist_defaults))
+    # experiments.extend(generate_variant("--p-mut",
+    #                                     [0],
+    #                                     non_default_params=mut_rev_cosine_dist_defaults))
     return experiments
 
 
@@ -161,17 +174,19 @@ def benchmark_mut_rev_euclid_dist():
         "--p-cross": "0",
         "--mutation-operator": "mut_rev_euclid_dist",
         "--mut-param": "10",
-        "--pop-size": "100"
+        "--pop-size": "100",
+        "--mutation-force-change": True,
+        "--mutation-max-trials": str(20)
     }
-    # experiments.extend(generate_variant("--mut-param",
-    #                                     [8, 12],
-    #                                     non_default_params=mut_rev_euclid_dist_defaults))
+    experiments.extend(generate_variant("--mut-param",
+                                        [1, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40],
+                                        non_default_params=mut_rev_euclid_dist_defaults))
     # experiments.extend(generate_variant("--pop-size",
     #                                     [100, 200, 500, 1000, 2500],
     #                                     non_default_params=mut_rev_euclid_dist_defaults))
-    experiments.extend(generate_variant("--p-mut",
-                                        [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-                                        non_default_params=mut_rev_euclid_dist_defaults))
+    # experiments.extend(generate_variant("--p-mut",
+    #                                     [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+    #                                     non_default_params=mut_rev_euclid_dist_defaults))
     return experiments
 
 
